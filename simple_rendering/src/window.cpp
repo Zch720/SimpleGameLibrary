@@ -12,6 +12,38 @@ GLFWwindow * Window::getGLFWWindow() {
     return window;
 }
 
+void Window::setClearColor(float r, float g, float b, float a) {
+    clearColor.r = r;
+    clearColor.g = g;
+    clearColor.b = b;
+    clearColor.a = a;
+    glClearColor(r, g, b, a);
+}
+
 void Window::makeContextCurrent() {
     glfwMakeContextCurrent(window);
+}
+
+void Window::clear() {
+    makeContextCurrent();
+    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glfwSwapBuffers(window);
+}
+
+void Window::close() {
+    glfwSetWindowShouldClose(window, true);
+}
+
+void Window::destroy() {
+    glfwDestroyWindow(window);
+    window = nullptr;
+}
+
+void Window::rename(std::string title) {
+    glfwSetWindowTitle(window, title.c_str());
+}
+
+void Window::resize(int width, int height) {
+    glfwSetWindowSize(window, width, height);
 }
