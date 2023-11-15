@@ -1,4 +1,4 @@
-.PHONY: all test dirs clean
+.PHONY: all test dirs libdir clean
 
 # g++ flags
 CFLAGS = -std=c++11 -Wfatal-errors -Wall
@@ -25,9 +25,9 @@ SIMPLE_RENDERING_INCLUDE = -I ./include
 TEST_ALL = ./test/ut_all.cpp
 TEST_HAEDERS = ./test/window_test.h
 
-all: dirs lib/libsrendering.a
+all: dirs bin/ut_all
 
-test: dirs bin/ut_all
+build_lib: dirs libdir lib/libsrendering.a
 
 ../ext/glad/obj/glad.o:
 	gcc -I$(GLAD_INCLUDE) -c $(GLAD_SRCS) -o $@
@@ -42,7 +42,10 @@ obj/window.o: include/window.h src/window.cpp ../ext/glad/obj/glad.o
 	g++ $(CFLAGS) $(INCLUDES) $(SIMPLE_RENDERING_INCLUDE) -c src/window.cpp -o $@
 
 dirs:
-	mkdir -p bin obj ../ext/glad/obj lib
+	mkdir -p bin obj ../ext/glad/obj
+
+libdir:
+	mkdir -p lib
 
 clean:
 	rm -rf bin obj lib
