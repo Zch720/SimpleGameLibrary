@@ -1,4 +1,4 @@
-.PHONY: all test dirs libdir clean
+.PHONY: all debug build_lib dirs libdir clean
 
 # g++ flags
 CFLAGS = -std=c++11 -Wfatal-errors -Wall
@@ -13,6 +13,7 @@ GLAD_SRCS = ../ext/glad/src/gl.c
 GLM_INCLUDE = ../ext/glm/include
 
 STB_INCLUDE = ../ext/stb/include
+STB_OBJECTS = ../ext/glad/obj/glad.o
 
 INCLUDES = -I $(GLFW_INCLUDE) -I $(GLAD_INCLUDE) -I $(GLM_INCLUDE) -I $(STB_INCLUDE)
 
@@ -23,22 +24,24 @@ SIMPLE_RENDERING_INCLUDE = -I ./include
 
 # tests
 TEST_ALL = ./test/ut_all.cpp
-TEST_HAEDERS = ./test/window_test.h
+TEST_HEADERS = ./test/window_test.h
 
 all: dirs bin/ut_all
 
-build_lib: dirs libdir lib/libsrendering.a
+debug: dirs bin/debug_ut_all
 
-../ext/glad/obj/glad.o:
-	gcc -I$(GLAD_INCLUDE) -c $(GLAD_SRCS) -o $@
+build_lib: dirs libdir lib/libsrendering.a
 
 lib/libsrendering.a: obj/window.o
 	ar rcs $@ $^
 
-bin/ut_all: $(TEST_ALL) $(TEST_HEADERS) obj/window.o ../ext/glad/obj/glad.o
-	g++ $(CFLAGS) $(INCLUDES) -o $@ $^ $(ALL_LIBS)
+bin/ut_all: $(TEST_ALL) $(TEST_HEADERS) obj/window.o
+	g++ $(CFLAGS) $(INCLUDES) ${STB_OBJECTS} -o $@ $^ $(ALL_LIBS)
 
-obj/window.o: include/window.h src/window.cpp ../ext/glad/obj/glad.o
+bin/debug_ut_all: $(TEST_ALL) $(TEST_HEADERS) obj/window.o
+	g++ $(CFLAGS) -g $(INCLUDES) ${STB_OBJECTS} -o $@ $^ $(ALL_LIBS)
+
+obj/window.o: include/window.h src/window.cpp
 	g++ $(CFLAGS) $(INCLUDES) $(SIMPLE_RENDERING_INCLUDE) -c src/window.cpp -o $@
 
 dirs:

@@ -1,4 +1,4 @@
-.PHONY: all ext_test clean dirs
+.PHONY: all ext_test dirs clean clean-all
 
 # g++ flags
 CFLAGS = -std=c++11 -Wfatal-errors -Wall
@@ -13,6 +13,7 @@ GLAD_SRCS = ./ext/glad/src/gl.c
 GLM_INCLUDE = ./ext/glm/include
 
 STB_INCLUDE = ./ext/stb/include
+STB_OBJECTS = ./ext/glad/obj/glad.o
 
 EXT_INCLUDES = -I $(GLFW_INCLUDE) -I $(GLAD_INCLUDE) -I $(GLM_INCLUDE) -I $(STB_INCLUDE)
 
@@ -43,17 +44,14 @@ all: dirs bin/ut_all
 
 ext_test: dirs bin/ext_ut_all
 
-ext/glad/obj/glad.o:
-	gcc -I $(GLAD_INCLUDE) -c $(GLAD_SRCS) -o $@
+bin/ut_all: $(TEST_ALL) $(TEST_HEADERS) simple_rendering/lib/libsrendering.a
+	g++ $(CFLAGS) $(INCLUDES) ${STB_OBJECTS} -o $@ $^ $(ALL_LIBS)
 
-bin/ut_all: $(TEST_ALL) $(TEST_HEADERS) ext/glad/obj/glad.o simple_rendering/lib/libsrendering.a
-	g++ $(CFLAGS) $(INCLUDES) -o $@ $^ $(ALL_LIBS)
-
-bin/ext_ut_all: $(EXT_TEST_ALL) $(EXT_TEST_HEADERS) ext/glad/obj/glad.o simple_rendering/lib/libsrendering.a
-	g++ $(CFLAGS) $(EXT_INCLUDES) -o $@ $^ $(EXT_ALL_LIBS)
+bin/ext_ut_all: $(EXT_TEST_ALL) $(EXT_TEST_HEADERS)
+	g++ $(CFLAGS) $(EXT_INCLUDES) ${STB_OBJECTS} -o $@ $^ $(EXT_ALL_LIBS)
 
 simple_rendering/lib/libsrendering.a:
-	make -C simple_rendering
+	make -C simple_rendering build_lib
 
 dirs:
 	mkdir -p bin ext/glad/obj
@@ -62,5 +60,5 @@ clean:
 	rm -rf bin
 
 clean-all:
-	rm -rf bin ext/glad/obj
+	$(MAKE) clean
 	make -C simple_rendering clean
