@@ -20,6 +20,10 @@ void Window::setClearColor(float r, float g, float b, float a) {
     glClearColor(r, g, b, a);
 }
 
+bool Window::isClose() {
+    return glfwWindowShouldClose(window);
+}
+
 void Window::makeContextCurrent() {
     glfwMakeContextCurrent(window);
 }

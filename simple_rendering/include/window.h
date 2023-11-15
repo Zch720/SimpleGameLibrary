@@ -12,6 +12,8 @@ public:
 
     void setClearColor(float r, float g, float b, float a);
 
+    bool isClose();
+
     void makeContextCurrent();
     void clear();
     void close();
