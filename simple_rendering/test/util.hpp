@@ -22,7 +22,7 @@
 int _kbhit() {
     static const int STDIN = 0;
     static bool initialized = false;
- 
+
     if (! initialized) {
         // Use termios to turn off line buffering
         termios term;
@@ -32,8 +32,31 @@ int _kbhit() {
         setbuf(stdin, NULL);
         initialized = true;
     }
- 
+
     int bytesWaiting;
     ioctl(STDIN, FIONREAD, &bytesWaiting);
     return bytesWaiting;
+}
+
+void EndOfGetKey() {
+    fflush(stdin);
+    printf("\n");
+}
+
+void CheckSuccess(bool success, std::string message) {
+    if (success) {
+        SUCCEED();
+    } else {
+        FAIL() << message;
+    }
+}
+
+void SuccessCheckFromInput(std::string message) {
+    char c = 0;
+    while (c != 's' && c != 'f') {
+        if (_kbhit()) c = getchar();
+    }
+
+    EndOfGetKey();
+    CheckSuccess(c == 's', message);
 }

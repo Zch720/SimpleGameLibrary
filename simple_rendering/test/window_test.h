@@ -52,25 +52,12 @@ protected:
         return window;
     }
 
-    void EndOfGetKey() {
-        fflush(stdin);
-        printf("\n");
-    }
-
-    void CheckSuccess(bool success, std::string message) {
-        if (success) {
-            SUCCEED();
-        } else {
-            FAIL() << message;
-        }
-    }
-
     static bool skipAll;
     static bool skipHandTest;
 };
 
 bool WindowSuite::skipAll = false;
-bool WindowSuite::skipHandTest = true;
+bool WindowSuite::skipHandTest = false;
 
 TEST_F(WindowSuite, CreateWindow) {
     Window window(800, 600, "Test Window");
@@ -109,14 +96,7 @@ TEST_F(WindowSuite, CheckWindowDisplay) {
     PRINTF("And title \"Test Window\"\n")
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowSuite, RenameWindow) {
@@ -129,14 +109,7 @@ TEST_F(WindowSuite, RenameWindow) {
     PRINTF("The title should be \"New Title\"\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowSuite, ResizeWindow) {
@@ -149,14 +122,7 @@ TEST_F(WindowSuite, ResizeWindow) {
     PRINTF("The window size should be 200x200\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowSuite, SetClearColor) {
@@ -170,14 +136,7 @@ TEST_F(WindowSuite, SetClearColor) {
     PRINTF("The window color should be red\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowSuite, CreateTwoWindow) {
@@ -189,14 +148,7 @@ TEST_F(WindowSuite, CreateTwoWindow) {
     PRINTF("There should be two windows\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Windows display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowSuite, TwoWindowWithDifferentColor) {
@@ -214,12 +166,5 @@ TEST_F(WindowSuite, TwoWindowWithDifferentColor) {
     PRINTF("The big one is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Windows display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }

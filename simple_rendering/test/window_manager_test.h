@@ -26,7 +26,7 @@ protected:
     static bool skipHandTest;
 };
 
-bool WindowManagerSuite::skipHandTest = true;
+bool WindowManagerSuite::skipHandTest = false;
 
 TEST_F(WindowManagerSuite, CreateOneWindow) {
     ASSERT_NO_THROW(WindowManager::Instance().createWindow("main window", 800, 600, "Test Window"));
@@ -88,14 +88,7 @@ TEST_F(WindowManagerSuite, RenameWindow) {
     PRINTF("There should be a window with title \"New Title\"\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowManagerSuite, SetWindowColor) {
@@ -108,14 +101,7 @@ TEST_F(WindowManagerSuite, SetWindowColor) {
     PRINTF("The window color should be red\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowManagerSuite, CreateTwoWindowWithDifferentColor) {
@@ -132,14 +118,7 @@ TEST_F(WindowManagerSuite, CreateTwoWindowWithDifferentColor) {
     PRINTF("The large ont is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
 
 TEST_F(WindowManagerSuite, ClearWindowsAtSameTime) {
@@ -155,12 +134,5 @@ TEST_F(WindowManagerSuite, ClearWindowsAtSameTime) {
     PRINTF("The large ont is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-
-    char c = 0;
-    while (c != 's' && c != 'f') {
-        if (_kbhit()) c = getchar();
-    }
-
-    EndOfGetKey();
-    CheckSuccess(c == 's', "Window display wrong");
+    SuccessCheckFromInput("Window display wrong");
 }
