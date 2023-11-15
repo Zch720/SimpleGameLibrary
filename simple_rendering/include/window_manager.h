@@ -23,6 +23,7 @@ public:
     void clearWindow(std::string identifyName);
     void closeWindow(std::string identifyName);
     void renameWindow(std::string identifyName, std::string newTitle);
+    void resizeWindow(std::string identifyName, int width, int height);
     void setWindowColor(std::string identifyName, float r, float g, float b, float a);
 
 private:

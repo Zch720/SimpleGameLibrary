@@ -91,6 +91,16 @@ TEST_F(WindowManagerSuite, RenameWindow) {
     SuccessCheckFromInput("Window display wrong");
 }
 
+TEST_F(WindowManagerSuite, ResizeWindow) {
+    WindowManager::Instance().createWindow("main window", 800, 600, "Test Window");
+    WindowManager::Instance().resizeWindow("main window", 400, 300);
+
+    PRINTF("There should be a window with size 400x300\n");
+    PRINTF("If success press 's', otherwise press 'f' ");
+    fflush(stdout);
+    SuccessCheckFromInput("Window display wrong");
+}
+
 TEST_F(WindowManagerSuite, SetWindowColor) {
     if (skipHandTest) GTEST_SKIP();
 

@@ -80,6 +80,11 @@ void WindowManager::renameWindow(std::string identifyName, std::string newTitle)
     windows[identifyName]->rename(newTitle);
 }
 
+void WindowManager::resizeWindow(std::string identifyName, int width, int height) {
+    checkWindowExist(identifyName);
+    windows[identifyName]->resize(width, height);
+}
+
 void WindowManager::setWindowColor(std::string identifyName, float r, float g, float b, float a) {
     checkWindowExist(identifyName);
     windows[identifyName]->setClearColor(r, g, b, a);
