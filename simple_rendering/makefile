@@ -23,13 +23,13 @@ ALL_LIBS = -L $(GLFW_LIB) -lgtest -lpthread -lglfw3
 SIMPLE_RENDERING_INCLUDE = -I ./include
 
 SIMPLE_RENDERING_SRC_FOLDER = ./src
-SIMPLE_RENDERING_SRCS = ./src/window.cpp ./src/window_manager.cpp
+SIMPLE_RENDERING_SRCS = ./src/window.cpp ./src/window_manager.cpp ./src/shader.cpp
 
 OBJECTS = $(addprefix obj/, $(addsuffix .o, $(basename $(notdir $(SIMPLE_RENDERING_SRCS)))))
 
 # tests
 TEST_ALL = ./test/ut_all.cpp
-TEST_HEADERS = ./test/window_test.h ./test/window_manager_test.h
+TEST_HEADERS = ./test/window_test.h ./test/window_manager_test.h ./test/shader_test.h
 
 all: dirs bin/ut_all
 

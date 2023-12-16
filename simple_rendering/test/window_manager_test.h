@@ -92,6 +92,8 @@ TEST_F(WindowManagerSuite, RenameWindow) {
 }
 
 TEST_F(WindowManagerSuite, ResizeWindow) {
+    if (skipHandTest) GTEST_SKIP();
+
     WindowManager::Instance().createWindow("main window", 800, 600, "Test Window");
     WindowManager::Instance().resizeWindow("main window", 400, 300);
 
