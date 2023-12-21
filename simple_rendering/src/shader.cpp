@@ -20,6 +20,10 @@ Shader::~Shader() {
     glDeleteProgram(programId);
 }
 
+void Shader::use() {
+    glUseProgram(programId);
+}
+
 void Shader::registerUniformVariable(std::string identifyName, std::string uniformName) {
     if (uniformLocations.find(identifyName) != uniformLocations.end()) {
         throw std::runtime_error("Uniform variable \"" + identifyName + "\" already registered");
@@ -30,6 +34,10 @@ void Shader::registerUniformVariable(std::string identifyName, std::string unifo
         throw std::runtime_error("Uniform variable \"" + uniformName + "\" not found");
     }
     uniformLocations[identifyName] = location;
+}
+
+bool Shader::hasUniformVariable(std::string identifyName) {
+    return uniformLocations.find(identifyName) != uniformLocations.end();
 }
 
 void Shader::setIntUniformVariable(std::string identifyName, int value) {

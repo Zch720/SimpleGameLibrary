@@ -23,13 +23,13 @@ ALL_LIBS = -L $(GLFW_LIB) -lgtest -lpthread -lglfw3
 SIMPLE_RENDERING_INCLUDE = -I ./include
 
 SIMPLE_RENDERING_SRC_FOLDER = ./src
-SIMPLE_RENDERING_SRCS = ./src/window.cpp ./src/window_manager.cpp ./src/shader.cpp
+SIMPLE_RENDERING_SRCS = ./src/window.cpp ./src/window_manager.cpp ./src/shader.cpp ./src/shader_manager.cpp
 
 OBJECTS = $(addprefix obj/, $(addsuffix .o, $(basename $(notdir $(SIMPLE_RENDERING_SRCS)))))
 
 # tests
 TEST_ALL = ./test/ut_all.cpp
-TEST_HEADERS = ./test/window_test.h ./test/window_manager_test.h ./test/shader_test.h
+TEST_HEADERS = ./test/window_test.h ./test/window_manager_test.h ./test/shader_test.h ./test/shader_manager_test.h
 
 all: dirs bin/ut_all
 
@@ -41,10 +41,10 @@ lib/libsrendering.a: ${OBJECTS}
 	ar rcs $@ $^
 
 bin/ut_all: $(TEST_ALL) $(TEST_HEADERS) $(OBJECTS)
-	g++ $(CFLAGS) $(INCLUDES) ${STB_OBJECTS} -o $@ $^ $(ALL_LIBS)
+	g++ $(CFLAGS) $(INCLUDES) ${STB_OBJECTS} $^ -o $@ $(ALL_LIBS)
 
 bin/debug_ut_all: $(TEST_ALL) $(TEST_HEADERS) $(OBJECTS)
-	g++ $(CFLAGS) -g $(INCLUDES) ${STB_OBJECTS} -o $@ $^ $(ALL_LIBS)
+	g++ $(CFLAGS) -g $(INCLUDES) ${STB_OBJECTS} $^ -o $@ $(ALL_LIBS)
 
 obj/%.o: $(SIMPLE_RENDERING_SRC_FOLDER)/%.cpp
 	g++ $(CFLAGS) $(INCLUDES) $(SIMPLE_RENDERING_INCLUDE) -c $< -o $@ $(ALL_LIBS)

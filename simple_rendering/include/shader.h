@@ -12,7 +12,10 @@ public:
     Shader(std::string vertexShaderSource, std::string fragmentShaderSource);
     ~Shader();
 
+    void use();
+
     void registerUniformVariable(std::string identifyName, std::string uniformName);
+    bool hasUniformVariable(std::string identifyName);
     void setIntUniformVariable(std::string identifyName, int value);
     int getIntUniformVariable(std::string identifyName);
     void setFloatUniformVariable(std::string identifyName, float value);
