@@ -30,9 +30,9 @@ void Window::makeContextCurrent() {
 
 void Window::clear() {
     makeContextCurrent();
+    glfwSwapBuffers(window);
     glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
     glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
 }
 
 void Window::close() {
