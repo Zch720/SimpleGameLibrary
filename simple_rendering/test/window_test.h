@@ -5,24 +5,15 @@
 class WindowSuite : public ::testing::Test {
 protected:
     void SetUp() override {
-        if (skipAll) {
-            GTEST_SKIP();
-        }
-
         SetUpGlfw();
     }
 
     void TearDown() override {
-        if (skipAll) {
-            return;
-        }
-
         glfwTerminate();
     }
 
     void SetUpGlfw() {
         if (!glfwInit()) {
-            skipAll = true;
             FAIL() << "Failed to initialize GLFW";
         }
 
@@ -32,7 +23,6 @@ protected:
 
     void SetUpGlad() {
         if (!gladLoadGL(glfwGetProcAddress)) {
-            skipAll = true;
             FAIL() << "Failed to initialize GLAD";
         }
     }
@@ -56,7 +46,6 @@ protected:
     static bool skipHandTest;
 };
 
-bool WindowSuite::skipAll = false;
 bool WindowSuite::skipHandTest = false;
 
 TEST_F(WindowSuite, CreateWindow) {
@@ -131,12 +120,16 @@ TEST_F(WindowSuite, SetClearColor) {
     Window window = CreateDefaultWindow(800, 600, "Test Window");
     window.setClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
-    window.clear();
-
     PRINTF("The window color should be red\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while(!glfwWindowShouldClose(window.getGLFWWindow())) {
+        window.clear();
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            glfwSetWindowShouldClose(window.getGLFWWindow(), true);
+        }
+    }
 }
 
 TEST_F(WindowSuite, CreateTwoWindow) {
@@ -159,12 +152,17 @@ TEST_F(WindowSuite, TwoWindowWithDifferentColor) {
     defaultWindow.setClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     window.setClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 
-    defaultWindow.clear();
-    window.clear();
-
     PRINTF("There should be two windows\n");
     PRINTF("The big one is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while(!glfwWindowShouldClose(window.getGLFWWindow())) {
+        defaultWindow.clear();
+        window.clear();
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            glfwSetWindowShouldClose(window.getGLFWWindow(), true);
+            glfwSetWindowShouldClose(defaultWindow.getGLFWWindow(), true);
+        }
+    }
 }
