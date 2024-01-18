@@ -108,12 +108,16 @@ TEST_F(WindowManagerSuite, SetWindowColor) {
 
     WindowManager::Instance().createWindow("main window", 800, 600, "Test Window");
     WindowManager::Instance().setWindowColor("main window", 1.0f, 0.0f, 0.0f, 1.0f);
-    WindowManager::Instance().clearWindow("main window");
 
     PRINTF("The window color should be red\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+    while (!WindowManager::Instance().isWindowClose("main window")) {
+        WindowManager::Instance().clearWindow("main window");
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            WindowManager::Instance().closeWindow("main window");
+        }
+    }
 }
 
 TEST_F(WindowManagerSuite, CreateTwoWindowWithDifferentColor) {
@@ -123,14 +127,18 @@ TEST_F(WindowManagerSuite, CreateTwoWindowWithDifferentColor) {
     WindowManager::Instance().createWindow("second window", 400, 300, "Second Window");
     WindowManager::Instance().setWindowColor("main window", 1.0f, 0.0f, 0.0f, 1.0f);
     WindowManager::Instance().setWindowColor("second window", 0.0f, 1.0f, 0.0f, 1.0f);
-    WindowManager::Instance().clearWindow("main window");
-    WindowManager::Instance().clearWindow("second window");
 
     PRINTF("There should be two window\n");
     PRINTF("The large ont is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+    while (!WindowManager::Instance().isWindowClose("main window")) {
+        WindowManager::Instance().clearWindow("main window");
+        WindowManager::Instance().clearWindow("second window");
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            WindowManager::Instance().closeWindow("main window");
+        }
+    }
 }
 
 TEST_F(WindowManagerSuite, ClearWindowsAtSameTime) {
@@ -140,11 +148,15 @@ TEST_F(WindowManagerSuite, ClearWindowsAtSameTime) {
     WindowManager::Instance().createWindow("second window", 400, 300, "Second Window");
     WindowManager::Instance().setWindowColor("main window", 1.0f, 0.0f, 0.0f, 1.0f);
     WindowManager::Instance().setWindowColor("second window", 0.0f, 1.0f, 0.0f, 1.0f);
-    WindowManager::Instance().clearAll();
 
     PRINTF("There should be two window\n");
     PRINTF("The large ont is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+    while (!WindowManager::Instance().isWindowClose("main window")) {
+        WindowManager::Instance().clearAll();
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            WindowManager::Instance().closeWindow("main window");
+        }
+    }
 }
