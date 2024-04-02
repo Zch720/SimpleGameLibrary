@@ -9,9 +9,6 @@ class WindowManager {
 public:
     static WindowManager & Instance();
 
-    WindowManager();
-    ~WindowManager();
-
     bool isWindowExist(std::string identifyName);
     bool isWindowClose(std::string identifyName);
 
@@ -26,9 +23,14 @@ public:
     void resizeWindow(std::string identifyName, int width, int height);
     void setWindowColor(std::string identifyName, float r, float g, float b, float a);
 
+protected:
+    WindowManager();
+    ~WindowManager();
+
 private:
     static WindowManager instance;
 
+    bool isRunning;
     bool isFirstWindow;
     std::unordered_map<std::string, Window *> windows;
 

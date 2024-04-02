@@ -60,3 +60,14 @@ void SuccessCheckFromInput(std::string message) {
     EndOfGetKey();
     CheckSuccess(c == 's', message);
 }
+
+bool SuccessCheckFromInputForLoop(std::string message) {
+    char c = 0;
+    if (_kbhit()) c = getchar();
+    if (c == 's' || c == 'f') {
+        EndOfGetKey();
+        CheckSuccess(c == 's', message);
+        return true;
+    }
+    return false;
+}

@@ -8,6 +8,9 @@ Window::Window(int width, int height, std::string title) {
     }
 }
 
+Window::~Window() {
+}
+
 GLFWwindow * Window::getGLFWWindow() {
     return window;
 }
@@ -17,6 +20,7 @@ void Window::setClearColor(float r, float g, float b, float a) {
     clearColor.g = g;
     clearColor.b = b;
     clearColor.a = a;
+    // TODO: maybe glClearColor should be removed from here
     glClearColor(r, g, b, a);
 }
 
@@ -40,8 +44,10 @@ void Window::close() {
 }
 
 void Window::destroy() {
-    glfwDestroyWindow(window);
-    window = nullptr;
+    if (window != nullptr) {
+        glfwDestroyWindow(window);
+        window = nullptr;
+    }
 }
 
 void Window::rename(std::string title) {

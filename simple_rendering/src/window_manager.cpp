@@ -12,6 +12,7 @@ WindowManager & WindowManager::Instance() {
 
 WindowManager::WindowManager() {
     isFirstWindow = true;
+    isRunning = false;
     windows = {};
 }
 
@@ -41,6 +42,7 @@ void WindowManager::createWindow(std::string identifyName, int width, int height
         windows[identifyName]->makeContextCurrent();
         initGlad();
         isFirstWindow = false;
+        isRunning = true;
     }
 }
 
@@ -56,6 +58,7 @@ void WindowManager::clearAll() {
 }
 
 void WindowManager::terminate() {
+    if (!isRunning) return;
     for (auto & window : windows) {
         window.second->destroy();
         delete window.second;
@@ -63,6 +66,7 @@ void WindowManager::terminate() {
     windows.clear();
     glfwTerminate();
     isFirstWindow = true;
+    isRunning = false;
 }
 
 void WindowManager::clearWindow(std::string identifyName) {

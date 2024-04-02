@@ -25,7 +25,6 @@ void ShaderManager::DestroyInstance() {
         delete instance;
         instance = nullptr;
     }
-
 }
 
 void ShaderManager::createShader(std::string identifyName, std::string vertexShaderSource, std::string fragmentShaderSource) {
