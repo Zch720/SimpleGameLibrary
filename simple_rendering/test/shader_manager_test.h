@@ -9,7 +9,7 @@ protected:
     }
 
     void TearDown() override {
-        ShaderManager::DestroyInstance();
+        ShaderManager::Instance().destroyShaders();
         WindowManager::Instance().terminate();
     }
 

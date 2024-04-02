@@ -11,10 +11,10 @@ class Shader;
 class ShaderManager {
 public:
     static ShaderManager & Instance();
-    static void DestroyInstance();
 
     void createShader(std::string identifyName, std::string vertexShaderSource, std::string fragmentShaderSource);
     bool hasShader(std::string identifyName);
+    void destroyShaders();
 
     void useShader(std::string identifyName);
 
@@ -68,7 +68,7 @@ protected:
     ~ShaderManager();
 
 private:
-    static ShaderManager * instance;
+    static ShaderManager instance;
 
     std::unordered_map<std::string, Shader *> shaders;
 

@@ -1,30 +1,18 @@
 #include "../include/shader.h"
 #include "../include/shader_manager.h"
 
-ShaderManager * ShaderManager::instance = nullptr;
+ShaderManager ShaderManager::instance;
 
 ShaderManager::ShaderManager() {
     shaders = {};
 }
 
 ShaderManager::~ShaderManager() {
-    for (auto shader : shaders) {
-        delete shader.second;
-    }
+    destroyShaders();
 }
 
 ShaderManager & ShaderManager::Instance() {
-    if (instance == nullptr) {
-        instance = new ShaderManager();
-    }
-    return *instance;
-}
-
-void ShaderManager::DestroyInstance() {
-    if (instance != nullptr) {
-        delete instance;
-        instance = nullptr;
-    }
+    return instance;
 }
 
 void ShaderManager::createShader(std::string identifyName, std::string vertexShaderSource, std::string fragmentShaderSource) {
@@ -39,6 +27,13 @@ bool ShaderManager::hasShader(std::string identifyName) {
 void ShaderManager::useShader(std::string identifyName) {
     checkShaderExist(identifyName);
     shaders[identifyName]->use();
+}
+
+void ShaderManager::destroyShaders() {
+    for (auto shader : shaders) {
+        delete shader.second;
+    }
+    shaders.clear();
 }
 
 void ShaderManager::registerShaderUniformVariable(std::string shaderIdentifyName, std::string identifyName, std::string uniformName) {
