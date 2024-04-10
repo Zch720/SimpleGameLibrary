@@ -9,6 +9,7 @@ include(FetchContent)
 FetchContent_Declare(
     googletest
     URL https://github.com/google/googletest/archive/f8d7d77c06936315286eb55f8de22cd23c188571.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP 1
 )
 
 if(NOT UNIX)
@@ -43,7 +44,7 @@ add_executable(
     test/ut_all.cpp
 )
 set_target_properties(simple_rendering_test PROPERTIES OUTPUT_NAME "ut_all")
-target_compile_options(simple_rendering_test PUBLIC -std=c++11 -Wall -Wfatal-errors)
+target_compile_options(simple_rendering_test PUBLIC -Wall -Wfatal-errors)
 target_include_directories(
     simple_rendering_test
     PRIVATE

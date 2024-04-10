@@ -77,18 +77,34 @@ TEST_F(ShaderSuite, CreateShader) {
 }
 
 TEST_F(ShaderSuite, VertexShaderCompileFail) {
+#ifdef _WIN32
+    std::string expectedMessage = "Compile shader failed, cause: ERROR: 0:2: '' :  syntax error, unexpected IDENTIFIER\n"
+                                  "ERROR: 1 compilation errors.  No code generated.\n"
+                                  "\n";
+#else
+    std::string expectedMessage = "Compile shader failed, cause: 0:1(1): error: syntax error, unexpected NEW_IDENTIFIER\n";
+#endif
+
     ASSERT_THROW_MESSAGE(
         Shader shader("invalid vertex shader source", fragmentShaderSource),
         std::runtime_error,
-        "Compile shader failed, cause: 0:1(1): error: syntax error, unexpected NEW_IDENTIFIER\n"
+        expectedMessage
     );
 }
 
 TEST_F(ShaderSuite, FragmentShaderCompileFail) {
+#ifdef _WIN32
+    std::string expectedMessage = "Compile shader failed, cause: ERROR: 0:2: '' :  syntax error, unexpected IDENTIFIER\n"
+                                  "ERROR: 1 compilation errors.  No code generated.\n"
+                                  "\n";
+#else
+    std::string expectedMessage = "Compile shader failed, cause: 0:1(1): error: syntax error, unexpected NEW_IDENTIFIER\n";
+#endif
+
     ASSERT_THROW_MESSAGE(
         Shader shader(vertexShaderSource, "invalid fragment shader source"),
         std::runtime_error,
-        "Compile shader failed, cause: 0:1(1): error: syntax error, unexpected NEW_IDENTIFIER\n"
+        expectedMessage
     );
 }
 

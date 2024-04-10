@@ -1,8 +1,12 @@
 #pragma once
 
 #include <iostream>
+#ifdef _WIN32
+#include <conio.h>
+#else
 #include <termios.h>
 #include <sys/ioctl.h>
+#endif
 #include <gtest/gtest.h>
 
 #define ASSERT_THROW_MESSAGE(code, expected_exception, expected_message)                \
@@ -19,6 +23,7 @@
 
 #define PRINTF(...) { printf("             "); printf("\033[0;33m"); printf(__VA_ARGS__); printf("\033[0;37m"); }
 
+#ifndef _WIN32
 int _kbhit() {
     static const int STDIN = 0;
     static bool initialized = false;
@@ -37,6 +42,7 @@ int _kbhit() {
     ioctl(STDIN, FIONREAD, &bytesWaiting);
     return bytesWaiting;
 }
+#endif
 
 void EndOfGetKey() {
     fflush(stdin);

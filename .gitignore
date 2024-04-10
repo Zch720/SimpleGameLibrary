@@ -1,5 +1,8 @@
+.vscode
+.vs
+.idea
+cmake-build-debug
+
 bin
 obj
 build
-
-.vscode
