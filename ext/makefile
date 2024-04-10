@@ -2,13 +2,13 @@
 
 CFLAGS = -std=c99 -Wfatal-errors -Wall
 
-all: dirs glad/obj/glad.o
+all: dirs glad/lib/glad.o
 
-glad/obj/glad.o: glad/src/gl.c
+glad/lib/glad.o: glad/src/gl.c
 	gcc $(CFLAGS) -I glad/include -c glad/src/gl.c -o $@
 
 dirs:
-	mkdir -p glad/obj
+	mkdir -p glad/lib
 
 clean:
-	rm -rf glad/obj
+	rm -rf glad/lib
