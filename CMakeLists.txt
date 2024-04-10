@@ -46,7 +46,7 @@ target_link_libraries(
     simple_game_library_test
     GTest::gtest_main
     glfw
-    ${CMAKE_CURRENT_SOURCE_DIR}/ext/glad/lib/glad.o
+    glad
     simple_rendering
 )
 
