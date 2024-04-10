@@ -88,7 +88,13 @@ TEST_F(WindowManagerSuite, RenameWindow) {
     PRINTF("There should be a window with title \"New Title\"\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while (!WindowManager::Instance().isWindowClose("main window")) {
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            WindowManager::Instance().closeWindow("main window");
+        }
+        glfwPollEvents();
+    }
 }
 
 TEST_F(WindowManagerSuite, ResizeWindow) {
@@ -100,7 +106,13 @@ TEST_F(WindowManagerSuite, ResizeWindow) {
     PRINTF("There should be a window with size 400x300\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while (!WindowManager::Instance().isWindowClose("main window")) {
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            WindowManager::Instance().closeWindow("main window");
+        }
+        glfwPollEvents();
+    }
 }
 
 TEST_F(WindowManagerSuite, SetWindowColor) {
@@ -112,11 +124,13 @@ TEST_F(WindowManagerSuite, SetWindowColor) {
     PRINTF("The window color should be red\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
+
     while (!WindowManager::Instance().isWindowClose("main window")) {
         WindowManager::Instance().clearWindow("main window");
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
             WindowManager::Instance().closeWindow("main window");
         }
+        glfwPollEvents();
     }
 }
 
@@ -132,12 +146,14 @@ TEST_F(WindowManagerSuite, CreateTwoWindowWithDifferentColor) {
     PRINTF("The large ont is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
+
     while (!WindowManager::Instance().isWindowClose("main window")) {
         WindowManager::Instance().clearWindow("main window");
         WindowManager::Instance().clearWindow("second window");
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
             WindowManager::Instance().closeWindow("main window");
         }
+        glfwPollEvents();
     }
 }
 
@@ -153,10 +169,12 @@ TEST_F(WindowManagerSuite, ClearWindowsAtSameTime) {
     PRINTF("The large ont is red, and the small one is green\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
+
     while (!WindowManager::Instance().isWindowClose("main window")) {
         WindowManager::Instance().clearAll();
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
             WindowManager::Instance().closeWindow("main window");
         }
+        glfwPollEvents();
     }
 }

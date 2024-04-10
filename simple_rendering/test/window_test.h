@@ -79,13 +79,19 @@ TEST_F(WindowSuite, DestroyWindow) {
 TEST_F(WindowSuite, CheckWindowDisplay) {
     if (skipHandTest) GTEST_SKIP();
 
-    CreateDefaultWindow(800, 600, "Test Window");
+    Window window = CreateDefaultWindow(800, 600, "Test Window");
 
     PRINTF("Should display window with size 800x600\n");
     PRINTF("And title \"Test Window\"\n")
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while (!glfwWindowShouldClose(window.getGLFWWindow())) {
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            glfwSetWindowShouldClose(window.getGLFWWindow(), true);
+        }
+        glfwPollEvents();
+    }
 }
 
 TEST_F(WindowSuite, RenameWindow) {
@@ -98,7 +104,13 @@ TEST_F(WindowSuite, RenameWindow) {
     PRINTF("The title should be \"New Title\"\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while (!glfwWindowShouldClose(window.getGLFWWindow())) {
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            glfwSetWindowShouldClose(window.getGLFWWindow(), true);
+        }
+        glfwPollEvents();
+    }
 }
 
 TEST_F(WindowSuite, ResizeWindow) {
@@ -111,7 +123,13 @@ TEST_F(WindowSuite, ResizeWindow) {
     PRINTF("The window size should be 200x200\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while (!glfwWindowShouldClose(window.getGLFWWindow())) {
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            glfwSetWindowShouldClose(window.getGLFWWindow(), true);
+        }
+        glfwPollEvents();
+    }
 }
 
 TEST_F(WindowSuite, SetClearColor) {
@@ -129,19 +147,26 @@ TEST_F(WindowSuite, SetClearColor) {
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
             glfwSetWindowShouldClose(window.getGLFWWindow(), true);
         }
+        glfwPollEvents();
     }
 }
 
 TEST_F(WindowSuite, CreateTwoWindow) {
     if (skipHandTest) GTEST_SKIP();
 
-    CreateDefaultWindow(800, 600, "Test Window");
-    CreateWindow(400, 300, "Second Window");
+    Window window = CreateDefaultWindow(800, 600, "Test Window");
+    Window window2 = CreateWindow(400, 300, "Second Window");
 
     PRINTF("There should be two windows\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
-    SuccessCheckFromInput("Window display wrong");
+
+    while (!glfwWindowShouldClose(window.getGLFWWindow())) {
+        if (SuccessCheckFromInputForLoop("Window display wrong")) {
+            glfwSetWindowShouldClose(window.getGLFWWindow(), true);
+        }
+        glfwPollEvents();
+    }
 }
 
 TEST_F(WindowSuite, TwoWindowWithDifferentColor) {
@@ -164,5 +189,6 @@ TEST_F(WindowSuite, TwoWindowWithDifferentColor) {
             glfwSetWindowShouldClose(window.getGLFWWindow(), true);
             glfwSetWindowShouldClose(defaultWindow.getGLFWWindow(), true);
         }
+        glfwPollEvents();
     }
 }
