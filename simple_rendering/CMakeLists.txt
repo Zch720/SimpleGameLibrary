@@ -5,12 +5,20 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
+
 include(FetchContent)
-FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/f8d7d77c06936315286eb55f8de22cd23c188571.zip
-    DOWNLOAD_EXTRACT_TIMESTAMP 1
-)
+if(CMAKE_VERSION VERSION_LESS 3.24)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/f8d7d77c06936315286eb55f8de22cd23c188571.zip
+    )
+else()
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/f8d7d77c06936315286eb55f8de22cd23c188571.zip
+        DOWNLOAD_EXTRACT_TIMESTAMP 1
+    )
+endif()
 
 if(NOT UNIX)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
