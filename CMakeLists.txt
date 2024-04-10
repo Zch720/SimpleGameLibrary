@@ -45,7 +45,7 @@ target_include_directories(
 target_link_libraries(
     simple_game_library_test
     GTest::gtest_main
-    ${CMAKE_CURRENT_SOURCE_DIR}/ext/glfw/lib/libglfw3.a
+    glfw
     ${CMAKE_CURRENT_SOURCE_DIR}/ext/glad/lib/glad.o
     simple_rendering
 )

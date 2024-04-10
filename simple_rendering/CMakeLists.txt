@@ -19,6 +19,8 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+add_subdirectory(../ext/glfw bin/glfw EXCLUDE_FROM_ALL)
+
 file(GLOB third_party_includes
     ${CMAKE_CURRENT_SOURCE_DIR}/../ext/glfw/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../ext/glad/include
@@ -50,7 +52,8 @@ target_include_directories(
 target_link_libraries(
     simple_rendering_test
     GTest::gtest_main
-    ${CMAKE_CURRENT_SOURCE_DIR}/../ext/glfw/lib/libglfw3.a
+    # ${CMAKE_CURRENT_SOURCE_DIR}/../ext/glfw/lib/libglfw3.a
+    glfw
     ${CMAKE_CURRENT_SOURCE_DIR}/../ext/glad/lib/glad.o
     simple_rendering
 )
