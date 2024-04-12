@@ -60,7 +60,11 @@ void CheckSuccess(bool success, std::string message) {
 void SuccessCheckFromInput(std::string message) {
     char c = 0;
     while (c != 's' && c != 'f') {
+#ifdef _WIN32
+        if (_kbhit()) c = _getch();
+#else
         if (_kbhit()) c = getchar();
+#endif
     }
 
     EndOfGetKey();
@@ -69,7 +73,11 @@ void SuccessCheckFromInput(std::string message) {
 
 bool SuccessCheckFromInputForLoop(std::string message) {
     char c = 0;
+#ifdef _WIN32
+    if (_kbhit()) c = _getch();
+#else
     if (_kbhit()) c = getchar();
+#endif
     if (c == 's' || c == 'f') {
         EndOfGetKey();
         CheckSuccess(c == 's', message);
