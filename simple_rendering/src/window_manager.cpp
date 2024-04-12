@@ -41,6 +41,7 @@ void WindowManager::createWindow(std::string identifyName, int width, int height
     if (isFirstWindow) {
         windows[identifyName]->makeContextCurrent();
         initGlad();
+        glEnable(GL_DEPTH_TEST);
         isFirstWindow = false;
         isRunning = true;
     }
