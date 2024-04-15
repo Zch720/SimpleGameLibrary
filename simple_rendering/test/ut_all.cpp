@@ -7,7 +7,8 @@
 #include "shape_triangle_test.h"
 #include "shape_rectangle_test.h"
 #include "shape_polygon_test.h"
-#include "shape_test.h"
+#include "renderable_test.h"
+#include "image_test.h"
 
 int main(int argc, char * argv[]) {
     testing::InitGoogleTest(&argc, argv);

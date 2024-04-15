@@ -6,7 +6,7 @@
 #include "../include/renderable/shapes/triangle.h"
 #include "./util.hpp"
 
-class ShapeSuite : public ::testing::Test {
+class RenderableSuite : public ::testing::Test {
 protected:
     virtual void SetUp() {
         WindowManager::Instance().createWindow("main_window", 800, 800, "Shapes Test");
@@ -45,9 +45,9 @@ protected:
     static bool skipHandTest;
 };
 
-bool ShapeSuite::skipHandTest = false;
+bool RenderableSuite::skipHandTest = false;
 
-TEST_F(ShapeSuite, SetColor) {
+TEST_F(RenderableSuite, SetColor) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -68,7 +68,7 @@ TEST_F(ShapeSuite, SetColor) {
     }
 }
 
-TEST_F(ShapeSuite, ChangeColorAtRuntimme) {
+TEST_F(RenderableSuite, ChangeColorAtRuntime) {
     if (skipHandTest) GTEST_SKIP();
 
     glm::vec3 colors[] = {
@@ -103,7 +103,7 @@ TEST_F(ShapeSuite, ChangeColorAtRuntimme) {
     }
 }
 
-TEST_F(ShapeSuite, SetColorButShaderDidNotRigesterColorIdentify) {
+TEST_F(RenderableSuite, SetColorButShaderDidNotRegisterColorIdentify) {
     ShaderManager::Instance().createShader("no_color_shader", vertexShaderSource, fragmentShaderSource);
 
     Triangle triangle = Triangle("no_color_shader", point1, point2, point3);
@@ -115,7 +115,7 @@ TEST_F(ShapeSuite, SetColorButShaderDidNotRigesterColorIdentify) {
     WindowManager::Instance().closeWindow("main_window");
 }
 
-TEST_F(ShapeSuite, Translate) {
+TEST_F(RenderableSuite, Translate) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -144,7 +144,7 @@ TEST_F(ShapeSuite, Translate) {
     }
 }
 
-TEST_F(ShapeSuite, TranslateX) {
+TEST_F(RenderableSuite, TranslateX) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -173,7 +173,7 @@ TEST_F(ShapeSuite, TranslateX) {
     }
 }
 
-TEST_F(ShapeSuite, TranslateY) {
+TEST_F(RenderableSuite, TranslateY) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -202,7 +202,7 @@ TEST_F(ShapeSuite, TranslateY) {
     }
 }
 
-TEST_F(ShapeSuite, TranslateZ) {
+TEST_F(RenderableSuite, TranslateZ) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -233,7 +233,7 @@ TEST_F(ShapeSuite, TranslateZ) {
     }
 }
 
-TEST_F(ShapeSuite, SetPosition) {
+TEST_F(RenderableSuite, SetPosition) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -263,7 +263,7 @@ TEST_F(ShapeSuite, SetPosition) {
     }
 }
 
-TEST_F(ShapeSuite, Scale) {
+TEST_F(RenderableSuite, Scale) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -293,7 +293,7 @@ TEST_F(ShapeSuite, Scale) {
     }
 }
 
-TEST_F(ShapeSuite, ScaleX) {
+TEST_F(RenderableSuite, ScaleX) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -323,7 +323,7 @@ TEST_F(ShapeSuite, ScaleX) {
     }
 }
 
-TEST_F(ShapeSuite, ScaleY) {
+TEST_F(RenderableSuite, ScaleY) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -353,7 +353,7 @@ TEST_F(ShapeSuite, ScaleY) {
     }
 }
 
-TEST_F(ShapeSuite, Rotate) {
+TEST_F(RenderableSuite, Rotate) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -376,7 +376,7 @@ TEST_F(ShapeSuite, Rotate) {
     }
 }
 
-TEST_F(ShapeSuite, RotateX) {
+TEST_F(RenderableSuite, RotateX) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -399,7 +399,7 @@ TEST_F(ShapeSuite, RotateX) {
     }
 }
 
-TEST_F(ShapeSuite, RotateY) {
+TEST_F(RenderableSuite, RotateY) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -422,7 +422,7 @@ TEST_F(ShapeSuite, RotateY) {
     }
 }
 
-TEST_F(ShapeSuite, RotateZ) {
+TEST_F(RenderableSuite, RotateZ) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);
@@ -445,7 +445,7 @@ TEST_F(ShapeSuite, RotateZ) {
     }
 }
 
-TEST_F(ShapeSuite, SetRotation) {
+TEST_F(RenderableSuite, SetRotation) {
     if (skipHandTest) GTEST_SKIP();
 
     Triangle triangle = Triangle("main_shader", point1, point2, point3);

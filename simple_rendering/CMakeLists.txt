@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
-
 include(FetchContent)
 if(CMAKE_VERSION VERSION_LESS 3.24)
     FetchContent_Declare(
@@ -64,6 +63,14 @@ target_link_libraries(
     glfw
     glad
     simple_rendering
+)
+
+target_compile_definitions(
+    simple_rendering_test
+    PRIVATE
+    PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+    RESOURCES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources"
+    TEST_RESOURCES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/test/resources"
 )
 
 include(GoogleTest)

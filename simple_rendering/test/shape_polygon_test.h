@@ -135,14 +135,3 @@ TEST_F(PolygonSuite, DrawConcavePolygon) {
         glfwPollEvents();
     }
 }
-
-TEST_F(PolygonSuite, DrawConcavePolygon2) {
-    if (skipHandTest) GTEST_SKIP();
-
-    int currentColor = 0;
-    glm::vec3 colors[] = {
-        {1.0f, 0.0f, 0.0f},
-        {0.0f, 1.0f, 0.0f},
-        {0.0f, 0.0f, 1.0f}
-    };
-}
