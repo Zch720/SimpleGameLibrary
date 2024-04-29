@@ -6,7 +6,7 @@
 
 class Image : public Renderable {
 public:
-    Image(const std::string & shaderIdentifyName, const std::string& path);
+    Image(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::string& path);
     ~Image();
 
     int width() const;

@@ -1,5 +1,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "../../include/renderable/renderable.h"
+#include "../../include/window_manager.h"
 #include "../../include/shader_manager.h"
 
 Renderable::Renderable() :
@@ -10,7 +11,8 @@ Renderable::Renderable() :
         rotationValue(0.0f) {
 }
 
-Renderable::Renderable(const std::string & shaderIdentifyName) :
+Renderable::Renderable(const std::string & windowIdentifyName, const std::string & shaderIdentifyName) :
+        windowIdentifyName(windowIdentifyName),
         shaderIdentifyName(shaderIdentifyName),
         color(1.0f),
         positionValue(0.0f),
@@ -19,6 +21,7 @@ Renderable::Renderable(const std::string & shaderIdentifyName) :
 }
 
 void Renderable::render() const {
+    WindowManager::Instance().useWindow(windowIdentifyName);
     ShaderManager::Instance().useShader(shaderIdentifyName);
     ShaderManager::Instance().setShaderVec4UniformVariable(shaderIdentifyName, "color", color);
     glm::mat4 transformationMatrix = calculateTransformationMatrix();

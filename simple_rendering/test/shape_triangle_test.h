@@ -48,13 +48,13 @@ protected:
 bool TriangleSuite::skipHandTest = false;
 
 TEST_F(TriangleSuite, CreateTriangle) {
-    ASSERT_NO_THROW(Triangle triangle = Triangle("main_shader", point1, point2, point3));
+    ASSERT_NO_THROW(Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3));
 }
 
 TEST_F(TriangleSuite, DrawTriangle) {
     if (skipHandTest) GTEST_SKIP();
     
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");

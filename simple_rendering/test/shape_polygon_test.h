@@ -65,13 +65,13 @@ protected:
 bool PolygonSuite::skipHandTest = false;
 
 TEST_F(PolygonSuite, CreatePolygon) {
-    ASSERT_NO_THROW(Polygon("main_shader", convexPolygonPoints));
+    ASSERT_NO_THROW(Polygon("main_window", "main_shader", convexPolygonPoints));
 }
 
 TEST_F(PolygonSuite, DrawConvexPolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    Polygon polygon = Polygon("main_shader", convexPolygonPoints);
+    Polygon polygon = Polygon("main_window", "main_shader", convexPolygonPoints);
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -99,7 +99,7 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
         {0.0, 0.55}
     };
 
-    Polygon polygon = Polygon("main_shader", Polygon::SortConvexPolygonVertices(unorderedPoints));
+    Polygon polygon = Polygon("main_window", "main_shader", Polygon::SortConvexPolygonVertices(unorderedPoints));
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -119,7 +119,7 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
 TEST_F(PolygonSuite, DrawConcavePolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    Polygon polygon = Polygon("main_shader", concavePolygonPoints);
+    Polygon polygon = Polygon("main_window", "main_shader", concavePolygonPoints);
 
     PRINTF("There should be a white star on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");

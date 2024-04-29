@@ -3,6 +3,7 @@
 #include <unordered_set>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "../../../include/window_manager.h"
 
 Polygon::Polygon() :
         Renderable(),
@@ -13,8 +14,8 @@ Polygon::Polygon() :
         indices() {
 }
 
-Polygon::Polygon(const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points) :
-        Renderable(shaderIdentifyName),
+Polygon::Polygon(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points) :
+        Renderable(windowIdentifyName, shaderIdentifyName),
         vertices(),
         indices() {
     for (size_t i = 0; i < points.size(); i++) {
@@ -80,6 +81,7 @@ bool checkPointInsideTriangle(const glm::vec2 & p, const glm::vec2 & a, const gl
 
 void Polygon::deleteGlDatas() {
     if (vao == 0) return;
+    if (!WindowManager::Instance().isWindowExist(windowIdentifyName)) return;
     
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);

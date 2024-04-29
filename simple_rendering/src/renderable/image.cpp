@@ -5,8 +5,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-Image::Image(const std::string & shaderIdentifyName, const std::string & path) :
-        Renderable(shaderIdentifyName), texturePath(path) {
+Image::Image(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::string & path) :
+        Renderable(windowIdentifyName, shaderIdentifyName), texturePath(path) {
     loadData();
 
     glGenTextures(1, &textureId);

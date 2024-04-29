@@ -48,11 +48,12 @@ public:
 
 protected:
     Renderable();
-    Renderable(const std::string & shaderIdentifyName);
+    Renderable(const std::string & windowIdentifyName, const std::string & shaderIdentifyName);
 
     virtual void renderImpl() const = 0;
     virtual glm::mat4 calculateTransformationMatrix() const;
 
+    std::string windowIdentifyName;
     std::string shaderIdentifyName;
     glm::vec4 color;
 

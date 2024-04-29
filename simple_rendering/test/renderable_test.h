@@ -50,7 +50,7 @@ bool RenderableSuite::skipHandTest = false;
 TEST_F(RenderableSuite, SetColor) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a red triangle on the screen\n");
@@ -77,7 +77,7 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
         {0.0f, 0.0f, 1.0f}
     };
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a triangle on the screen\n");
@@ -106,7 +106,7 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
 TEST_F(RenderableSuite, SetColorButShaderDidNotRegisterColorIdentify) {
     ShaderManager::Instance().createShader("no_color_shader", vertexShaderSource, fragmentShaderSource);
 
-    Triangle triangle = Triangle("no_color_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "no_color_shader", point1, point2, point3);
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     WindowManager::Instance().useWindow("main_window");
@@ -118,7 +118,7 @@ TEST_F(RenderableSuite, SetColorButShaderDidNotRegisterColorIdentify) {
 TEST_F(RenderableSuite, Translate) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between lower left and upper right\n");
@@ -147,7 +147,7 @@ TEST_F(RenderableSuite, Translate) {
 TEST_F(RenderableSuite, TranslateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between left and right\n");
@@ -176,7 +176,7 @@ TEST_F(RenderableSuite, TranslateX) {
 TEST_F(RenderableSuite, TranslateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between up and down\n");
@@ -205,8 +205,8 @@ TEST_F(RenderableSuite, TranslateY) {
 TEST_F(RenderableSuite, TranslateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
-    Triangle triangle2 = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
+    Triangle triangle2 = Triangle("main_window", "main_shader", point1, point2, point3);
     triangle2.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a white triangle and red triangle on the screen by terns\n");
@@ -236,7 +236,7 @@ TEST_F(RenderableSuite, TranslateZ) {
 TEST_F(RenderableSuite, SetPosition) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between lower left and upper right\n");
@@ -266,7 +266,7 @@ TEST_F(RenderableSuite, SetPosition) {
 TEST_F(RenderableSuite, Scale) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled vertically and horizontally\n");
@@ -296,7 +296,7 @@ TEST_F(RenderableSuite, Scale) {
 TEST_F(RenderableSuite, ScaleX) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled horizontally\n");
@@ -326,7 +326,7 @@ TEST_F(RenderableSuite, ScaleX) {
 TEST_F(RenderableSuite, ScaleY) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled vertically\n");
@@ -356,7 +356,7 @@ TEST_F(RenderableSuite, ScaleY) {
 TEST_F(RenderableSuite, Rotate) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate clockwise\n");
@@ -379,7 +379,7 @@ TEST_F(RenderableSuite, Rotate) {
 TEST_F(RenderableSuite, RotateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around x-axis\n");
@@ -402,7 +402,7 @@ TEST_F(RenderableSuite, RotateX) {
 TEST_F(RenderableSuite, RotateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around y-axis\n");
@@ -425,7 +425,7 @@ TEST_F(RenderableSuite, RotateY) {
 TEST_F(RenderableSuite, RotateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around z-axis\n");
@@ -448,7 +448,7 @@ TEST_F(RenderableSuite, RotateZ) {
 TEST_F(RenderableSuite, SetRotation) {
     if (skipHandTest) GTEST_SKIP();
 
-    Triangle triangle = Triangle("main_shader", point1, point2, point3);
+    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate clockwise\n");

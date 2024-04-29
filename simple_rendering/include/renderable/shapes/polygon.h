@@ -10,7 +10,7 @@ using namespace glm;
 class Polygon : public Renderable {
 public:
     Polygon();
-    Polygon(const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points);
+    Polygon(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points);
     Polygon(const Polygon & other);
     ~Polygon();
 
