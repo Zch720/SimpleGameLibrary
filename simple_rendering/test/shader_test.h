@@ -108,6 +108,12 @@ TEST_F(ShaderSuite, FragmentShaderCompileFail) {
     );
 }
 
+TEST_F(ShaderSuite, DefaultUniformVariableRegister) {
+    Shader shader(vertexShaderSource, fragmentShaderSource);
+
+    ASSERT_TRUE(shader.hasUniformVariable("color"));
+}
+
 TEST_F(ShaderSuite, RegisterUniformVariable) {
     Shader shader(vertexShaderSource, fragmentShaderSource);
 

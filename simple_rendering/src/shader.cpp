@@ -14,6 +14,8 @@ Shader::Shader(std::string vertexShaderSource, std::string fragmentShaderSource)
     linkProgram(programId, vertexShaderId, fragmentShaderId);
     glDeleteShader(vertexShaderId);
     glDeleteShader(fragmentShaderId);
+
+    registerDefaultUniformVariable();
 }
 
 Shader::~Shader() {
@@ -272,6 +274,35 @@ std::string Shader::getProgramLinkErrors(uint32_t programId) {
     std::string logString(log);
     delete[] log;
     return logString;
+}
+
+std::vector<std::string> Shader::getAllUniformVariableName() {
+    std::vector<std::string> uniformNames = {};
+
+    int count;
+
+    int size;
+    unsigned int type;
+
+    const int bufSize = 64;
+    char name[bufSize];
+    int length;
+
+    glGetProgramiv(programId, GL_ACTIVE_UNIFORMS, &count);
+
+    for (int i = 0; i < count; i++) {
+        glGetActiveUniform(programId, i, bufSize, &length, &size, &type, name);
+        uniformNames.push_back(name);
+    }
+
+    return uniformNames;
+}
+
+void Shader::registerDefaultUniformVariable() {
+    std::vector<std::string> uniformNames = getAllUniformVariableName();
+    for (std::string uniformName : uniformNames) {
+        registerUniformVariable(uniformName, uniformName);
+    }
 }
 
 void Shader::checkUniformVariableExist(std::string identifyName) {

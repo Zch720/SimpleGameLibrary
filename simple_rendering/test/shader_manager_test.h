@@ -86,6 +86,13 @@ TEST_F(ShaderManagerSuite, UseShader) {
     ShaderManager::Instance().useShader("test");
 }
 
+TEST_F(ShaderManagerSuite, DefaultUniformVariableRegister) {
+    ShaderManager::Instance().createShader("test", vertexShaderSource, fragmentShaderSourceForUniformTest);
+
+    ASSERT_TRUE(ShaderManager::Instance().isShaderHasUniformVariable("test", "color"));
+    ASSERT_TRUE(ShaderManager::Instance().isShaderHasUniformVariable("test", "test_shader_int"));
+}
+
 TEST_F(ShaderManagerSuite, RegisterUniformVariable) {
     ShaderManager::Instance().createShader("test", vertexShaderSource, fragmentShaderSourceForUniformTest);
 

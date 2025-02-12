@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <string>
+#include <vector>
 #include <unordered_map>
 #include <glm/matrix.hpp>
 
@@ -57,5 +58,7 @@ private:
     bool isProgramLinkSuccess(uint32_t programId);
     std::string getProgramLinkErrors(uint32_t programId);
 
+    std::vector<std::string> getAllUniformVariableName();
+    void registerDefaultUniformVariable();
     void checkUniformVariableExist(std::string identifyName);
 };
