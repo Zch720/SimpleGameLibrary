@@ -11,7 +11,6 @@ protected:
     void SetUp() override {
         WindowManager::Instance().createWindow(DEFAULT_WINDOW, 800, 800, "Test Window");
         ShaderManager::Instance().createShader(DEFAULT_SHADER, vertexShaderSource, fragmentShaderSource);
-        ShaderManager::Instance().registerShaderUniformVariable(DEFAULT_SHADER, "color", "color");
         ShaderManager::Instance().registerShaderUniformVariable(DEFAULT_SHADER, "transform", "model");
     }
 

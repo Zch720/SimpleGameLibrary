@@ -11,7 +11,6 @@ protected:
     virtual void SetUp() {
         WindowManager::Instance().createWindow("main_window", 800, 800, "Shapes Test");
         ShaderManager::Instance().createShader("main_shader", vertexShaderSource, fragmentShaderSource);
-        ShaderManager::Instance().registerShaderUniformVariable("main_shader", "color", "color");
         ShaderManager::Instance().registerShaderUniformVariable("main_shader", "transform", "model");
     }
 

@@ -104,7 +104,7 @@ void WindowManager::initGlfw() {
 
 void WindowManager::initGlfwWindowHint() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 }
 
 void WindowManager::initGlad() {
