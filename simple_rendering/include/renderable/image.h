@@ -4,15 +4,20 @@
 #include <memory>
 #include "./renderable.h"
 
+class Window;
+
 class Image : public Renderable {
 public:
-    Image(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::string& path);
+    friend Window;
+
     ~Image();
 
     int width() const;
     int height() const;
 
 protected:
+    Image(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::string& path);
+
     void renderImpl() const override;
     void loadData();
     bool isInvalidTextureType() const;

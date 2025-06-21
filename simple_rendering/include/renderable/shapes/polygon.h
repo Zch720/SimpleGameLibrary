@@ -7,11 +7,13 @@
 
 using namespace glm;
 
+class Window;
+
 class Polygon : public Renderable {
 public:
+    friend Window;
+
     Polygon();
-    Polygon(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points);
-    Polygon(const Polygon & other);
     ~Polygon();
 
     Polygon & operator=(const Polygon & other);
@@ -19,9 +21,13 @@ public:
     static std::vector<glm::vec2> SortConvexPolygonVertices(const std::vector<glm::vec2> & points);
 
 protected:
+    Polygon(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points);
+    Polygon(const Polygon & other);
+    
     void renderImpl() const override;
 
 private:
+
     uint32_t vao;
     uint32_t vbo;
     uint32_t ebo;

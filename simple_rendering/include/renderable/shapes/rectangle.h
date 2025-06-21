@@ -6,8 +6,14 @@
 
 using namespace glm;
 
+class Window;
+
 class Rectangle : public Polygon {
 public:
-    Rectangle(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const glm::vec2 & point1, const glm::vec2 & point2, const glm::vec2 & point3, const glm::vec2 & point4);
+    friend Window;
+
     ~Rectangle();
+
+private:
+    Rectangle(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const glm::vec2 & point1, const glm::vec2 & point2, const glm::vec2 & point3, const glm::vec2 & point4);
 };

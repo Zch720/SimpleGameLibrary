@@ -47,13 +47,13 @@ protected:
 bool TriangleSuite::skipHandTest = false;
 
 TEST_F(TriangleSuite, CreateTriangle) {
-    ASSERT_NO_THROW(Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3));
+    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Triangle>("main_window", "polygon", "main_window", "main_shader", point1, point2, point3));
 }
 
 TEST_F(TriangleSuite, DrawTriangle) {
     if (skipHandTest) GTEST_SKIP();
     
-    Triangle triangle = Triangle("main_window", "main_shader", point1, point2, point3);
+    WindowManager::Instance().createRenderable<Triangle>("main_window", "polygon", "main_window", "main_shader", point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -61,8 +61,7 @@ TEST_F(TriangleSuite, DrawTriangle) {
 
     WindowManager::Instance().useWindow("main_window");
     while (!WindowManager::Instance().isWindowClose("main_window")) {
-        WindowManager::Instance().clearWindow("main_window");
-        triangle.render();
+        WindowManager::Instance().renderWindow("main_window");
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
             WindowManager::Instance().closeWindow("main_window");
         }

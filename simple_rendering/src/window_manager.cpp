@@ -95,6 +95,11 @@ void WindowManager::setWindowColor(std::string identifyName, float r, float g, f
     windows[identifyName]->setClearColor(r, g, b, a);
 }
 
+void WindowManager::renderWindow(std::string identifyName) {
+    checkWindowExist(identifyName);
+    windows[identifyName]->render();
+}
+
 void WindowManager::initGlfw() {
     if (!glfwInit()) {
         throw std::runtime_error("Failed to initialize GLFW");
