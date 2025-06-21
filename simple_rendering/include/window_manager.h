@@ -22,6 +22,12 @@ public:
     void renameWindow(std::string identifyName, std::string newTitle);
     void resizeWindow(std::string identifyName, int width, int height);
     void setWindowColor(std::string identifyName, float r, float g, float b, float a);
+    void renderWindow(std::string identifyName);
+    
+    template<typename R, typename... Args>
+    void createRenderable(std::string identifyName, std::string renderableIdentifyName, Args&&... args);
+    template<typename R>
+    R& getRenderable(std::string identifyName, std::string renderableIdentifyName);
 
 protected:
     WindowManager();
@@ -40,3 +46,5 @@ private:
 
     void checkWindowExist(std::string identifyName);
 };
+
+#include "./window_manager.tpp"

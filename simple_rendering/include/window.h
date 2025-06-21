@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./renderable/renderable.h"
 
 class Window {
 public:
@@ -22,6 +24,14 @@ public:
 
     void rename(std::string title);
     void resize(int width, int height);
+    
+    void render();
+
+    template<typename R, typename... Args>
+    void createRenderable(std::string renderableIdentifyName, Args&&... args);
+    bool isRenderableExist(std::string renderableIdentifyName);
+    template<typename R>
+    R& getRenderable(std::string renderableIdentifyName);
 
 private:
     struct ClearColor {
@@ -33,4 +43,7 @@ private:
 
     GLFWwindow * window;
     ClearColor clearColor;
+    std::unordered_map<std::string, Renderable *> renderables;
 };
+
+#include "./window.tpp"

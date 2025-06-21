@@ -57,3 +57,14 @@ void Window::rename(std::string title) {
 void Window::resize(int width, int height) {
     glfwSetWindowSize(window, width, height);
 }
+
+void Window::render() {
+    clear();
+    for (auto r : renderables) {
+        r.second->render();
+    }
+}
+
+bool Window::isRenderableExist(std::string renderableIdentifyName) {
+    return renderables.find(renderableIdentifyName) != renderables.end();
+}
