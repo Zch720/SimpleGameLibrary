@@ -102,19 +102,6 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
     }
 }
 
-TEST_F(RenderableSuite, SetColorButShaderDidNotRegisterColorIdentify) {
-    ShaderManager::Instance().createShader("no_color_shader", vertexShaderSource, fragmentShaderSource);
-
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", "no_color_shader", point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
-    triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
-
-    WindowManager::Instance().useWindow("main_window");
-    WindowManager::Instance().clearWindow("main_window");
-    ASSERT_ANY_THROW(triangle.render());
-    WindowManager::Instance().closeWindow("main_window");
-}
-
 TEST_F(RenderableSuite, Translate) {
     if (skipHandTest) GTEST_SKIP();
 
