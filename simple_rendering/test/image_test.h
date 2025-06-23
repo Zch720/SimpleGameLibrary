@@ -10,14 +10,17 @@ class ImageSuite : public ::testing::Test {
 protected:
     void SetUp() override {
         WindowManager::Instance().createWindow(DEFAULT_WINDOW, 800, 800, "Test Window");
-        ShaderManager::Instance().createShader(DEFAULT_SHADER, vertexShaderSource, fragmentShaderSource);
-        ShaderManager::Instance().registerShaderUniformVariable(DEFAULT_SHADER, "transform", "model");
+        shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
+        ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
     }
 
     void TearDown() override {
         ShaderManager::Instance().destroyShaders();
         WindowManager::Instance().terminate();
     }
+
+    const std::string DEFAULT_WINDOW = "main window";
+    ShaderId shaderId;
     
     std::string vertexShaderSource = R"(
         #version 330 core
@@ -30,9 +33,6 @@ protected:
             texCoord = aTexCoord;
         }
     )";
-
-    const std::string DEFAULT_WINDOW = "main window";
-    const std::string DEFAULT_SHADER = "default";
 
     std::string fragmentShaderSource = R"(
         #version 330 core
@@ -55,7 +55,7 @@ protected:
 bool ImageSuite::skipHandTest = false;
 
 TEST_F(ImageSuite, CreatePngImage) {
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image.png");
+    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
     
     ASSERT_EQ(225, image.width());
@@ -65,7 +65,7 @@ TEST_F(ImageSuite, CreatePngImage) {
 TEST_F(ImageSuite, DrawPngImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image.png");
+    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
     image.scale({0.005, 0.005, 1});
 
@@ -86,7 +86,7 @@ TEST_F(ImageSuite, DrawPngImage) {
 TEST_F(ImageSuite, DrawTransparentPngImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image_transparent.png");
+    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image_transparent.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
     image.scale({0.005, 0.005, 1});
 
@@ -105,7 +105,7 @@ TEST_F(ImageSuite, DrawTransparentPngImage) {
 }
 
 TEST_F(ImageSuite, CreateJpgImage) {
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image.jpg");
+    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.jpg");
     Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
     
     ASSERT_EQ(225, image.width());
@@ -115,7 +115,7 @@ TEST_F(ImageSuite, CreateJpgImage) {
 TEST_F(ImageSuite, DrawJpgImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
     
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image.jpg");
+    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.jpg");
     Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
     image.scale({0.005, 0.005, 1});
 
@@ -134,7 +134,7 @@ TEST_F(ImageSuite, DrawJpgImage) {
 }
 
 TEST_F(ImageSuite, CreateBmpImage) {
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image.bmp");
+    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.bmp");
     Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
     
     ASSERT_EQ(225, image.width());
@@ -144,7 +144,7 @@ TEST_F(ImageSuite, CreateBmpImage) {
 TEST_F(ImageSuite, DrawBmpImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
     
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image.bmp");
+    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.bmp");
     Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
     image.scale({0.005, 0.005, 1});
 
@@ -163,13 +163,13 @@ TEST_F(ImageSuite, DrawBmpImage) {
 }
 
 TEST_F(ImageSuite, CreateTifImage) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/image.tif"),
+    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.tif"),
         std::runtime_error,
         "Unable to load texture file: " TEST_RESOURCES_DIR "/image.tif. Invalid texture type.");
 }
 
 TEST_F(ImageSuite, CreateImageFileNotExist) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, DEFAULT_SHADER, TEST_RESOURCES_DIR"/not_exist.png"),
+    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/not_exist.png"),
         std::runtime_error,
         "Unable to load texture file: " TEST_RESOURCES_DIR "/not_exist.png");
 }

@@ -10,14 +10,16 @@ class RectangleSuite : public ::testing::Test {
 protected:
     virtual void SetUp() {
         WindowManager::Instance().createWindow("main_window", 800, 800, "Shapes Test");
-        ShaderManager::Instance().createShader("main_shader", vertexShaderSource, fragmentShaderSource);
-        ShaderManager::Instance().registerShaderUniformVariable("main_shader", "transform", "model");
+        shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
+        ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
     }
 
     virtual void TearDown() {
         ShaderManager::Instance().destroyShaders();
         WindowManager::Instance().terminate();
     }
+
+    ShaderId shaderId;
     
     std::string vertexShaderSource = R"(
         #version 330 core
@@ -48,13 +50,13 @@ protected:
 bool RectangleSuite::skipHandTest = false;
 
 TEST_F(RectangleSuite, CreateRectangle) {
-    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Rectangle>("main_window", "polygon", "main_window", "main_shader", point1, point2, point3, point4));
+    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Rectangle>("main_window", "polygon", "main_window", shaderId, point1, point2, point3, point4));
 }
 
 TEST_F(RectangleSuite, DrawRectangle) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Rectangle>("main_window", "polygon", "main_window", "main_shader", point1, point2, point3, point4);
+    WindowManager::Instance().createRenderable<Rectangle>("main_window", "polygon", "main_window", shaderId, point1, point2, point3, point4);
 
     PRINTF("There should be a white rectangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");

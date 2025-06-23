@@ -7,6 +7,7 @@
 
 using namespace glm;
 
+class ShaderId;
 class Window;
 
 class Polygon : public Renderable {
@@ -21,7 +22,7 @@ public:
     static std::vector<glm::vec2> SortConvexPolygonVertices(const std::vector<glm::vec2> & points);
 
 protected:
-    Polygon(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points);
+    Polygon(const std::string & windowIdentifyName, ShaderId, const std::vector<glm::vec2> & points);
     Polygon(const Polygon & other);
     
     void renderImpl() const override;

@@ -4,6 +4,7 @@
 #include <memory>
 #include "./renderable.h"
 
+class ShaderId;
 class Window;
 
 class Image : public Renderable {
@@ -16,7 +17,7 @@ public:
     int height() const;
 
 protected:
-    Image(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::string& path);
+    Image(const std::string & windowIdentifyName, ShaderId shaderId, const std::string& path);
 
     void renderImpl() const override;
     void loadData();

@@ -3,6 +3,7 @@
 #include <unordered_set>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "../../../include/shader_manager.h"
 #include "../../../include/window_manager.h"
 
 Polygon::Polygon() :
@@ -14,8 +15,8 @@ Polygon::Polygon() :
         indices() {
 }
 
-Polygon::Polygon(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::vector<glm::vec2> & points) :
-        Renderable(windowIdentifyName, shaderIdentifyName),
+Polygon::Polygon(const std::string & windowIdentifyName, ShaderId shaderId, const std::vector<glm::vec2> & points) :
+        Renderable(windowIdentifyName, shaderId),
         vertices(),
         indices() {
     for (size_t i = 0; i < points.size(); i++) {

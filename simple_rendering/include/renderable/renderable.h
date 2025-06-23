@@ -2,6 +2,7 @@
 
 #include <string>
 #include <glm/matrix.hpp>
+#include "../shader_manager.h"
 
 class Renderable {
 public:
@@ -48,13 +49,13 @@ public:
 
 protected:
     Renderable();
-    Renderable(const std::string & windowIdentifyName, const std::string & shaderIdentifyName);
+    Renderable(const std::string & windowIdentifyName, ShaderId shaderId);
 
     virtual void renderImpl() const = 0;
     virtual glm::mat4 calculateTransformationMatrix() const;
 
     std::string windowIdentifyName;
-    std::string shaderIdentifyName;
+    ShaderId shaderId;
     glm::vec4 color;
 
     glm::vec3 positionValue;

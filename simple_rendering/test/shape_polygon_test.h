@@ -10,14 +10,16 @@ class PolygonSuite : public ::testing::Test {
 protected:
     virtual void SetUp() {
         WindowManager::Instance().createWindow("main_window", 800, 800, "Shapes Test");
-        ShaderManager::Instance().createShader("main_shader", vertexShaderSource, fragmentShaderSource);
-        ShaderManager::Instance().registerShaderUniformVariable("main_shader", "transform", "model");
+        shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
+        ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
     }
 
     virtual void TearDown() {
         ShaderManager::Instance().destroyShaders();
         WindowManager::Instance().terminate();
     }
+
+    ShaderId shaderId;
     
     std::string vertexShaderSource = R"(
         #version 330 core
@@ -64,13 +66,13 @@ protected:
 bool PolygonSuite::skipHandTest = false;
 
 TEST_F(PolygonSuite, CreatePolygon) {
-    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", "main_shader", convexPolygonPoints));
+    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, convexPolygonPoints));
 }
 
 TEST_F(PolygonSuite, DrawConvexPolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", "main_shader", convexPolygonPoints);
+    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, convexPolygonPoints);
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -97,7 +99,7 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
         {0.0, 0.55}
     };
 
-    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", "main_shader", Polygon::SortConvexPolygonVertices(unorderedPoints));
+    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, Polygon::SortConvexPolygonVertices(unorderedPoints));
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -116,7 +118,7 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
 TEST_F(PolygonSuite, DrawConcavePolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", "main_shader", concavePolygonPoints);
+    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, concavePolygonPoints);
 
     PRINTF("There should be a white star on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");

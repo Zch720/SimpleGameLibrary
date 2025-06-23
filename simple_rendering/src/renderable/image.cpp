@@ -4,9 +4,10 @@
 #include <GLFW/glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include "../../include/shader_manager.h"
 
-Image::Image(const std::string & windowIdentifyName, const std::string & shaderIdentifyName, const std::string & path) :
-        Renderable(windowIdentifyName, shaderIdentifyName), texturePath(path) {
+Image::Image(const std::string & windowIdentifyName, ShaderId shaderId, const std::string & path) :
+        Renderable(windowIdentifyName, shaderId), texturePath(path) {
     loadData();
 
     glGenTextures(1, &textureId);
