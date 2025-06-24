@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-#include <unordered_map>
 #include <glm/matrix.hpp>
 
 class Shader;
@@ -84,7 +83,6 @@ protected:
 private:
     static ShaderManager instance;
 
-    // std::unordered_map<std::string, Shader *> shaders;
     std::vector<Shader *> shaders;
 
     void checkShaderExist(ShaderId id);

@@ -29,13 +29,11 @@ ShaderManager & ShaderManager::Instance() {
 
 ShaderId ShaderManager::createShader(std::string vertexShaderSource, std::string fragmentShaderSource) {
     Shader * shader = new Shader(vertexShaderSource, fragmentShaderSource);
-    // shaders[identifyName] = shader;
     shaders.push_back(shader);
     return ShaderId(shaders.size());
 }
 
 bool ShaderManager::hasShader(ShaderId id) {
-    // return shaders.find(identifyName) != shaders.end();
     return id.getId() != 0 && id.getId() <= shaders.size();
 }
 
@@ -45,9 +43,6 @@ void ShaderManager::useShader(ShaderId id) {
 }
 
 void ShaderManager::destroyShaders() {
-    // for (auto shader : shaders) {
-    //     delete shader.second;
-    // }
     for (Shader * shader : shaders) {
         delete shader;
     }
@@ -70,10 +65,6 @@ void ShaderManager::setShaderIntUniformVariable(ShaderId id, std::string identif
 }
 
 void ShaderManager::setAllShadersIntUniformVariable(std::string identifyName, int value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setIntUniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setIntUniformVariable(identifyName, value);
@@ -92,10 +83,6 @@ void ShaderManager::setShaderFloatUniformVariable(ShaderId id, std::string ident
 }
 
 void ShaderManager::setAllShadersFloatUniformVariable(std::string identifyName, float value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setFloatUniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setFloatUniformVariable(identifyName, value);
@@ -114,10 +101,6 @@ void ShaderManager::setShaderVec2UniformVariable(ShaderId id, std::string identi
 }
 
 void ShaderManager::setAllShadersVec2UniformVariable(std::string identifyName, glm::vec2 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setVec2UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setVec2UniformVariable(identifyName, value);
@@ -136,10 +119,6 @@ void ShaderManager::setShaderVec3UniformVariable(ShaderId id, std::string identi
 }
 
 void ShaderManager::setAllShadersVec3UniformVariable(std::string identifyName, glm::vec3 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setVec3UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setVec3UniformVariable(identifyName, value);
@@ -158,10 +137,6 @@ void ShaderManager::setShaderVec4UniformVariable(ShaderId id, std::string identi
 }
 
 void ShaderManager::setAllShadersVec4UniformVariable(std::string identifyName, glm::vec4 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setVec4UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setVec4UniformVariable(identifyName, value);
@@ -180,10 +155,6 @@ void ShaderManager::setShaderMat2UniformVariable(ShaderId id, std::string identi
 }
 
 void ShaderManager::setAllShadersMat2UniformVariable(std::string identifyName, glm::mat2 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat2UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat2UniformVariable(identifyName, value);
@@ -202,10 +173,6 @@ void ShaderManager::setShaderMat3UniformVariable(ShaderId id, std::string identi
 }
 
 void ShaderManager::setAllShadersMat3UniformVariable(std::string identifyName, glm::mat3 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat3UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat3UniformVariable(identifyName, value);
@@ -224,10 +191,6 @@ void ShaderManager::setShaderMat4UniformVariable(ShaderId id, std::string identi
 }
 
 void ShaderManager::setAllShadersMat4UniformVariable(std::string identifyName, glm::mat4 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat4UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat4UniformVariable(identifyName, value);
@@ -246,10 +209,6 @@ void ShaderManager::setShaderMat2x3UniformVariable(ShaderId id, std::string iden
 }
 
 void ShaderManager::setAllShadersMat2x3UniformVariable(std::string identifyName, glm::mat2x3 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat2x3UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat2x3UniformVariable(identifyName, value);
@@ -268,10 +227,6 @@ void ShaderManager::setShaderMat3x2UniformVariable(ShaderId id, std::string iden
 }
 
 void ShaderManager::setAllShadersMat3x2UniformVariable(std::string identifyName, glm::mat3x2 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat3x2UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat3x2UniformVariable(identifyName, value);
@@ -290,10 +245,6 @@ void ShaderManager::setShaderMat2x4UniformVariable(ShaderId id, std::string iden
 }
 
 void ShaderManager::setAllShadersMat2x4UniformVariable(std::string identifyName, glm::mat2x4 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat2x4UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat2x4UniformVariable(identifyName, value);
@@ -312,10 +263,6 @@ void ShaderManager::setShaderMat4x2UniformVariable(ShaderId id, std::string iden
 }
 
 void ShaderManager::setAllShadersMat4x2UniformVariable(std::string identifyName, glm::mat4x2 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat4x2UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat4x2UniformVariable(identifyName, value);
@@ -334,10 +281,6 @@ void ShaderManager::setShaderMat3x4UniformVariable(ShaderId id, std::string iden
 }
 
 void ShaderManager::setAllShadersMat3x4UniformVariable(std::string identifyName, glm::mat3x4 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat3x4UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat3x4UniformVariable(identifyName, value);
@@ -356,10 +299,6 @@ void ShaderManager::setShaderMat4x3UniformVariable(ShaderId id, std::string iden
 }
 
 void ShaderManager::setAllShadersMat4x3UniformVariable(std::string identifyName, glm::mat4x3 value) {
-    // for (auto shader : shaders) {
-    //     if (shader.second->hasUniformVariable(identifyName))
-    //         shader.second->setMat4x3UniformVariable(identifyName, value);
-    // }
     for (Shader * shader : shaders) {
         if (shader->hasUniformVariable(identifyName)) {
             shader->setMat4x3UniformVariable(identifyName, value);
