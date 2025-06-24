@@ -17,6 +17,10 @@ This is a game library based on GLFW. Is is designed to be simple and easy to ma
 - C++ 14
 - CMake 3.14 or later
 
+#### Require Libraries
+
+Ubuntu: `sudo apt install libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev`
+
 #### OS
 
 - Windows: support
