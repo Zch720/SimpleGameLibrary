@@ -4,6 +4,7 @@
 #include "../../include/shader_manager.h"
 
 Renderable::Renderable() :
+        windowId(),
         shaderId(),
         color(1.0f),
         positionValue(0.0f),
@@ -11,8 +12,8 @@ Renderable::Renderable() :
         rotationValue(0.0f) {
 }
 
-Renderable::Renderable(const std::string & windowIdentifyName, ShaderId shaderId) :
-        windowIdentifyName(windowIdentifyName),
+Renderable::Renderable(WindowId windowId, ShaderId shaderId) :
+        windowId(windowId),
         shaderId(shaderId),
         color(1.0f),
         positionValue(0.0f),
@@ -21,7 +22,7 @@ Renderable::Renderable(const std::string & windowIdentifyName, ShaderId shaderId
 }
 
 void Renderable::render() const {
-    WindowManager::Instance().useWindow(windowIdentifyName);
+    WindowManager::Instance().useWindow(windowId);
     ShaderManager::Instance().useShader(shaderId);
     ShaderManager::Instance().setShaderVec4UniformVariable(shaderId, "color", color);
     glm::mat4 transformationMatrix = calculateTransformationMatrix();

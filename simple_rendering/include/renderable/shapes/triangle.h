@@ -6,6 +6,7 @@
 
 using namespace glm;
 
+class WindowId;
 class ShaderId;
 class Window;
 
@@ -16,5 +17,5 @@ public:
     ~Triangle();
 
 private:
-    Triangle(const std::string & windowIdentifyName, ShaderId shaderId, const glm::vec2 & point1, const glm::vec2 & point2, const glm::vec2 & point3);
+    Triangle(WindowId windowId, ShaderId shaderId, const glm::vec2 & point1, const glm::vec2 & point2, const glm::vec2 & point3);
 };

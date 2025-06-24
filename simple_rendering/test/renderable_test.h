@@ -9,7 +9,7 @@
 class RenderableSuite : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        WindowManager::Instance().createWindow("main_window", 800, 800, "Shapes Test");
+        windowId = WindowManager::Instance().createWindow(800, 800, "Shapes Test");
         shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
         ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
     }
@@ -19,6 +19,7 @@ protected:
         WindowManager::Instance().terminate();
     }
 
+    WindowId windowId;
     ShaderId shaderId;
     
     std::string vertexShaderSource = R"(
@@ -51,19 +52,19 @@ bool RenderableSuite::skipHandTest = false;
 TEST_F(RenderableSuite, SetColor) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a red triangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
-        WindowManager::Instance().renderWindow("main_window");
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -78,8 +79,8 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
         {0.0f, 0.0f, 1.0f}
     };
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a triangle on the screen\n");
@@ -89,16 +90,16 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
 
     int count = 200;
     int colorIndex = 0;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         if (--count == 0) {
             count = 200;
             triangle.setColor(colors[colorIndex].r, colors[colorIndex].g, colors[colorIndex].b, 1.0f);
             colorIndex = (colorIndex + 1) % 3;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -107,8 +108,8 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
 TEST_F(RenderableSuite, Translate) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between lower left and upper right\n");
@@ -117,17 +118,17 @@ TEST_F(RenderableSuite, Translate) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle.translate({delta, delta, 0});
         count--;
         if (count == 0) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -136,8 +137,8 @@ TEST_F(RenderableSuite, Translate) {
 TEST_F(RenderableSuite, TranslateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between left and right\n");
@@ -146,17 +147,17 @@ TEST_F(RenderableSuite, TranslateX) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle.translateX(delta);
         count--;
         if (count == 0) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -165,8 +166,8 @@ TEST_F(RenderableSuite, TranslateX) {
 TEST_F(RenderableSuite, TranslateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between up and down\n");
@@ -175,17 +176,17 @@ TEST_F(RenderableSuite, TranslateY) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle.translateY(delta);
         count--;
         if (count == 0) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -194,10 +195,10 @@ TEST_F(RenderableSuite, TranslateY) {
 TEST_F(RenderableSuite, TranslateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle1", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle1 = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle1");
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle2", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle2 = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle2");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle1", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle1 = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle1");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle2", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle2 = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle2");
     triangle2.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a white triangle and red triangle on the screen by terns\n");
@@ -206,17 +207,17 @@ TEST_F(RenderableSuite, TranslateZ) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle1.translateZ(delta);
         count--;
         if (count == 0) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -225,8 +226,8 @@ TEST_F(RenderableSuite, TranslateZ) {
 TEST_F(RenderableSuite, SetPosition) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between lower left and upper right\n");
@@ -235,8 +236,8 @@ TEST_F(RenderableSuite, SetPosition) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         glm::vec3 pos = triangle.position();
         triangle.position({pos.x + delta, pos.y + delta, pos.z});
         count--;
@@ -244,9 +245,9 @@ TEST_F(RenderableSuite, SetPosition) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -255,8 +256,8 @@ TEST_F(RenderableSuite, SetPosition) {
 TEST_F(RenderableSuite, Scale) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled vertically and horizontally\n");
@@ -265,8 +266,8 @@ TEST_F(RenderableSuite, Scale) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         glm::vec3 scale = triangle.scale();
         triangle.scale({scale.x + delta, scale.y + delta, scale.z});
         count--;
@@ -274,9 +275,9 @@ TEST_F(RenderableSuite, Scale) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -285,8 +286,8 @@ TEST_F(RenderableSuite, Scale) {
 TEST_F(RenderableSuite, ScaleX) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled horizontally\n");
@@ -295,8 +296,8 @@ TEST_F(RenderableSuite, ScaleX) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         glm::vec3 scale = triangle.scale();
         triangle.scaleX(scale.x + delta);
         count--;
@@ -304,9 +305,9 @@ TEST_F(RenderableSuite, ScaleX) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -315,8 +316,8 @@ TEST_F(RenderableSuite, ScaleX) {
 TEST_F(RenderableSuite, ScaleY) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled vertically\n");
@@ -325,8 +326,8 @@ TEST_F(RenderableSuite, ScaleY) {
 
     int count = 75;
     double delta = 0.004;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         glm::vec3 scale = triangle.scale();
         triangle.scaleY(scale.y + delta);
         count--;
@@ -334,9 +335,9 @@ TEST_F(RenderableSuite, ScaleY) {
             delta *= -1;
             count = 125;
         }
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -345,8 +346,8 @@ TEST_F(RenderableSuite, ScaleY) {
 TEST_F(RenderableSuite, Rotate) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate clockwise\n");
@@ -354,12 +355,12 @@ TEST_F(RenderableSuite, Rotate) {
     fflush(stdout);
 
     double delta = -0.5;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle.rotate({0, 0, delta});
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -368,8 +369,8 @@ TEST_F(RenderableSuite, Rotate) {
 TEST_F(RenderableSuite, RotateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around x-axis\n");
@@ -377,12 +378,12 @@ TEST_F(RenderableSuite, RotateX) {
     fflush(stdout);
 
     double delta = -0.5;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle.rotateX(delta);
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -391,8 +392,8 @@ TEST_F(RenderableSuite, RotateX) {
 TEST_F(RenderableSuite, RotateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around y-axis\n");
@@ -400,12 +401,12 @@ TEST_F(RenderableSuite, RotateY) {
     fflush(stdout);
 
     double delta = -0.5;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle.rotateY(delta);
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -414,8 +415,8 @@ TEST_F(RenderableSuite, RotateY) {
 TEST_F(RenderableSuite, RotateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around z-axis\n");
@@ -423,12 +424,12 @@ TEST_F(RenderableSuite, RotateZ) {
     fflush(stdout);
 
     double delta = -0.5;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         triangle.rotateZ(delta);
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -437,8 +438,8 @@ TEST_F(RenderableSuite, RotateZ) {
 TEST_F(RenderableSuite, SetRotation) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Triangle>("main_window", "triangle", "main_window", shaderId, point1, point2, point3);
-    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>("main_window", "triangle");
+    WindowManager::Instance().createRenderable<Triangle>(windowId, "triangle", windowId, shaderId, point1, point2, point3);
+    Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, "triangle");
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate clockwise\n");
@@ -446,13 +447,13 @@ TEST_F(RenderableSuite, SetRotation) {
     fflush(stdout);
 
     double delta = -0.5;
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
         glm::vec3 rotation = triangle.rotation();
         triangle.rotation({rotation.x, rotation.y, rotation.z + delta});
-        WindowManager::Instance().renderWindow("main_window");
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }

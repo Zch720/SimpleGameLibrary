@@ -5,13 +5,15 @@
 class ShaderManagerSuite : public testing::Test {
 protected:
     void SetUp() override {
-        WindowManager::Instance().createWindow("main window", 800, 600, "Test Window");
+        windowId = WindowManager::Instance().createWindow(800, 600, "Test Window");
     }
 
     void TearDown() override {
         ShaderManager::Instance().destroyShaders();
         WindowManager::Instance().terminate();
     }
+
+    WindowId windowId;
 
     std::string vertexShaderSource = R"(
         #version 330 core

@@ -9,7 +9,7 @@
 class ImageSuite : public ::testing::Test {
 protected:
     void SetUp() override {
-        WindowManager::Instance().createWindow(DEFAULT_WINDOW, 800, 800, "Test Window");
+        windowId = WindowManager::Instance().createWindow(800, 800, "Test Window");
         shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
         ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
     }
@@ -19,7 +19,7 @@ protected:
         WindowManager::Instance().terminate();
     }
 
-    const std::string DEFAULT_WINDOW = "main window";
+    WindowId windowId;
     ShaderId shaderId;
     
     std::string vertexShaderSource = R"(
@@ -55,8 +55,8 @@ protected:
 bool ImageSuite::skipHandTest = false;
 
 TEST_F(ImageSuite, CreatePngImage) {
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.png");
-    Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
+    WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
+    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, "image");
     
     ASSERT_EQ(225, image.width());
     ASSERT_EQ(225, image.height());
@@ -65,19 +65,19 @@ TEST_F(ImageSuite, CreatePngImage) {
 TEST_F(ImageSuite, DrawPngImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.png");
-    Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
+    WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
+    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, "image");
     image.scale({0.005, 0.005, 1});
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow(DEFAULT_WINDOW);
-    while (!WindowManager::Instance().isWindowClose(DEFAULT_WINDOW)) {
-        WindowManager::Instance().renderWindow(DEFAULT_WINDOW);
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Image show wrong")) {
-            WindowManager::Instance().closeWindow(DEFAULT_WINDOW);
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -86,27 +86,27 @@ TEST_F(ImageSuite, DrawPngImage) {
 TEST_F(ImageSuite, DrawTransparentPngImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image_transparent.png");
-    Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
+    WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image_transparent.png");
+    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, "image");
     image.scale({0.005, 0.005, 1});
 
     PRINTF("There should be a smile image with no background in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow(DEFAULT_WINDOW);
-    while (!WindowManager::Instance().isWindowClose(DEFAULT_WINDOW)) {
-        WindowManager::Instance().renderWindow(DEFAULT_WINDOW);
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Image show wrong")) {
-            WindowManager::Instance().closeWindow(DEFAULT_WINDOW);
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
 }
 
 TEST_F(ImageSuite, CreateJpgImage) {
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.jpg");
-    Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
+    WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
+    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, "image");
     
     ASSERT_EQ(225, image.width());
     ASSERT_EQ(225, image.height());
@@ -115,27 +115,27 @@ TEST_F(ImageSuite, CreateJpgImage) {
 TEST_F(ImageSuite, DrawJpgImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
     
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.jpg");
-    Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
+    WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
+    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, "image");
     image.scale({0.005, 0.005, 1});
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow(DEFAULT_WINDOW);
-    while (!WindowManager::Instance().isWindowClose(DEFAULT_WINDOW)) {
-        WindowManager::Instance().renderWindow(DEFAULT_WINDOW);
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Image show wrong")) {
-            WindowManager::Instance().closeWindow(DEFAULT_WINDOW);
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
 }
 
 TEST_F(ImageSuite, CreateBmpImage) {
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.bmp");
-    Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
+    WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
+    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, "image");
     
     ASSERT_EQ(225, image.width());
     ASSERT_EQ(225, image.height());
@@ -144,32 +144,32 @@ TEST_F(ImageSuite, CreateBmpImage) {
 TEST_F(ImageSuite, DrawBmpImage) {
     if (ImageSuite::skipHandTest) GTEST_SKIP();
     
-    WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.bmp");
-    Image& image = WindowManager::Instance().getRenderable<Image>(DEFAULT_WINDOW, "image");
+    WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
+    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, "image");
     image.scale({0.005, 0.005, 1});
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow(DEFAULT_WINDOW);
-    while (!WindowManager::Instance().isWindowClose(DEFAULT_WINDOW)) {
-        WindowManager::Instance().renderWindow(DEFAULT_WINDOW);
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Image show wrong")) {
-            WindowManager::Instance().closeWindow(DEFAULT_WINDOW);
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
 }
 
 TEST_F(ImageSuite, CreateTifImage) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/image.tif"),
+    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/image.tif"),
         std::runtime_error,
         "Unable to load texture file: " TEST_RESOURCES_DIR "/image.tif. Invalid texture type.");
 }
 
 TEST_F(ImageSuite, CreateImageFileNotExist) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(DEFAULT_WINDOW, "image", DEFAULT_WINDOW, shaderId, TEST_RESOURCES_DIR"/not_exist.png"),
+    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, "image", windowId, shaderId, TEST_RESOURCES_DIR"/not_exist.png"),
         std::runtime_error,
         "Unable to load texture file: " TEST_RESOURCES_DIR "/not_exist.png");
 }

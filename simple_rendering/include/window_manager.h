@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
+#include <vector>
+#include <queue>
+#include "./window_id.h"
 
 class Window;
 
@@ -9,25 +11,26 @@ class WindowManager {
 public:
     static WindowManager & Instance();
 
-    bool isWindowExist(std::string identifyName);
-    bool isWindowClose(std::string identifyName);
+    bool isWindowExist(WindowId id);
+    bool isWindowClose(WindowId id);
 
-    void createWindow(std::string identifyName, int width, int height, std::string title);
-    void useWindow(std::string identifyName);
+    WindowId createWindow(int width, int height, std::string title);
+    void useWindow(WindowId id);
     void clearAll();
     void terminate();
 
-    void clearWindow(std::string identifyName);
-    void closeWindow(std::string identifyName);
-    void renameWindow(std::string identifyName, std::string newTitle);
-    void resizeWindow(std::string identifyName, int width, int height);
-    void setWindowColor(std::string identifyName, float r, float g, float b, float a);
-    void renderWindow(std::string identifyName);
+    void clearWindow(WindowId id);
+    void closeWindow(WindowId id);
+    void destroyWindow(WindowId id);
+    void renameWindow(WindowId id, std::string newTitle);
+    void resizeWindow(WindowId id, int width, int height);
+    void setWindowColor(WindowId id, float r, float g, float b, float a);
+    void renderWindow(WindowId id);
     
     template<typename R, typename... Args>
-    void createRenderable(std::string identifyName, std::string renderableIdentifyName, Args&&... args);
+    void createRenderable(WindowId id, std::string renderableIdentifyName, Args&&... args);
     template<typename R>
-    R& getRenderable(std::string identifyName, std::string renderableIdentifyName);
+    R& getRenderable(WindowId id, std::string renderableIdentifyName);
 
 protected:
     WindowManager();
@@ -38,13 +41,15 @@ private:
 
     bool isRunning;
     bool isFirstWindow;
-    std::unordered_map<std::string, Window *> windows;
+    std::vector<Window *> windows;
+    std::vector<uint64_t> generation;
+    std::queue<uint64_t> freeId;
 
     void initGlfw();
     void initGlfwWindowHint();
     void initGlad();
 
-    void checkWindowExist(std::string identifyName);
+    void checkWindowExist(WindowId id);
 };
 
 #include "./window_manager.tpp"

@@ -4,13 +4,13 @@
 #include "./window_manager.h"
 
 template<typename R, typename... Args>
-void WindowManager::createRenderable(std::string identifyName, std::string renderableIdentifyName, Args&&... args) {
-    checkWindowExist(identifyName);
-    windows[identifyName]->createRenderable<R>(renderableIdentifyName, std::forward<Args>(args)...);
+void WindowManager::createRenderable(WindowId id, std::string renderableIdentifyName, Args&&... args) {
+    checkWindowExist(id);
+    windows[id.getId() - 1]->createRenderable<R>(renderableIdentifyName, std::forward<Args>(args)...);
 }
 
 template<typename R>
-R& WindowManager::getRenderable(std::string identifyName, std::string renderableIdentifyName) {
-    checkWindowExist(identifyName);
-    return windows[identifyName]->getRenderable<R>(renderableIdentifyName);
+R& WindowManager::getRenderable(WindowId id, std::string renderableIdentifyName) {
+    checkWindowExist(id);
+    return windows[id.getId() - 1]->getRenderable<R>(renderableIdentifyName);
 }

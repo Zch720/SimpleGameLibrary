@@ -3,23 +3,9 @@
 #include <string>
 #include <vector>
 #include <glm/matrix.hpp>
+#include "./shader_id.h"
 
 class Shader;
-class ShaderManager;
-
-class ShaderId {
-public:
-    friend ShaderManager;
-
-    ShaderId();
-
-    uint64_t getId() const;
-
-private:
-    ShaderId(uint64_t id);
-
-    uint64_t id;
-};
 
 class ShaderManager {
 public:

@@ -9,7 +9,7 @@
 class PolygonSuite : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        WindowManager::Instance().createWindow("main_window", 800, 800, "Shapes Test");
+        windowId = WindowManager::Instance().createWindow(800, 800, "Shapes Test");
         shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
         ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
     }
@@ -19,6 +19,7 @@ protected:
         WindowManager::Instance().terminate();
     }
 
+    WindowId windowId;
     ShaderId shaderId;
     
     std::string vertexShaderSource = R"(
@@ -66,23 +67,23 @@ protected:
 bool PolygonSuite::skipHandTest = false;
 
 TEST_F(PolygonSuite, CreatePolygon) {
-    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, convexPolygonPoints));
+    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Polygon>(windowId, "polygon", windowId, shaderId, convexPolygonPoints));
 }
 
 TEST_F(PolygonSuite, DrawConvexPolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, convexPolygonPoints);
+    WindowManager::Instance().createRenderable<Polygon>(windowId, "polygon", windowId, shaderId, convexPolygonPoints);
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
-        WindowManager::Instance().renderWindow("main_window");
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -99,17 +100,17 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
         {0.0, 0.55}
     };
 
-    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, Polygon::SortConvexPolygonVertices(unorderedPoints));
+    WindowManager::Instance().createRenderable<Polygon>(windowId, "polygon", windowId, shaderId, Polygon::SortConvexPolygonVertices(unorderedPoints));
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
-        WindowManager::Instance().renderWindow("main_window");
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }
@@ -118,17 +119,17 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
 TEST_F(PolygonSuite, DrawConcavePolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", shaderId, concavePolygonPoints);
+    WindowManager::Instance().createRenderable<Polygon>(windowId, "polygon", windowId, shaderId, concavePolygonPoints);
 
     PRINTF("There should be a white star on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
     fflush(stdout);
 
-    WindowManager::Instance().useWindow("main_window");
-    while (!WindowManager::Instance().isWindowClose("main_window")) {
-        WindowManager::Instance().renderWindow("main_window");
+    WindowManager::Instance().useWindow(windowId);
+    while (!WindowManager::Instance().isWindowClose(windowId)) {
+        WindowManager::Instance().renderWindow(windowId);
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
-            WindowManager::Instance().closeWindow("main_window");
+            WindowManager::Instance().closeWindow(windowId);
         }
         glfwPollEvents();
     }

@@ -6,8 +6,8 @@
 #include <stb_image.h>
 #include "../../include/shader_manager.h"
 
-Image::Image(const std::string & windowIdentifyName, ShaderId shaderId, const std::string & path) :
-        Renderable(windowIdentifyName, shaderId), texturePath(path) {
+Image::Image(WindowId windowId, ShaderId shaderId, const std::string & path) :
+        Renderable(windowId, shaderId), texturePath(path) {
     loadData();
 
     glGenTextures(1, &textureId);
