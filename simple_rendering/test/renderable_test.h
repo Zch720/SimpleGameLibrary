@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./test_env.h"
+#include "./util.hpp"
 #include "../include/window_manager.h"
 #include "../include/shader_manager.h"
 #include "../include/renderable/shapes/triangle.h"
-#include "./util.hpp"
 
 class RenderableSuite : public ::testing::Test {
 protected:
@@ -43,11 +44,7 @@ protected:
     vec2 point1 { 0.0f, 0.5f };
     vec2 point2 { -0.5f, -0.5f };
     vec2 point3 { 0.5f, -0.5f };
-
-    static bool skipHandTest;
 };
-
-bool RenderableSuite::skipHandTest = false;
 
 TEST_F(RenderableSuite, SetColor) {
     if (skipHandTest) GTEST_SKIP();

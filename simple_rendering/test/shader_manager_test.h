@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "./test_env.h"
 #include "../include/window_manager.h"
 #include "../include/shader_manager.h"
 

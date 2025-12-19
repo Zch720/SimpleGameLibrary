@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "./test_env.h"
 #include "./util.hpp"
 #include "../include/window.h"
 
@@ -41,12 +42,7 @@ protected:
 
         return window;
     }
-
-    static bool skipAll;
-    static bool skipHandTest;
 };
-
-bool WindowSuite::skipHandTest = false;
 
 TEST_F(WindowSuite, CreateWindow) {
     Window window(WindowId(), 800, 600, "Test Window");

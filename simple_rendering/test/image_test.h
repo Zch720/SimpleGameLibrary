@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./test_env.h"
+#include "./util.hpp"
 #include "../include/window_manager.h"
 #include "../include/shader_manager.h"
 #include "../include/renderable/image.h"
-#include "./util.hpp"
 
 class ImageSuite : public ::testing::Test {
 protected:
@@ -48,11 +49,7 @@ protected:
             FragColor = textureColor;
         }
     )";
-
-    static bool skipHandTest;
 };
-
-bool ImageSuite::skipHandTest = false;
 
 TEST_F(ImageSuite, CreatePngImage) {
     RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
@@ -63,7 +60,7 @@ TEST_F(ImageSuite, CreatePngImage) {
 }
 
 TEST_F(ImageSuite, DrawPngImage) {
-    if (ImageSuite::skipHandTest) GTEST_SKIP();
+    if (skipHandTest) GTEST_SKIP();
 
     RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
@@ -84,7 +81,7 @@ TEST_F(ImageSuite, DrawPngImage) {
 }
 
 TEST_F(ImageSuite, DrawTransparentPngImage) {
-    if (ImageSuite::skipHandTest) GTEST_SKIP();
+    if (skipHandTest) GTEST_SKIP();
 
     RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image_transparent.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
@@ -113,7 +110,7 @@ TEST_F(ImageSuite, CreateJpgImage) {
 }
 
 TEST_F(ImageSuite, DrawJpgImage) {
-    if (ImageSuite::skipHandTest) GTEST_SKIP();
+    if (skipHandTest) GTEST_SKIP();
     
     RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
@@ -142,7 +139,7 @@ TEST_F(ImageSuite, CreateBmpImage) {
 }
 
 TEST_F(ImageSuite, DrawBmpImage) {
-    if (ImageSuite::skipHandTest) GTEST_SKIP();
+    if (skipHandTest) GTEST_SKIP();
     
     RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
