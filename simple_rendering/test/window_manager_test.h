@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./test_env.h"
 #include "./util.hpp"
 #include "../include/window_manager.h"
 
@@ -22,11 +23,7 @@ protected:
             FAIL() << message;
         }
     }
-
-    static bool skipHandTest;
 };
-
-bool WindowManagerSuite::skipHandTest = false;
 
 TEST_F(WindowManagerSuite, CreateOneWindow) {
     ASSERT_NO_THROW(WindowManager::Instance().createWindow("main window", 800, 600, "Test Window"));

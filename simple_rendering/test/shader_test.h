@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./test_env.h"
 #include "./util.hpp"
 #include "../include/window_manager.h"
 #include "../include/shader.h"

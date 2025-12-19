@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./test_env.h"
+#include "./util.hpp"
 #include "../include/window_manager.h"
 #include "../include/shader_manager.h"
 #include "../include/renderable/shapes/polygon.h"
-#include "./util.hpp"
 
 class PolygonSuite : public ::testing::Test {
 protected:
@@ -57,11 +58,7 @@ protected:
         {-0.62, 0.15},
         {-0.25, 0.0}
     };
-
-    static bool skipHandTest;
 };
-
-bool PolygonSuite::skipHandTest = false;
 
 TEST_F(PolygonSuite, CreatePolygon) {
     ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Polygon>("main_window", "polygon", "main_window", "main_shader", convexPolygonPoints));

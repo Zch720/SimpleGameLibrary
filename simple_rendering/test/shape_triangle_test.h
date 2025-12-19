@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./test_env.h"
+#include "./util.hpp"
 #include "../include/window_manager.h"
 #include "../include/shader_manager.h"
 #include "../include/renderable/shapes/triangle.h"
-#include "./util.hpp"
 
 class TriangleSuite : public ::testing::Test {
 protected:
@@ -40,11 +41,7 @@ protected:
     vec2 point1 { 0.0f, 0.5f };
     vec2 point2 { -0.5f, -0.5f };
     vec2 point3 { 0.5f, -0.5f };
-
-    static bool skipHandTest;
 };
-
-bool TriangleSuite::skipHandTest = false;
 
 TEST_F(TriangleSuite, CreateTriangle) {
     ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Triangle>("main_window", "polygon", "main_window", "main_shader", point1, point2, point3));
