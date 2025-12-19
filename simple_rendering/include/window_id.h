@@ -13,8 +13,8 @@ public:
     uint64_t getId() const;
     uint64_t getGen() const;
 
-    friend bool operator==(WindowId left, WindowId right);
-    friend bool operator!=(WindowId left, WindowId right);
+    friend bool operator==(const WindowId & left, const WindowId & right);
+    friend bool operator!=(const WindowId & left, const WindowId & right);
 
 private:
     WindowId(uint64_t id, uint64_t gen);

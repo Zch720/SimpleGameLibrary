@@ -18,7 +18,7 @@ public:
     int height() const;
 
 protected:
-    Image(WindowId windowId, ShaderId shaderId, const std::string& path);
+    Image(RenderableId renderableId, ShaderId shaderId, const std::string& path);
 
     void renderImpl() const override;
     void loadData();

@@ -52,7 +52,7 @@ protected:
 };
 
 TEST_F(ImageSuite, CreatePngImage) {
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
+    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
     
     ASSERT_EQ(225, image.width());
@@ -62,7 +62,7 @@ TEST_F(ImageSuite, CreatePngImage) {
 TEST_F(ImageSuite, DrawPngImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
+    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
     image.scale({0.005, 0.005, 1});
 
@@ -83,7 +83,7 @@ TEST_F(ImageSuite, DrawPngImage) {
 TEST_F(ImageSuite, DrawTransparentPngImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image_transparent.png");
+    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image_transparent.png");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
     image.scale({0.005, 0.005, 1});
 
@@ -102,7 +102,7 @@ TEST_F(ImageSuite, DrawTransparentPngImage) {
 }
 
 TEST_F(ImageSuite, CreateJpgImage) {
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
+    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
     
     ASSERT_EQ(225, image.width());
@@ -112,7 +112,7 @@ TEST_F(ImageSuite, CreateJpgImage) {
 TEST_F(ImageSuite, DrawJpgImage) {
     if (skipHandTest) GTEST_SKIP();
     
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
+    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
     image.scale({0.005, 0.005, 1});
 
@@ -131,7 +131,7 @@ TEST_F(ImageSuite, DrawJpgImage) {
 }
 
 TEST_F(ImageSuite, CreateBmpImage) {
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
+    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
     
     ASSERT_EQ(225, image.width());
@@ -141,7 +141,7 @@ TEST_F(ImageSuite, CreateBmpImage) {
 TEST_F(ImageSuite, DrawBmpImage) {
     if (skipHandTest) GTEST_SKIP();
     
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
+    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
     Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
     image.scale({0.005, 0.005, 1});
 
@@ -160,13 +160,13 @@ TEST_F(ImageSuite, DrawBmpImage) {
 }
 
 TEST_F(ImageSuite, CreateTifImage) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/image.tif"),
+    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.tif"),
         std::runtime_error,
         "Unable to load texture file: " TEST_RESOURCES_DIR "/image.tif. Invalid texture type.");
 }
 
 TEST_F(ImageSuite, CreateImageFileNotExist) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, windowId, shaderId, TEST_RESOURCES_DIR"/not_exist.png"),
+    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/not_exist.png"),
         std::runtime_error,
         "Unable to load texture file: " TEST_RESOURCES_DIR "/not_exist.png");
 }

@@ -4,9 +4,12 @@
 #include <glm/matrix.hpp>
 #include "../window_id.h"
 #include "../shader_id.h"
+#include "./renderable_id.h"
 
 class Renderable {
 public:
+    RenderableId getId() const;
+
     void render() const;
     void setColor(float r, float g, float b, float a);
 
@@ -50,12 +53,13 @@ public:
 
 protected:
     Renderable();
-    Renderable(WindowId windowId, ShaderId shaderId);
+    Renderable(RenderableId renderableId, ShaderId shaderId);
 
     virtual void renderImpl() const = 0;
     virtual glm::mat4 calculateTransformationMatrix() const;
 
-    WindowId windowId;
+    RenderableId id;
+    // WindowId windowId;
     ShaderId shaderId;
     glm::vec4 color;
 

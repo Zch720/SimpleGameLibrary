@@ -5,12 +5,13 @@
 #include <vector>
 #include <unordered_map>
 #include <glm/matrix.hpp>
+#include "./shader_id.h"
 
 using namespace glm;
 
 class Shader {
 public:
-    Shader(std::string vertexShaderSource, std::string fragmentShaderSource);
+    Shader(ShaderId id, std::string vertexShaderSource, std::string fragmentShaderSource);
     ~Shader();
 
     void use();
@@ -47,6 +48,8 @@ public:
     glm::mat4x3 getMat4x3UniformVariable(std::string identifyName);
 
 private:
+    ShaderId id;
+
     uint32_t programId;
     std::unordered_map<std::string, uint32_t> uniformLocations;
 

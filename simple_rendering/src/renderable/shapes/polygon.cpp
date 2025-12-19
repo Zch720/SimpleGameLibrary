@@ -15,8 +15,8 @@ Polygon::Polygon() :
         indices() {
 }
 
-Polygon::Polygon(WindowId windowId, ShaderId shaderId, const std::vector<glm::vec2> & points) :
-        Renderable(windowId, shaderId),
+Polygon::Polygon(RenderableId renderableId, ShaderId shaderId, const std::vector<glm::vec2> & points) :
+        Renderable(renderableId, shaderId),
         vertices(),
         indices() {
     for (size_t i = 0; i < points.size(); i++) {
@@ -82,7 +82,7 @@ bool checkPointInsideTriangle(const glm::vec2 & p, const glm::vec2 & a, const gl
 
 void Polygon::deleteGlDatas() {
     if (vao == 0) return;
-    if (!WindowManager::Instance().isWindowExist(windowId)) return;
+    if (!WindowManager::Instance().isWindowExist(id.getWindowId())) return;
     
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);

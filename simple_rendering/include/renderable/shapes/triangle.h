@@ -17,5 +17,5 @@ public:
     ~Triangle();
 
 private:
-    Triangle(WindowId windowId, ShaderId shaderId, const glm::vec2 & point1, const glm::vec2 & point2, const glm::vec2 & point3);
+    Triangle(RenderableId renderableId, ShaderId shaderId, const glm::vec2 & point1, const glm::vec2 & point2, const glm::vec2 & point3);
 };

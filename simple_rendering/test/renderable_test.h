@@ -49,7 +49,7 @@ protected:
 TEST_F(RenderableSuite, SetColor) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
@@ -76,7 +76,7 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
         {0.0f, 0.0f, 1.0f}
     };
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
@@ -105,7 +105,7 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
 TEST_F(RenderableSuite, Translate) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -134,7 +134,7 @@ TEST_F(RenderableSuite, Translate) {
 TEST_F(RenderableSuite, TranslateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -163,7 +163,7 @@ TEST_F(RenderableSuite, TranslateX) {
 TEST_F(RenderableSuite, TranslateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -192,9 +192,9 @@ TEST_F(RenderableSuite, TranslateY) {
 TEST_F(RenderableSuite, TranslateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangle1Id = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangle1Id = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle1 = WindowManager::Instance().getRenderable<Triangle>(windowId, triangle1Id);
-    RenderableId triangle2Id = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangle2Id = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle2 = WindowManager::Instance().getRenderable<Triangle>(windowId, triangle2Id);
     triangle2.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
@@ -223,7 +223,7 @@ TEST_F(RenderableSuite, TranslateZ) {
 TEST_F(RenderableSuite, SetPosition) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -253,7 +253,7 @@ TEST_F(RenderableSuite, SetPosition) {
 TEST_F(RenderableSuite, Scale) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -283,7 +283,7 @@ TEST_F(RenderableSuite, Scale) {
 TEST_F(RenderableSuite, ScaleX) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -313,7 +313,7 @@ TEST_F(RenderableSuite, ScaleX) {
 TEST_F(RenderableSuite, ScaleY) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -343,7 +343,7 @@ TEST_F(RenderableSuite, ScaleY) {
 TEST_F(RenderableSuite, Rotate) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -366,7 +366,7 @@ TEST_F(RenderableSuite, Rotate) {
 TEST_F(RenderableSuite, RotateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -389,7 +389,7 @@ TEST_F(RenderableSuite, RotateX) {
 TEST_F(RenderableSuite, RotateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -412,7 +412,7 @@ TEST_F(RenderableSuite, RotateY) {
 TEST_F(RenderableSuite, RotateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -435,7 +435,7 @@ TEST_F(RenderableSuite, RotateZ) {
 TEST_F(RenderableSuite, SetRotation) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
+    RenderableId triangleId = WindowManager::Instance().createRenderable<Triangle>(windowId, shaderId, point1, point2, point3);
     Triangle& triangle = WindowManager::Instance().getRenderable<Triangle>(windowId, triangleId);
 
     PRINTF("There should be a white triangle on the screen\n");

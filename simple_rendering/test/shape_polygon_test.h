@@ -64,13 +64,13 @@ protected:
 };
 
 TEST_F(PolygonSuite, CreatePolygon) {
-    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Polygon>(windowId, windowId, shaderId, convexPolygonPoints));
+    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Polygon>(windowId, shaderId, convexPolygonPoints));
 }
 
 TEST_F(PolygonSuite, DrawConvexPolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Polygon>(windowId, windowId, shaderId, convexPolygonPoints);
+    WindowManager::Instance().createRenderable<Polygon>(windowId, shaderId, convexPolygonPoints);
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -97,7 +97,7 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
         {0.0, 0.55}
     };
 
-    WindowManager::Instance().createRenderable<Polygon>(windowId, windowId, shaderId, Polygon::SortConvexPolygonVertices(unorderedPoints));
+    WindowManager::Instance().createRenderable<Polygon>(windowId, shaderId, Polygon::SortConvexPolygonVertices(unorderedPoints));
 
     PRINTF("There should be a white pentagon on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -116,7 +116,7 @@ TEST_F(PolygonSuite, DrawUnorderedConvexPolygon) {
 TEST_F(PolygonSuite, DrawConcavePolygon) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Polygon>(windowId, windowId, shaderId, concavePolygonPoints);
+    WindowManager::Instance().createRenderable<Polygon>(windowId, shaderId, concavePolygonPoints);
 
     PRINTF("There should be a white star on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");

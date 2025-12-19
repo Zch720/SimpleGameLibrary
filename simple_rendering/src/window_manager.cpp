@@ -4,28 +4,6 @@
 #include "../include/window.h"
 #include "../include/window_manager.h"
 
-WindowId::WindowId(): id(0), gen(0) {
-}
-
-WindowId::WindowId(uint64_t id, uint64_t gen): id(id), gen(gen) {
-}
-
-uint64_t WindowId::getId() const {
-    return id;
-}
-
-uint64_t WindowId::getGen() const {
-    return gen;
-}
-
-bool operator==(WindowId left, WindowId right) {
-    return left.id == right.id && left.gen == right.gen;
-}
-
-bool operator!=(WindowId left, WindowId right) {
-    return left.id != right.id || left.gen != right.gen;
-}
-
 WindowManager WindowManager::instance;
 
 WindowManager & WindowManager::Instance() {

@@ -23,7 +23,7 @@ public:
     static std::vector<glm::vec2> SortConvexPolygonVertices(const std::vector<glm::vec2> & points);
 
 protected:
-    Polygon(WindowId windowId, ShaderId, const std::vector<glm::vec2> & points);
+    Polygon(RenderableId renderableId, ShaderId, const std::vector<glm::vec2> & points);
     Polygon(const Polygon & other);
     
     void renderImpl() const override;

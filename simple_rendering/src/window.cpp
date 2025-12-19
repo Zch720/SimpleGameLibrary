@@ -1,24 +1,6 @@
 #include <stdexcept>
 #include "../include/window.h"
 
-RenderableId::RenderableId(): id(0), gen(0) {
-}
-
-RenderableId::RenderableId(WindowId windowId, uint64_t id, uint64_t gen): windowId(windowId), id(id), gen(gen) {
-}
-
-WindowId RenderableId::getWindowId() const {
-    return windowId;
-}
-
-uint64_t RenderableId::getId() const {
-    return id;
-}
-
-uint64_t RenderableId::getGen() const {
-    return gen;
-}
-
 Window::Window(WindowId id, int width, int height, std::string title): id(id) {
     window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     if (window == nullptr) {

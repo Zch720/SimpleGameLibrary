@@ -76,7 +76,7 @@ protected:
 };
 
 TEST_F(ShaderSuite, CreateShader) {
-    ASSERT_NO_THROW(Shader shader(vertexShaderSource, fragmentShaderSource));
+    ASSERT_NO_THROW(Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSource));
 }
 
 TEST_F(ShaderSuite, VertexShaderCompileFail) {
@@ -89,7 +89,7 @@ TEST_F(ShaderSuite, VertexShaderCompileFail) {
 #endif
 
     ASSERT_THROW_MESSAGE(
-        Shader shader("invalid vertex shader source", fragmentShaderSource),
+        Shader shader(ShaderId(), "invalid vertex shader source", fragmentShaderSource),
         std::runtime_error,
         expectedMessage
     );
@@ -105,26 +105,26 @@ TEST_F(ShaderSuite, FragmentShaderCompileFail) {
 #endif
 
     ASSERT_THROW_MESSAGE(
-        Shader shader(vertexShaderSource, "invalid fragment shader source"),
+        Shader shader(ShaderId(), vertexShaderSource, "invalid fragment shader source"),
         std::runtime_error,
         expectedMessage
     );
 }
 
 TEST_F(ShaderSuite, DefaultUniformVariableRegister) {
-    Shader shader(vertexShaderSource, fragmentShaderSource);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSource);
 
     ASSERT_TRUE(shader.hasUniformVariable("color"));
 }
 
 TEST_F(ShaderSuite, RegisterUniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSource);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSource);
 
     ASSERT_NO_THROW(shader.registerUniformVariable("test shader color", "color"));
 }
 
 TEST_F(ShaderSuite, RegisterUniformVariableNotExistShouldFail) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
 
     ASSERT_THROW_MESSAGE(
         shader.registerUniformVariable("test shader color", "clr"),
@@ -134,7 +134,7 @@ TEST_F(ShaderSuite, RegisterUniformVariableNotExistShouldFail) {
 }
 
 TEST_F(ShaderSuite, RegisterUniformVariableTwiceShouldFail) {
-    Shader shader(vertexShaderSource, fragmentShaderSource);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSource);
 
     shader.registerUniformVariable("test shader color", "color");
     ASSERT_THROW_MESSAGE(
@@ -145,7 +145,7 @@ TEST_F(ShaderSuite, RegisterUniformVariableTwiceShouldFail) {
 }
 
 TEST_F(ShaderSuite, SetIntUniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader int", "test_shader_int");
 
     ASSERT_NO_THROW(shader.setIntUniformVariable("test shader int", 1));
@@ -153,7 +153,7 @@ TEST_F(ShaderSuite, SetIntUniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetFloatUniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader float", "test_shader_float");
 
     ASSERT_NO_THROW(shader.setFloatUniformVariable("test shader float", 1.2f));
@@ -161,7 +161,7 @@ TEST_F(ShaderSuite, SetFloatUniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetVec2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader vec2", "test_shader_vec2");
 
     vec2 value(1.0f, 4.0f);
@@ -170,7 +170,7 @@ TEST_F(ShaderSuite, SetVec2UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetVec3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader vec3", "test_shader_vec3");
 
     vec3 value(1.0f, 4.0f, 5.0f);
@@ -179,7 +179,7 @@ TEST_F(ShaderSuite, SetVec3UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetVec4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader vec4", "test_shader_vec4");
 
     vec4 value(1.0f, 4.0f, 5.0f, 2.0f);
@@ -188,7 +188,7 @@ TEST_F(ShaderSuite, SetVec4UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat2", "test_shader_mat2");
 
     mat2 value(1.0f, 2.0f, 3.0f, 4.0f);
@@ -197,7 +197,7 @@ TEST_F(ShaderSuite, SetMat2UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat3", "test_shader_mat3");
 
     mat3 value(
@@ -209,7 +209,7 @@ TEST_F(ShaderSuite, SetMat3UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat4", "test_shader_mat4");
 
     mat4 value(
@@ -222,7 +222,7 @@ TEST_F(ShaderSuite, SetMat4UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat2x3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat2x3", "test_shader_mat2x3");
 
     mat2x3 value(
@@ -234,7 +234,7 @@ TEST_F(ShaderSuite, SetMat2x3UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat3x2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat3x2", "test_shader_mat3x2");
 
     mat3x2 value(
@@ -245,7 +245,7 @@ TEST_F(ShaderSuite, SetMat3x2UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat2x4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat2x4", "test_shader_mat2x4");
 
     mat2x4 value(
@@ -258,7 +258,7 @@ TEST_F(ShaderSuite, SetMat2x4UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat4x2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat4x2", "test_shader_mat4x2");
 
     mat4x2 value(
@@ -269,7 +269,7 @@ TEST_F(ShaderSuite, SetMat4x2UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat3x4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat3x4", "test_shader_mat3x4");
 
     mat3x4 value(
@@ -282,7 +282,7 @@ TEST_F(ShaderSuite, SetMat3x4UniformVariable) {
 }
 
 TEST_F(ShaderSuite, SetMat4x3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Shader shader(ShaderId(), vertexShaderSource, fragmentShaderSourceForUniformTest);
     shader.registerUniformVariable("test shader mat4x3", "test_shader_mat4x3");
 
     mat4x3 value(

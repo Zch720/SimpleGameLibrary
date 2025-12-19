@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "../include/shader.h"
 
-Shader::Shader(std::string vertexShaderSource, std::string fragmentShaderSource) {
+Shader::Shader(ShaderId id, std::string vertexShaderSource, std::string fragmentShaderSource): id(id) {
     uint32_t vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
     compileShader(vertexShaderId, vertexShaderSource.c_str());
     uint32_t fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);

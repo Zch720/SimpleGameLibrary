@@ -6,8 +6,8 @@
 template<typename R, typename... Args>
 RenderableId Window::createRenderable(Args&&... args) {
     static_assert(std::is_base_of<Renderable, R>::value, "R must be subclass of Renderable");
-    R* r = new R(std::forward<Args>(args)...);
     RenderableId renderableId = newRenderableId();
+    R* r = new R(renderableId, std::forward<Args>(args)...);
     renderables[renderableId.getId() - 1] = r;
     return renderableId;
 }

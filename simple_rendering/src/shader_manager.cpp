@@ -1,18 +1,6 @@
 #include "../include/shader.h"
 #include "../include/shader_manager.h"
 
-ShaderId::ShaderId() {
-    this->id = 0;
-}
-
-ShaderId::ShaderId(uint64_t id) {
-    this->id = id;
-}
-
-uint64_t ShaderId::getId() const {
-    return id;
-}
-
 ShaderManager ShaderManager::instance;
 
 ShaderManager::ShaderManager() {
@@ -28,9 +16,10 @@ ShaderManager & ShaderManager::Instance() {
 }
 
 ShaderId ShaderManager::createShader(std::string vertexShaderSource, std::string fragmentShaderSource) {
-    Shader * shader = new Shader(vertexShaderSource, fragmentShaderSource);
+    ShaderId id = ShaderId(shaders.size() + 1);
+    Shader * shader = new Shader(id, vertexShaderSource, fragmentShaderSource);
     shaders.push_back(shader);
-    return ShaderId(shaders.size());
+    return id;
 }
 
 bool ShaderManager::hasShader(ShaderId id) {
