@@ -59,7 +59,6 @@ protected:
     virtual glm::mat4 calculateTransformationMatrix() const;
 
     RenderableId id;
-    // WindowId windowId;
     ShaderId shaderId;
     glm::vec4 color;
 

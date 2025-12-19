@@ -21,6 +21,10 @@ Renderable::Renderable(RenderableId renderableId, ShaderId shaderId) :
         rotationValue(0.0f) {
 }
 
+RenderableId Renderable::getId() const {
+    return id;
+}
+
 void Renderable::render() const {
     WindowManager::Instance().useWindow(id.getWindowId());
     ShaderManager::Instance().useShader(shaderId);

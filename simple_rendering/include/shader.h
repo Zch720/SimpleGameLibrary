@@ -14,6 +14,8 @@ public:
     Shader(ShaderId id, std::string vertexShaderSource, std::string fragmentShaderSource);
     ~Shader();
 
+    ShaderId getId() const;
+
     void use();
 
     void registerUniformVariable(std::string identifyName, std::string uniformName);

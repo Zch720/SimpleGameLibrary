@@ -22,6 +22,10 @@ Shader::~Shader() {
     glDeleteProgram(programId);
 }
 
+ShaderId Shader::getId() const {
+    return id;
+}
+
 void Shader::use() {
     glUseProgram(programId);
 }
