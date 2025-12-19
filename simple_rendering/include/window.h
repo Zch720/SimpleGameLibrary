@@ -1,16 +1,20 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
+#include <queue>
+#include <vector>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include "./window_id.h"
+#include "./renderable/renderable_id.h"
 #include "./renderable/renderable.h"
 
 class Window {
 public:
-    Window(int width, int height, std::string title);
+    Window(WindowId id, int width, int height, std::string title);
     ~Window();
 
+    WindowId getId() const;
     GLFWwindow * getGLFWWindow();
 
     void setClearColor(float r, float g, float b, float a);
@@ -28,10 +32,10 @@ public:
     void render();
 
     template<typename R, typename... Args>
-    void createRenderable(std::string renderableIdentifyName, Args&&... args);
-    bool isRenderableExist(std::string renderableIdentifyName);
+    RenderableId createRenderable(Args&&... args);
+    bool isRenderableExist(RenderableId renderableId);
     template<typename R>
-    R& getRenderable(std::string renderableIdentifyName);
+    R& getRenderable(RenderableId renderableId);
 
 private:
     struct ClearColor {
@@ -41,9 +45,14 @@ private:
         float a = 1;
     };
 
+    WindowId id;
     GLFWwindow * window;
     ClearColor clearColor;
-    std::unordered_map<std::string, Renderable *> renderables;
+    std::vector<Renderable *> renderables;
+    std::vector<uint64_t> renderablesGenertrion;
+    std::queue<uint64_t> renderablesFreeId;
+
+    RenderableId newRenderableId();
 };
 
 #include "./window.tpp"

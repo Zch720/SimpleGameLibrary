@@ -50,13 +50,13 @@ protected:
 bool TriangleSuite::skipHandTest = false;
 
 TEST_F(TriangleSuite, CreateTriangle) {
-    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Triangle>(windowId, "polygon", windowId, shaderId, point1, point2, point3));
+    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3));
 }
 
 TEST_F(TriangleSuite, DrawTriangle) {
     if (skipHandTest) GTEST_SKIP();
     
-    WindowManager::Instance().createRenderable<Triangle>(windowId, "polygon", windowId, shaderId, point1, point2, point3);
+    WindowManager::Instance().createRenderable<Triangle>(windowId, windowId, shaderId, point1, point2, point3);
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");

@@ -51,13 +51,13 @@ protected:
 bool RectangleSuite::skipHandTest = false;
 
 TEST_F(RectangleSuite, CreateRectangle) {
-    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Rectangle>(windowId, "polygon", windowId, shaderId, point1, point2, point3, point4));
+    ASSERT_NO_THROW(WindowManager::Instance().createRenderable<Rectangle>(windowId, windowId, shaderId, point1, point2, point3, point4));
 }
 
 TEST_F(RectangleSuite, DrawRectangle) {
     if (skipHandTest) GTEST_SKIP();
 
-    WindowManager::Instance().createRenderable<Rectangle>(windowId, "polygon", windowId, shaderId, point1, point2, point3, point4);
+    WindowManager::Instance().createRenderable<Rectangle>(windowId, windowId, shaderId, point1, point2, point3, point4);
 
     PRINTF("There should be a white rectangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");

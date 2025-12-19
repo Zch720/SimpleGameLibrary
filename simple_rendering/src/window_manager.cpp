@@ -18,6 +18,14 @@ uint64_t WindowId::getGen() const {
     return gen;
 }
 
+bool operator==(WindowId left, WindowId right) {
+    return left.id == right.id && left.gen == right.gen;
+}
+
+bool operator!=(WindowId left, WindowId right) {
+    return left.id != right.id || left.gen != right.gen;
+}
+
 WindowManager WindowManager::instance;
 
 WindowManager & WindowManager::Instance() {
@@ -52,18 +60,9 @@ bool WindowManager::isWindowClose(WindowId id) {
 WindowId WindowManager::createWindow(int width, int height, std::string title) {
     if (isFirstWindow) initGlfw();
 
-    Window * newWindow = new Window(width, height, title);
-    WindowId windowId;
-    if (freeId.empty()) {
-        windows.push_back(newWindow);
-        generation.push_back(1);
-        windowId = WindowId(windows.size(), 1);
-    } else {
-        uint64_t id = freeId.front();
-        freeId.pop();
-        windows[id - 1] = newWindow;
-        windowId = WindowId(id, generation[id - 1]);
-    }
+    WindowId windowId = newWindowId();
+    Window * newWindow = new Window(windowId, width, height, title);
+    windows[windowId.getId() - 1] = newWindow;
 
     if (isFirstWindow) {
         newWindow->makeContextCurrent();
@@ -160,6 +159,20 @@ void WindowManager::initGlad() {
     if (!gladLoadGL(glfwGetProcAddress)) {
         throw std::runtime_error("Failed to initialize GLAD");
     }
+}
+
+WindowId WindowManager::newWindowId() {
+    WindowId windowId;
+    if (freeId.empty()) {
+        windows.push_back(nullptr);
+        generation.push_back(1);
+        windowId = WindowId(windows.size(), 1);
+    } else {
+        uint64_t id = freeId.front();
+        freeId.pop();
+        windowId = WindowId(id, generation[id - 1]);
+    }
+    return windowId;
 }
 
 void WindowManager::checkWindowExist(WindowId id) {

@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include "./window_id.h"
+#include "./renderable/renderable_id.h"
 
 class Window;
 
@@ -28,9 +29,9 @@ public:
     void renderWindow(WindowId id);
     
     template<typename R, typename... Args>
-    void createRenderable(WindowId id, std::string renderableIdentifyName, Args&&... args);
+    RenderableId createRenderable(WindowId id, Args&&... args);
     template<typename R>
-    R& getRenderable(WindowId id, std::string renderableIdentifyName);
+    R& getRenderable(WindowId id, RenderableId renderableId);
 
 protected:
     WindowManager();
@@ -49,6 +50,7 @@ private:
     void initGlfwWindowHint();
     void initGlad();
 
+    WindowId newWindowId();
     void checkWindowExist(WindowId id);
 };
 

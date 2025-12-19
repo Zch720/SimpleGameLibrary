@@ -28,7 +28,7 @@ protected:
     }
 
     Window CreateDefaultWindow(int width, int height, const char * title) {
-        Window defaultWindow(width, height, title);
+        Window defaultWindow(WindowId(), width, height, title);
         defaultWindow.makeContextCurrent();
 
         SetUpGlad();
@@ -37,7 +37,7 @@ protected:
     }
 
     Window CreateWindow(int width, int height, const char * title) {
-        Window window(width, height, title);
+        Window window(WindowId(), width, height, title);
 
         return window;
     }
@@ -49,7 +49,7 @@ protected:
 bool WindowSuite::skipHandTest = false;
 
 TEST_F(WindowSuite, CreateWindow) {
-    Window window(800, 600, "Test Window");
+    Window window(WindowId(), 800, 600, "Test Window");
     window.makeContextCurrent();
 
     SetUpGlad();
