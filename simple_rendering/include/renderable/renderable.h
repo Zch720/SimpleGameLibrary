@@ -4,12 +4,22 @@
 #include <glm/matrix.hpp>
 #include "../window_id.h"
 #include "../shader_id.h"
+#include "./mesh.h"
+#include "./material.h"
 #include "./renderable_id.h"
+
+class Window;
 
 class Renderable {
 public:
+    friend Window;
+
     RenderableId getId() const;
 
+    glm::vec4 getColor() const;
+    glm::mat4 getTransformationMatrix() const;
+
+    void update();
     void render() const;
     void setColor(float r, float g, float b, float a);
 
@@ -53,16 +63,19 @@ public:
 
 protected:
     Renderable();
-    Renderable(RenderableId renderableId, ShaderId shaderId);
+    Renderable(RenderableId renderableId, Mesh * mesh, Material * material);
 
-    virtual void renderImpl() const = 0;
-    virtual glm::mat4 calculateTransformationMatrix() const;
+    void updateTransformationMatrix();
 
     RenderableId id;
-    ShaderId shaderId;
+    Mesh * mesh;
+    Material * material;
+
     glm::vec4 color;
 
+    bool transformDirty;
     glm::vec3 positionValue;
     glm::vec3 scaleValue;
     glm::vec3 rotationValue;
+    glm::mat4 transformationMatrix;
 };

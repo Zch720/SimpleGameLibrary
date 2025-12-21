@@ -121,6 +121,16 @@ void WindowManager::renderWindow(WindowId id) {
     windows[id.getId() - 1]->render();
 }
 
+RenderableId WindowManager::createRenderable(WindowId id, Mesh * mesh, Material * material) {
+    checkWindowExist(id);
+    return windows[id.getId() - 1]->createRenderable(mesh, material);
+}
+
+Renderable& WindowManager::getRenderable(WindowId id, RenderableId renderableId) {
+    checkWindowExist(id);
+    return windows[id.getId() - 1]->getRenderable(renderableId);
+}
+
 void WindowManager::initGlfw() {
     if (!glfwInit()) {
         throw std::runtime_error("Failed to initialize GLFW");

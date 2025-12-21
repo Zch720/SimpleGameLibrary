@@ -64,9 +64,18 @@ void Window::resize(int width, int height) {
 
 void Window::render() {
     clear();
+    makeContextCurrent();
     for (auto r : renderables) {
+        r->update();
         r->render();
     }
+}
+
+RenderableId Window::createRenderable(Mesh * mesh, Material * material) {
+    RenderableId renderableId = newRenderableId();
+    Renderable * r = new Renderable(renderableId, mesh, material);
+    renderables[renderableId.getId() - 1] = r;
+    return renderableId;
 }
 
 bool Window::isRenderableExist(RenderableId renderableId) {
@@ -79,6 +88,14 @@ bool Window::isRenderableExist(RenderableId renderableId) {
         return true;
     }
     return false;
+}
+
+Renderable& Window::getRenderable(RenderableId renderableId) {
+    if (!isRenderableExist(renderableId)) {
+        throw new std::runtime_error("Connet find renderable with id: " + std::to_string(renderableId.getId()));
+    }
+
+    return *renderables[renderableId.getId() - 1];
 }
 
 RenderableId Window::newRenderableId() {

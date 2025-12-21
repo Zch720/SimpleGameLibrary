@@ -5,7 +5,6 @@
 #include "./util.hpp"
 #include "../include/window_manager.h"
 #include "../include/shader_manager.h"
-#include "../include/renderable/image.h"
 
 class ImageSuite : public ::testing::Test {
 protected:
@@ -13,6 +12,10 @@ protected:
         windowId = WindowManager::Instance().createWindow(800, 800, "Test Window");
         shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
         ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
+        imageVertexLayout = VertexLayout();
+        imageVertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
+        imageVertexLayout.addAttribute({ .index = 1, .size = 2, .type = GL_FLOAT, .normalized = false, .offset = sizeof(float) * 3 });
+        imageMesh = new Mesh(imageVertices.data(), 4, triangleIndices.data(), 6, imageVertexLayout);
     }
 
     void TearDown() override {
@@ -22,6 +25,15 @@ protected:
 
     WindowId windowId;
     ShaderId shaderId;
+    VertexLayout imageVertexLayout;
+    Mesh * imageMesh = nullptr;
+    std::vector<float> imageVertices {
+        -0.5f, 0.5f, 0.0f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
+        0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f
+    };
+    std::vector<uint32_t> triangleIndices { 0, 1, 2, 0, 2, 3 };
     
     std::string vertexShaderSource = R"(
         #version 330 core
@@ -51,20 +63,13 @@ protected:
     )";
 };
 
-TEST_F(ImageSuite, CreatePngImage) {
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
-    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
-    
-    ASSERT_EQ(225, image.width());
-    ASSERT_EQ(225, image.height());
-}
-
 TEST_F(ImageSuite, DrawPngImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.png");
-    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
-    image.scale({0.005, 0.005, 1});
+    Texture2D texture(TEST_RESOURCES_DIR"/image.png");
+    Material material(shaderId, &texture);
+
+    WindowManager::Instance().createRenderable(windowId, imageMesh, &material);
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -83,9 +88,10 @@ TEST_F(ImageSuite, DrawPngImage) {
 TEST_F(ImageSuite, DrawTransparentPngImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image_transparent.png");
-    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
-    image.scale({0.005, 0.005, 1});
+    Texture2D texture(TEST_RESOURCES_DIR"/image_transparent.png");
+    Material material(shaderId, &texture);
+
+    WindowManager::Instance().createRenderable(windowId, imageMesh, &material);
 
     PRINTF("There should be a smile image with no background in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -101,20 +107,13 @@ TEST_F(ImageSuite, DrawTransparentPngImage) {
     }
 }
 
-TEST_F(ImageSuite, CreateJpgImage) {
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
-    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
-    
-    ASSERT_EQ(225, image.width());
-    ASSERT_EQ(225, image.height());
-}
-
 TEST_F(ImageSuite, DrawJpgImage) {
     if (skipHandTest) GTEST_SKIP();
-    
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.jpg");
-    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
-    image.scale({0.005, 0.005, 1});
+
+    Texture2D texture(TEST_RESOURCES_DIR"/image.jpg");
+    Material material(shaderId, &texture);
+
+    WindowManager::Instance().createRenderable(windowId, imageMesh, &material);
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -128,22 +127,15 @@ TEST_F(ImageSuite, DrawJpgImage) {
         }
         glfwPollEvents();
     }
-}
-
-TEST_F(ImageSuite, CreateBmpImage) {
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
-    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
-    
-    ASSERT_EQ(225, image.width());
-    ASSERT_EQ(225, image.height());
 }
 
 TEST_F(ImageSuite, DrawBmpImage) {
     if (skipHandTest) GTEST_SKIP();
-    
-    RenderableId imageId = WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.bmp");
-    Image& image = WindowManager::Instance().getRenderable<Image>(windowId, imageId);
-    image.scale({0.005, 0.005, 1});
+
+    Texture2D texture(TEST_RESOURCES_DIR"/image.bmp");
+    Material material(shaderId, &texture);
+
+    WindowManager::Instance().createRenderable(windowId, imageMesh, &material);
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -157,16 +149,4 @@ TEST_F(ImageSuite, DrawBmpImage) {
         }
         glfwPollEvents();
     }
-}
-
-TEST_F(ImageSuite, CreateTifImage) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/image.tif"),
-        std::runtime_error,
-        "Unable to load texture file: " TEST_RESOURCES_DIR "/image.tif. Invalid texture type.");
-}
-
-TEST_F(ImageSuite, CreateImageFileNotExist) {
-    ASSERT_THROW_MESSAGE(WindowManager::Instance().createRenderable<Image>(windowId, shaderId, TEST_RESOURCES_DIR"/not_exist.png"),
-        std::runtime_error,
-        "Unable to load texture file: " TEST_RESOURCES_DIR "/not_exist.png");
 }

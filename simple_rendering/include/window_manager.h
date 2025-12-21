@@ -27,11 +27,9 @@ public:
     void resizeWindow(WindowId id, int width, int height);
     void setWindowColor(WindowId id, float r, float g, float b, float a);
     void renderWindow(WindowId id);
-    
-    template<typename R, typename... Args>
-    RenderableId createRenderable(WindowId id, Args&&... args);
-    template<typename R>
-    R& getRenderable(WindowId id, RenderableId renderableId);
+
+    RenderableId createRenderable(WindowId id, Mesh * mesh, Material * material);
+    Renderable& getRenderable(WindowId id, RenderableId renderableId);
 
 protected:
     WindowManager();
@@ -53,5 +51,3 @@ private:
     WindowId newWindowId();
     void checkWindowExist(WindowId id);
 };
-
-#include "./window_manager.tpp"

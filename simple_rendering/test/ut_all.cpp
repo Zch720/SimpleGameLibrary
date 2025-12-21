@@ -7,9 +7,8 @@
 #include "window_manager_test.h"
 #include "shader_test.h"
 #include "shader_manager_test.h"
-#include "shape_triangle_test.h"
-#include "shape_rectangle_test.h"
-#include "shape_polygon_test.h"
+#include "texture_2d_test.h"
+#include "vertex_layout_test.h"
 #include "renderable_test.h"
 #include "image_test.h"
 

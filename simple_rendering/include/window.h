@@ -31,11 +31,9 @@ public:
     
     void render();
 
-    template<typename R, typename... Args>
-    RenderableId createRenderable(Args&&... args);
+    RenderableId createRenderable(Mesh * mesh, Material * material);
     bool isRenderableExist(RenderableId renderableId);
-    template<typename R>
-    R& getRenderable(RenderableId renderableId);
+    Renderable & getRenderable(RenderableId renderableId);
 
 private:
     struct ClearColor {
@@ -54,5 +52,3 @@ private:
 
     RenderableId newRenderableId();
 };
-
-#include "./window.tpp"
