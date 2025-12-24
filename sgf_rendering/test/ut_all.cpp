@@ -1,0 +1,50 @@
+#include <gtest/gtest.h>
+#include <string>
+#include <regex>
+
+#include "test_env.h"
+#include "shader_test.h"
+#include "shader_manager_test.h"
+#include "texture_2d_test.h"
+#include "vertex_layout_test.h"
+#include "renderable_test.h"
+#include "image_test.h"
+
+struct Arg {
+    std::string key;
+    std::string value;
+};
+
+Arg parseArg(char *);
+void handleArg(Arg);
+
+int main(int argc, char * argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    for (int i = 1; i < argc; i++) {
+        handleArg(parseArg(argv[i]));
+    }
+    return RUN_ALL_TESTS();
+}
+
+Arg parseArg(char * arg) {
+    std::string argStr(arg);
+    std::regex reg("--([a-zA-Z]+)=(.+)");
+    std::smatch result;
+
+    if (std::regex_match(argStr, result, reg)) {
+        if (result.size() == 3) return { .key = result[1], .value = result[2] };
+    }
+    return { "", "" };
+}
+
+void handleArg(Arg arg) {
+    if (arg.key == "" || arg.value == "") return;
+
+    if (arg.key == "skipHandTest") {
+        if (arg.value == "true") {
+            skipHandTest = true;
+        } else {
+            skipHandTest = false;
+        }
+    }
+}
