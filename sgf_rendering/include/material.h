@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./render_context.h"
 #include "./shader_id.h"
 #include "./texture_2d.h"
 
@@ -10,8 +11,8 @@ public:
     Material(ShaderId shaderId);
     Material(ShaderId shaderId, Texture2D * texture);
 
-    void bind() const;
-    void applyPerObject(const Renderable & renderable) const;
+    void bind(const RenderContext & context) const;
+    void applyPerObject(const RenderContext & context, const Renderable & renderable) const;
 
 private:
     bool useTexture = false;

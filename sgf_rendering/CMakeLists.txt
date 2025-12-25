@@ -28,8 +28,12 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+add_subdirectory(../sgf_utils bin/sgf EXCLUDE_FROM_ALL)
 add_subdirectory(../ext bin/ext EXCLUDE_FROM_ALL)
 
+file(GLOB sgf_includes
+    ${CMAKE_CURRENT_SOURCE_DIR}/../sgf_utils/include
+)
 file(GLOB third_party_includes
     ${CMAKE_CURRENT_SOURCE_DIR}/../ext/glad/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../ext/glm/include
@@ -44,7 +48,12 @@ add_library(sgf_rendering ${sgf_rendering_sources})
 target_include_directories(
     sgf_rendering
     PRIVATE
+    ${sgf_includes}
     ${third_party_includes}
+)
+target_link_libraries(
+    sgf_rendering
+    sgf_utils
 )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
@@ -58,6 +67,7 @@ target_compile_options(sgf_rendering_test PUBLIC -Wall -Wfatal-errors)
 target_include_directories(
     sgf_rendering_test
     PRIVATE
+    ${sgf_includes}
     ${third_party_includes}
     ${third_party_includes_test}
 )
@@ -66,6 +76,7 @@ target_link_libraries(
     GTest::gtest_main
     glfw
     glad
+    sgf_utils
     sgf_rendering
 )
 

@@ -1,7 +1,6 @@
 #include "../include/renderable.h"
 #include <glad/gl.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "../include/shader_manager.h"
 
 Renderable::Renderable(Mesh * mesh, Material * material) :
         mesh(mesh),
@@ -33,10 +32,10 @@ void Renderable::update() {
     }
 }
 
-void Renderable::render() const {
+void Renderable::render(const RenderContext & context) const {
     if (mesh == nullptr) return;
-    material->bind();
-    material->applyPerObject(*this);
+    material->bind(context);
+    material->applyPerObject(context, *this);
     mesh->bind();
     glDrawElements(GL_TRIANGLES, mesh->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
     mesh->unbind();

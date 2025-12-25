@@ -2,6 +2,7 @@
 
 #include <string>
 #include <glm/matrix.hpp>
+#include "./render_context.h"
 #include "./renderable_id.h"
 #include "./mesh.h"
 #include "./material.h"
@@ -16,7 +17,7 @@ public:
     glm::mat4 getTransformationMatrix() const;
 
     void update();
-    void render() const;
+    void render(const RenderContext & context) const;
     void setColor(float r, float g, float b, float a);
 
     glm::vec3 position() const;

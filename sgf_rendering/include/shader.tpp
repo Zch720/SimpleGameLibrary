@@ -1,7 +1,7 @@
-#include "./shader_id.h"
+#include "./shader.h"
 
 template <>
-struct TypeName<ShaderTag> {
+struct TypeName<Shader> {
     std::string operator()() const noexcept {
         return "Shader";
     }

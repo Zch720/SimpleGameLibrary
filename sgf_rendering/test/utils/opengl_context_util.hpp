@@ -52,22 +52,4 @@ namespace sgf_test {
         }
         glfwTerminate();
     }
-
-    // bool isWindowClosed() {
-    //     return glfwWindowShouldClose(window);
-    // }
-
-    // void clearWindow() {
-    //     glfwSwapBuffers(window);
-    //     glClearColor(0, 0, 0, 0);
-    //     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // }
-
-    // void windowUpdate() {
-    //     glfwPollEvents();
-    // }
-
-    // void closeWindow() {
-    //     glfwSetWindowShouldClose(window, true);
-    // }
 }

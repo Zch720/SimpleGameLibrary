@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "./test_env.h"
 #include "./utils.h"
-#include "../include/shader_manager.h"
 #include "../include/renderable.h"
 
 class ImageSuite : public ::testing::Test {
@@ -9,8 +8,11 @@ protected:
     void SetUp() override {
         sgf_test::createOpenGLContext();
 
-        shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
-        ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
+        shaderId = context.ShaderManager.create({
+            .vertexShaderSource = vertexShaderSource,
+            .fragmentShaderSource = fragmentShaderSource
+        });
+        context.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
         imageVertexLayout = VertexLayout();
         imageVertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
         imageVertexLayout.addAttribute({ .index = 1, .size = 2, .type = GL_FLOAT, .normalized = false, .offset = sizeof(float) * 3 });
@@ -18,11 +20,12 @@ protected:
     }
 
     void TearDown() override {
-        ShaderManager::Instance().destroyShaders();
+        context.ShaderManager.destroyAll();
 
         sgf_test::OpenGLContextTerminate();
     }
 
+    RenderContext context;
     ShaderId shaderId;
     VertexLayout imageVertexLayout;
     Mesh * imageMesh = nullptr;
@@ -76,7 +79,7 @@ TEST_F(ImageSuite, DrawPngImage) {
 
     WINDOW_LOOP("Image show wrong", {
         image.update();
-        image.render();
+        image.render(context);
     });
 }
 
@@ -94,7 +97,7 @@ TEST_F(ImageSuite, DrawTransparentPngImage) {
 
     WINDOW_LOOP("Image show wrong", {
         image.update();
-        image.render();
+        image.render(context);
     });
 }
 
@@ -112,7 +115,7 @@ TEST_F(ImageSuite, DrawJpgImage) {
 
     WINDOW_LOOP("Image show wrong", {
         image.update();
-        image.render();
+        image.render(context);
     });
 }
 
@@ -130,6 +133,6 @@ TEST_F(ImageSuite, DrawBmpImage) {
 
     WINDOW_LOOP("Image show wrong", {
         image.update();
-        image.render();
+        image.render(context);
     });
 }

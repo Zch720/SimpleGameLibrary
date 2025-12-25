@@ -3,13 +3,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "../include/shader.h"
 
-Shader::Shader(const std::string & vertexShaderSource, const std::string & fragmentShaderSource) {
-    id = ShaderIdGenerator::Instance().getNewId();
+Shader::Shader(const Id & id, const Construct & constructParameter) {
+    this->id = id;
 
     uint32_t vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-    compileShader(vertexShaderId, vertexShaderSource.c_str());
+    compileShader(vertexShaderId, constructParameter.vertexShaderSource.c_str());
     uint32_t fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-    compileShader(fragmentShaderId, fragmentShaderSource.c_str());
+    compileShader(fragmentShaderId, constructParameter.fragmentShaderSource.c_str());
 
     programId = glCreateProgram();
     linkProgram(programId, vertexShaderId, fragmentShaderId);
@@ -20,12 +20,7 @@ Shader::Shader(const std::string & vertexShaderSource, const std::string & fragm
 }
 
 Shader::~Shader() {
-    ShaderIdGenerator::Instance().freeId(id);
     glDeleteProgram(programId);
-}
-
-ShaderId Shader::getId() const {
-    return id;
 }
 
 void Shader::use() {

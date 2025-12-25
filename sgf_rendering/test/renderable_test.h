@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "./test_env.h"
 #include "./utils.h"
-#include "../include/shader_manager.h"
 #include "../include/renderable.h"
 
 using namespace glm;
@@ -11,8 +10,11 @@ protected:
     virtual void SetUp() {
         sgf_test::createOpenGLContext();
 
-        shaderId = ShaderManager::Instance().createShader(vertexShaderSource, fragmentShaderSource);
-        ShaderManager::Instance().registerShaderUniformVariable(shaderId, "transform", "model");
+        shaderId = context.ShaderManager.create({
+            .vertexShaderSource = vertexShaderSource,
+            .fragmentShaderSource = fragmentShaderSource
+        });
+        context.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
         material = new Material(shaderId);
         triangleVertexLayout = VertexLayout();
         triangleVertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
@@ -22,11 +24,12 @@ protected:
     virtual void TearDown() {
         delete material;
         delete triangleMesh;
-        ShaderManager::Instance().destroyShaders();
+        context.ShaderManager.destroyAll();
 
         sgf_test::OpenGLContextTerminate();
     }
 
+    RenderContext context;
     ShaderId shaderId;
     Material * material;
     VertexLayout triangleVertexLayout;
@@ -74,7 +77,6 @@ TEST_F(RenderableSuite, DrawTriangle) {
     vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
     Mesh mesh((void *)vertices.data(), 3, indices.data(), 3, vertexLayout);
 
-    // WindowManager::Instance().createRenderable(windowId, &mesh, material);
     Renderable triangle(&mesh, material);
 
     PRINTF("There should be a white triangle on the screen\n");
@@ -83,7 +85,7 @@ TEST_F(RenderableSuite, DrawTriangle) {
     
     WINDOW_LOOP("Window display wrong", {
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -109,7 +111,7 @@ TEST_F(RenderableSuite, DrawRectangle) {
     
     WINDOW_LOOP("Window display wrong", {
         rectangle.update();
-        rectangle.render();
+        rectangle.render(context);
     });
 }
 
@@ -136,7 +138,7 @@ TEST_F(RenderableSuite, DrawPentagon) {
 
     WINDOW_LOOP("Window display wrong", {
         pentagon.update();
-        pentagon.render();
+        pentagon.render(context);
     });
 }
 
@@ -152,7 +154,7 @@ TEST_F(RenderableSuite, SetColor) {
 
     WINDOW_LOOP("Window display wrong", {
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -183,7 +185,7 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -208,7 +210,7 @@ TEST_F(RenderableSuite, Translate) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -233,7 +235,7 @@ TEST_F(RenderableSuite, TranslateX) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -258,7 +260,7 @@ TEST_F(RenderableSuite, TranslateY) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -284,9 +286,9 @@ TEST_F(RenderableSuite, TranslateZ) {
         }
 
         triangle1.update();
-        triangle1.render();
+        triangle1.render(context);
         triangle2.update();
-        triangle2.render();
+        triangle2.render(context);
     });
 }
 
@@ -312,7 +314,7 @@ TEST_F(RenderableSuite, SetPosition) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -338,7 +340,7 @@ TEST_F(RenderableSuite, Scale) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -364,7 +366,7 @@ TEST_F(RenderableSuite, ScaleX) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -390,7 +392,7 @@ TEST_F(RenderableSuite, ScaleY) {
         }
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -409,7 +411,7 @@ TEST_F(RenderableSuite, Rotate) {
         triangle.rotate({0, 0, delta});
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -428,7 +430,7 @@ TEST_F(RenderableSuite, RotateX) {
         triangle.rotateX(delta);
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -447,7 +449,7 @@ TEST_F(RenderableSuite, RotateY) {
         triangle.rotateY(delta);
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -466,7 +468,7 @@ TEST_F(RenderableSuite, RotateZ) {
         triangle.rotateZ(delta);
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }
 
@@ -486,6 +488,6 @@ TEST_F(RenderableSuite, SetRotation) {
         triangle.rotation({rotation.x, rotation.y, rotation.z + delta});
 
         triangle.update();
-        triangle.render();
+        triangle.render(context);
     });
 }

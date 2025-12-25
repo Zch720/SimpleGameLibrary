@@ -1,7 +1,10 @@
 #include <gtest/gtest.h>
+#include <manager.h>
 #include "./test_env.h"
 #include "./utils.h"
 #include "../include/shader.h"
+
+using namespace glm;
 
 class ShaderSuite : public ::testing::Test {
 protected:
@@ -71,7 +74,13 @@ protected:
 };
 
 TEST_F(ShaderSuite, CreateShader) {
-    ASSERT_NO_THROW(Shader shader(vertexShaderSource, fragmentShaderSource));
+    ASSERT_NO_THROW({
+        Manager<Shader> manager;
+        manager.create(Shader::Construct {
+            .vertexShaderSource = vertexShaderSource,
+            .fragmentShaderSource = fragmentShaderSource
+        });
+    });
 }
 
 TEST_F(ShaderSuite, VertexShaderCompileFail) {
@@ -84,7 +93,13 @@ TEST_F(ShaderSuite, VertexShaderCompileFail) {
 #endif
 
     ASSERT_THROW_MESSAGE(
-        Shader shader("invalid vertex shader source", fragmentShaderSource),
+        {
+            Manager<Shader> manager;
+            manager.create(Shader::Construct {
+                .vertexShaderSource = "invalid vertex shader source",
+                .fragmentShaderSource = fragmentShaderSource
+            });
+        },
         std::runtime_error,
         expectedMessage
     );
@@ -100,190 +115,268 @@ TEST_F(ShaderSuite, FragmentShaderCompileFail) {
 #endif
 
     ASSERT_THROW_MESSAGE(
-        Shader shader(vertexShaderSource, "invalid fragment shader source"),
+        {
+            Manager<Shader> manager;
+            manager.create(Shader::Construct {
+                .vertexShaderSource = "invalid fragment shader source",
+                .fragmentShaderSource = fragmentShaderSource
+            });
+        },
         std::runtime_error,
         expectedMessage
     );
 }
 
 TEST_F(ShaderSuite, DefaultUniformVariableRegister) {
-    Shader shader(vertexShaderSource, fragmentShaderSource);
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSource
+    });
 
-    ASSERT_TRUE(shader.hasUniformVariable("color"));
+    ASSERT_TRUE(manager.getRef(id).hasUniformVariable("color"));
 }
 
 TEST_F(ShaderSuite, RegisterUniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSource);
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSource
+    });
 
-    ASSERT_NO_THROW(shader.registerUniformVariable("test shader color", "color"));
+    ASSERT_NO_THROW(manager.getRef(id).registerUniformVariable("test shader color", "color"));
 }
 
 TEST_F(ShaderSuite, RegisterUniformVariableNotExistShouldFail) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
 
     ASSERT_THROW_MESSAGE(
-        shader.registerUniformVariable("test shader color", "clr"),
+        manager.getRef(id).registerUniformVariable("test shader color", "clr"),
         std::runtime_error,
         "Uniform variable \"clr\" not found"
     );
 }
 
 TEST_F(ShaderSuite, RegisterUniformVariableTwiceShouldFail) {
-    Shader shader(vertexShaderSource, fragmentShaderSource);
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSource
+    });
 
-    shader.registerUniformVariable("test shader color", "color");
+    manager.getRef(id).registerUniformVariable("test shader color", "color");
     ASSERT_THROW_MESSAGE(
-        shader.registerUniformVariable("test shader color", "color"),
+        manager.getRef(id).registerUniformVariable("test shader color", "color"),
         std::runtime_error,
         "Uniform variable \"test shader color\" already registered"
     );
 }
 
 TEST_F(ShaderSuite, SetIntUniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader int", "test_shader_int");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader int", "test_shader_int");
 
-    ASSERT_NO_THROW(shader.setIntUniformVariable("test shader int", 1));
-    ASSERT_EQ(1, shader.getIntUniformVariable("test shader int"));
+    ASSERT_NO_THROW(manager.getRef(id).setIntUniformVariable("test shader int", 1));
+    ASSERT_EQ(1, manager.getRef(id).getIntUniformVariable("test shader int"));
 }
 
 TEST_F(ShaderSuite, SetFloatUniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader float", "test_shader_float");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader float", "test_shader_float");
 
-    ASSERT_NO_THROW(shader.setFloatUniformVariable("test shader float", 1.2f));
-    ASSERT_EQ(1.2f, shader.getFloatUniformVariable("test shader float"));
+    ASSERT_NO_THROW(manager.getRef(id).setFloatUniformVariable("test shader float", 1.2f));
+    ASSERT_EQ(1.2f, manager.getRef(id).getFloatUniformVariable("test shader float"));
 }
 
 TEST_F(ShaderSuite, SetVec2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader vec2", "test_shader_vec2");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader vec2", "test_shader_vec2");
 
     vec2 value(1.0f, 4.0f);
-    ASSERT_NO_THROW(shader.setVec2UniformVariable("test shader vec2", value));
-    ASSERT_EQ(value, shader.getVec2UniformVariable("test shader vec2"));
+    ASSERT_NO_THROW(manager.getRef(id).setVec2UniformVariable("test shader vec2", value));
+    ASSERT_EQ(value, manager.getRef(id).getVec2UniformVariable("test shader vec2"));
 }
 
 TEST_F(ShaderSuite, SetVec3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader vec3", "test_shader_vec3");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader vec3", "test_shader_vec3");
 
     vec3 value(1.0f, 4.0f, 5.0f);
-    ASSERT_NO_THROW(shader.setVec3UniformVariable("test shader vec3", value));
-    ASSERT_EQ(value, shader.getVec3UniformVariable("test shader vec3"));
+    ASSERT_NO_THROW(manager.getRef(id).setVec3UniformVariable("test shader vec3", value));
+    ASSERT_EQ(value, manager.getRef(id).getVec3UniformVariable("test shader vec3"));
 }
 
 TEST_F(ShaderSuite, SetVec4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader vec4", "test_shader_vec4");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader vec4", "test_shader_vec4");
 
     vec4 value(1.0f, 4.0f, 5.0f, 2.0f);
-    ASSERT_NO_THROW(shader.setVec4UniformVariable("test shader vec4", value));
-    ASSERT_EQ(value, shader.getVec4UniformVariable("test shader vec4"));
+    ASSERT_NO_THROW(manager.getRef(id).setVec4UniformVariable("test shader vec4", value));
+    ASSERT_EQ(value, manager.getRef(id).getVec4UniformVariable("test shader vec4"));
 }
 
 TEST_F(ShaderSuite, SetMat2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat2", "test_shader_mat2");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat2", "test_shader_mat2");
 
     mat2 value(1.0f, 2.0f, 3.0f, 4.0f);
-    ASSERT_NO_THROW(shader.setMat2UniformVariable("test shader mat2", value));
-    ASSERT_EQ(value, shader.getMat2UniformVariable("test shader mat2"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat2UniformVariable("test shader mat2", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat2UniformVariable("test shader mat2"));
 }
 
 TEST_F(ShaderSuite, SetMat3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat3", "test_shader_mat3");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat3", "test_shader_mat3");
 
     mat3 value(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
         7.0f, 8.0f, 9.0f);
-    ASSERT_NO_THROW(shader.setMat3UniformVariable("test shader mat3", value));
-    ASSERT_EQ(value, shader.getMat3UniformVariable("test shader mat3"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat3UniformVariable("test shader mat3", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat3UniformVariable("test shader mat3"));
 }
 
 TEST_F(ShaderSuite, SetMat4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat4", "test_shader_mat4");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat4", "test_shader_mat4");
 
     mat4 value(
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f,
         9.0f, 10.0f, 11.0f, 12.0f,
         13.0f, 14.0f, 15.0f, 16.0f);
-    ASSERT_NO_THROW(shader.setMat4UniformVariable("test shader mat4", value));
-    ASSERT_EQ(value, shader.getMat4UniformVariable("test shader mat4"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat4UniformVariable("test shader mat4", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat4UniformVariable("test shader mat4"));
 }
 
 TEST_F(ShaderSuite, SetMat2x3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat2x3", "test_shader_mat2x3");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat2x3", "test_shader_mat2x3");
 
     mat2x3 value(
         1.0f, 2.0f,
         3.0f, 4.0f,
         5.0f, 6.0f);
-    ASSERT_NO_THROW(shader.setMat2x3UniformVariable("test shader mat2x3", value));
-    ASSERT_EQ(value, shader.getMat2x3UniformVariable("test shader mat2x3"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat2x3UniformVariable("test shader mat2x3", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat2x3UniformVariable("test shader mat2x3"));
 }
 
 TEST_F(ShaderSuite, SetMat3x2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat3x2", "test_shader_mat3x2");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat3x2", "test_shader_mat3x2");
 
     mat3x2 value(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f);
-    ASSERT_NO_THROW(shader.setMat3x2UniformVariable("test shader mat3x2", value));
-    ASSERT_EQ(value, shader.getMat3x2UniformVariable("test shader mat3x2"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat3x2UniformVariable("test shader mat3x2", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat3x2UniformVariable("test shader mat3x2"));
 }
 
 TEST_F(ShaderSuite, SetMat2x4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat2x4", "test_shader_mat2x4");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat2x4", "test_shader_mat2x4");
 
     mat2x4 value(
         1.0f, 2.0f,
         3.0f, 4.0f,
         5.0f, 6.0f,
         7.0f, 8.0f);
-    ASSERT_NO_THROW(shader.setMat2x4UniformVariable("test shader mat2x4", value));
-    ASSERT_EQ(value, shader.getMat2x4UniformVariable("test shader mat2x4"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat2x4UniformVariable("test shader mat2x4", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat2x4UniformVariable("test shader mat2x4"));
 }
 
 TEST_F(ShaderSuite, SetMat4x2UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat4x2", "test_shader_mat4x2");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat4x2", "test_shader_mat4x2");
 
     mat4x2 value(
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f);
-    ASSERT_NO_THROW(shader.setMat4x2UniformVariable("test shader mat4x2", value));
-    ASSERT_EQ(value, shader.getMat4x2UniformVariable("test shader mat4x2"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat4x2UniformVariable("test shader mat4x2", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat4x2UniformVariable("test shader mat4x2"));
 }
 
 TEST_F(ShaderSuite, SetMat3x4UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat3x4", "test_shader_mat3x4");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat3x4", "test_shader_mat3x4");
 
     mat3x4 value(
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
         7.0f, 8.0f, 9.0f,
         10.0f, 11.0f, 12.0f);
-    ASSERT_NO_THROW(shader.setMat3x4UniformVariable("test shader mat3x4", value));
-    ASSERT_EQ(value, shader.getMat3x4UniformVariable("test shader mat3x4"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat3x4UniformVariable("test shader mat3x4", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat3x4UniformVariable("test shader mat3x4"));
 }
 
 TEST_F(ShaderSuite, SetMat4x3UniformVariable) {
-    Shader shader(vertexShaderSource, fragmentShaderSourceForUniformTest);
-    shader.registerUniformVariable("test shader mat4x3", "test_shader_mat4x3");
+    Manager<Shader> manager;
+    Shader::Id id = manager.create(Shader::Construct {
+        .vertexShaderSource = vertexShaderSource,
+        .fragmentShaderSource = fragmentShaderSourceForUniformTest
+    });
+    manager.getRef(id).registerUniformVariable("test shader mat4x3", "test_shader_mat4x3");
 
     mat4x3 value(
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f,
         9.0f, 10.0f, 11.0f, 12.0f);
-    ASSERT_NO_THROW(shader.setMat4x3UniformVariable("test shader mat4x3", value));
-    ASSERT_EQ(value, shader.getMat4x3UniformVariable("test shader mat4x3"));
+    ASSERT_NO_THROW(manager.getRef(id).setMat4x3UniformVariable("test shader mat4x3", value));
+    ASSERT_EQ(value, manager.getRef(id).getMat4x3UniformVariable("test shader mat4x3"));
 }

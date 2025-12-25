@@ -1,18 +1,23 @@
 #pragma once
 
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <glm/matrix.hpp>
+#include <resource.h>
 #include "./shader_id.h"
 
-class Shader {
+class Shader: public Resource<Shader, ShaderId> {
 public:
-    Shader(const std::string & vertexShaderSource, const std::string & fragmentShaderSource);
-    ~Shader();
+    struct Construct {
+        std::string vertexShaderSource;
+        std::string fragmentShaderSource;
+    };
 
-    ShaderId getId() const;
+    Shader(const Id & id, const Construct & constructParameter);
+    ~Shader();
 
     void use();
 
@@ -48,8 +53,6 @@ public:
     glm::mat4x3 getMat4x3UniformVariable(const std::string & identifyName);
 
 private:
-    ShaderId id;
-
     uint32_t programId;
     std::unordered_map<std::string, uint32_t> uniformLocations;
 
@@ -65,3 +68,5 @@ private:
     void registerDefaultUniformVariable();
     void checkUniformVariableExist(const std::string & identifyName);
 };
+
+#include "./shader.tpp"
