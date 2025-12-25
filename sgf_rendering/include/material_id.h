@@ -2,7 +2,7 @@
 
 #include <resource_id.h>
 
-struct MaterialTag {};
+struct MaterialTag {
+    static const std::string TypeName;
+};
 using MaterialId = ResourceId<MaterialTag>;
-
-#include "./material_id.tpp"

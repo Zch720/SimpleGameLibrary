@@ -1,8 +1,0 @@
-#include "./shader_id.h"
-
-template <>
-struct TypeName<ShaderTag> {
-    std::string operator()() const noexcept {
-        return "Shader";
-    }
-};

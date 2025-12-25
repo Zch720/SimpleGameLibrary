@@ -1,6 +1,9 @@
 #include "../include/mesh.h"
 #include <glad/gl.h>
 
+const std::string MeshTag::TypeName = "Mesh";
+const std::string Mesh::TypeName = "Mesh";
+
 Mesh::Mesh(const Id & id, const Construct & constructParameter):
     verticesCount(constructParameter.verticesCount),
     indicesCount(constructParameter.indicesCount),

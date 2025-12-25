@@ -2,6 +2,9 @@
 #include "../include/render_context.h"
 #include "../include/renderable.h"
 
+const std::string MaterialTag::TypeName = "Material";
+const std::string Material::TypeName = "Material";
+
 Material::Material(const Id & id, const Construct & constructParameter):
     useTexture(constructParameter.useTexture),
     shaderId(constructParameter.shaderId),

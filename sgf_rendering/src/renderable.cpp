@@ -3,6 +3,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "../include/render_context.h"
 
+const std::string RenderableTag::TypeName = "Renderable";
+const std::string Renderable::TypeName = "Renderable";
+
 Renderable::Renderable(const Id & id, const Construct & constructParameter):
         meshId(constructParameter.meshId),
         materialId(constructParameter.materialId),

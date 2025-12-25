@@ -2,7 +2,7 @@
 
 #include <resource_id.h>
 
-struct MeshTag {};
+struct MeshTag {
+    static const std::string TypeName;
+};
 using MeshId = ResourceId<MeshTag>;
-
-#include "./mesh_id.tpp"

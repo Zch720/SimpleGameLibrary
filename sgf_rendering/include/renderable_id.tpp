@@ -1,8 +1,0 @@
-#include "./renderable_id.h"
-
-template <>
-struct TypeName<RenderableTag> {
-    std::string operator()() const noexcept {
-        return "Renderable";
-    }
-};

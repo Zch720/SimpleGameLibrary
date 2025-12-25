@@ -3,18 +3,15 @@
 #include "../include/resource.h"
 #include "./util.hpp"
 
-struct FooTag {};
-using FooId = ResourceId<FooTag>;
-
-template <>
-struct TypeName<FooTag> {
-    std::string operator()() {
-        return "Foo";
-    }
+struct FooTag {
+    static const std::string TypeName;
 };
+const std::string FooTag::TypeName = "Foo";
+using FooId = ResourceId<FooTag>;
 
 class Foo : public Resource<Foo, FooId> {
 public:
+    static const std::string TypeName;
     struct Construct {
         int a;
     };
@@ -26,13 +23,7 @@ public:
 
     int a;
 };
-
-template <>
-struct TypeName<Foo> {
-    std::string operator()() {
-        return "Foo";
-    }
-};
+const std::string Foo::TypeName = "Foo";
 
 TEST(ManagerSuite, CreateManager) {
     ASSERT_NO_THROW(Manager<Foo>());

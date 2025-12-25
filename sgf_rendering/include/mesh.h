@@ -7,6 +7,7 @@
 
 class Mesh: public Resource<Mesh, MeshId> {
 public:
+    static const std::string TypeName;
     struct Construct {
         void * vertices;
         size_t verticesCount;
@@ -33,5 +34,3 @@ private:
 
     VertexLayout vertexLayout;
 };
-
-#include "./mesh.tpp"

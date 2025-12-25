@@ -2,7 +2,7 @@
 
 #include <resource_id.h>
 
-struct RenderableTag {};
+struct RenderableTag {
+    static const std::string TypeName;
+};
 using RenderableId = ResourceId<RenderableTag>;
-
-#include "./renderable_id.tpp"

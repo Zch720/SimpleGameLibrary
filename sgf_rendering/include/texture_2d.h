@@ -7,6 +7,7 @@
 
 class Texture2D: public Resource<Texture2D, Texture2DId> {
 public:
+    static const std::string TypeName;
     struct Construct {
         std::string path;
     };
@@ -34,5 +35,3 @@ private:
     bool isValidTextureType() const;
     uint8_t * loadData();
 };
-
-#include "./texture_2d.tpp"

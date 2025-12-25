@@ -11,6 +11,7 @@
 
 class Shader: public Resource<Shader, ShaderId> {
 public:
+    static const std::string TypeName;
     struct Construct {
         std::string vertexShaderSource;
         std::string fragmentShaderSource;
@@ -68,5 +69,3 @@ private:
     void registerDefaultUniformVariable();
     void checkUniformVariableExist(const std::string & identifyName);
 };
-
-#include "./shader.tpp"

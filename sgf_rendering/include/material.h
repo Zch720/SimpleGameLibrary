@@ -10,6 +10,7 @@ class Renderable;
 
 class Material: public Resource<Material, MaterialId> {
 public:
+    static const std::string TypeName;
     struct Construct {
         bool useTexture;
         ShaderId shaderId;
@@ -27,5 +28,3 @@ private:
     Texture2DId textureId;
     ShaderId shaderId;
 };
-
-#include "./material.tpp"

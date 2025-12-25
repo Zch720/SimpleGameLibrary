@@ -2,7 +2,6 @@
 
 #include <string>
 #include "./resource_id.h"
-#include "./type_name.h"
 
 template <typename T, typename TId>
 class Resource {

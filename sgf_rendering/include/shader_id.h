@@ -2,7 +2,7 @@
 
 #include <resource_id.h>
 
-struct ShaderTag {};
+struct ShaderTag {
+    static const std::string TypeName;
+};
 using ShaderId = ResourceId<ShaderTag>;
-
-#include "./shader_id.tpp"

@@ -11,6 +11,7 @@ class RenderContext;
 
 class Renderable: public Resource<Renderable, RenderableId> {
 public:
+    static const std::string TypeName;
     struct Construct {
         MeshId meshId;
         MaterialId materialId;

@@ -25,8 +25,7 @@ std::string ResourceId<Tag>::toString() const {
 
 template <typename Tag>
 std::string ResourceId<Tag>::getTypeName() {
-    typename TypeName<Tag>::TypeName typeNameObj;
-    return typeNameObj();
+    return Tag::TypeName;
 }
 
 template <typename Tag>

@@ -7,6 +7,5 @@ typename Resource<T, TId>::Id Resource<T, TId>::getId() const {
 
 template <typename T, typename TId>
 std::string Resource<T, TId>::getTypeName() {
-    typename TypeName<T>::TypeName typeNameObj;
-    return typeNameObj();
+    return T::TypeName;
 }

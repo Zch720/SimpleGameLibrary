@@ -3,6 +3,9 @@
 #include <glad/gl.h>
 #include <glm/gtc/type_ptr.hpp>
 
+const std::string ShaderTag::TypeName = "Shader";
+const std::string Shader::TypeName = "Shader";
+
 Shader::Shader(const Id & id, const Construct & constructParameter) {
     this->id = id;
 

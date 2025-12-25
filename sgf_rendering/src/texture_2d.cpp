@@ -5,6 +5,9 @@
 #include <memory>
 #include <regex>
 
+const std::string Texture2DTag::TypeName = "Texture2D";
+const std::string Texture2D::TypeName = "Texture2D";
+
 Texture2D::Texture2D(const Id & id, const Construct & constructParameter): path(constructParameter.path) {
     this->id = id;
 
