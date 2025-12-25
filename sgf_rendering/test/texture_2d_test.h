@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "./utils.h"
-#include "../include/texture_2d.h"
+#include "../include/sgf/rendering/texture_2d.h"
 
 class Texture2DSuite: public ::testing::Test {
 protected:

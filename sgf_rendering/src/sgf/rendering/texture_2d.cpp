@@ -1,4 +1,4 @@
-#include "../include/texture_2d.h"
+#include "../../../include/sgf/rendering/texture_2d.h"
 #include <glad/gl.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>

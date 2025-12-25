@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include <manager.h>
+#include <sgf/utils/manager.h>
 #include "./test_env.h"
 #include "./utils.h"
-#include "../include/shader.h"
+#include "../include/sgf/rendering/shader.h"
 
 using namespace glm;
 

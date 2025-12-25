@@ -1,6 +1,6 @@
-#include "../include/material.h"
-#include "../include/render_context.h"
-#include "../include/renderable.h"
+#include "../../../include/sgf/rendering/material.h"
+#include "../../../include/sgf/rendering/render_context.h"
+#include "../../../include/sgf/rendering/renderable.h"
 
 const std::string MaterialTag::TypeName = "Material";
 const std::string Material::TypeName = "Material";

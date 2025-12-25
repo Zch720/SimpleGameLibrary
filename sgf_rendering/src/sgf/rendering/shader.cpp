@@ -1,4 +1,4 @@
-#include "../include/shader.h"
+#include "../../../include/sgf/rendering/shader.h"
 #include <stdexcept>
 #include <glad/gl.h>
 #include <glm/gtc/type_ptr.hpp>

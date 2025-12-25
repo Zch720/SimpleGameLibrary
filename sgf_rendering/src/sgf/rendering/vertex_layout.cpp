@@ -1,4 +1,4 @@
-#include "../include/vertex_layout.h"
+#include "../../../include/sgf/rendering/vertex_layout.h"
 #include <glad/gl.h>
 
 size_t getTypeSize(GLenum glType) {

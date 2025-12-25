@@ -1,4 +1,4 @@
-#include "../include/render_context.h"
+#include "../../../include/sgf/rendering/render_context.h"
 
 void RenderContext::destroyAllResources() {
     ShaderManager.destroyAll();

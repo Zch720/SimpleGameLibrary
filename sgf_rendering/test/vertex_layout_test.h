@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/vertex_layout.h"
+#include "../include/sgf/rendering/vertex_layout.h"
 
 TEST(VertexLayoutSuite, AddStride_GL_BYTE) {
     VertexLayout vertexLayout;

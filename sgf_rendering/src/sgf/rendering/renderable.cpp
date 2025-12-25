@@ -1,7 +1,7 @@
-#include "../include/renderable.h"
+#include "../../../include/sgf/rendering/renderable.h"
 #include <glad/gl.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "../include/render_context.h"
+#include "../../../include/sgf/rendering/render_context.h"
 
 const std::string RenderableTag::TypeName = "Renderable";
 const std::string Renderable::TypeName = "Renderable";

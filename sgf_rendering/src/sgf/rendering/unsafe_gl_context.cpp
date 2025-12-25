@@ -1,5 +1,5 @@
-#include "../include/unsafe_gl_context.h"
-#include "../include/render_context.h"
+#include "../../../include/sgf/rendering/unsafe_gl_context.h"
+#include "../../../include/sgf/rendering/render_context.h"
 
 UnsafeGLContext::UnsafeGLContext(RenderContext & renderContext): renderContext(renderContext) {
 }

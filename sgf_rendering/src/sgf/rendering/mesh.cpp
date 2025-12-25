@@ -1,4 +1,4 @@
-#include "../include/mesh.h"
+#include "../../../include/sgf/rendering/mesh.h"
 #include <glad/gl.h>
 
 const std::string MeshTag::TypeName = "Mesh";

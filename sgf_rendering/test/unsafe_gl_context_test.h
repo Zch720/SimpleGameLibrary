@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "./utils.h"
-#include "../include/render_context.h"
+#include "../include/sgf/rendering/render_context.h"
 
 TEST(UnsafeGLContextSuite, Breath) {
     std::vector<float> vertices {

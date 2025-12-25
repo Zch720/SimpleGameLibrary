@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include "./test_env.h"
 #include "./utils.h"
-#include "../include/render_context.h"
-#include "../include/renderable.h"
+#include "../include/sgf/rendering/render_context.h"
+#include "../include/sgf/rendering/renderable.h"
 
 using namespace glm;
 
