@@ -33,6 +33,10 @@ Mesh::~Mesh() {
     glDeleteVertexArrays(1, &VAO);
 }
 
+size_t Mesh::getVerticesCount() const {
+    return verticesCount;
+}
+
 size_t Mesh::getIndicesCount() const {
     return indicesCount;
 }

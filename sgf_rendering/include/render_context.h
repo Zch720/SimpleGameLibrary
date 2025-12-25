@@ -1,10 +1,15 @@
 #pragma once
 
+#include <functional>
 #include <manager.h>
 #include "./material.h"
 #include "./mesh.h"
 #include "./shader.h"
 #include "./texture_2d.h"
+
+#ifdef SGF_RENDERING_UNSAFE
+#include "./unsafe_gl_context.h"
+#endif
 
 class RenderContext {
 public:
@@ -14,4 +19,12 @@ public:
     Manager<Material> MaterialManager;
 
     void destroyAllResources();
+
+#ifdef SGF_RENDERING_UNSAFE
+    template <typename Fn>
+    void unsafeExecute(Fn&& fn) {
+        UnsafeGLContext glContext(*this);
+        fn(glContext);
+    }
+#endif
 };

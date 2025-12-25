@@ -13,8 +13,8 @@ Texture2D::Texture2D(const Id & id, const Construct & constructParameter): path(
 
     uint8_t * data = loadData();
 
-    glGenTextures(1, &textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glGenTextures(1, &textureHandle);
+    glBindTexture(GL_TEXTURE_2D, textureHandle);
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -26,8 +26,8 @@ Texture2D::Texture2D(const Id & id, const Construct & constructParameter): path(
 }
 
 Texture2D::~Texture2D() {
-    if (textureId != 0) {
-        glDeleteTextures(1, &textureId);
+    if (textureHandle != 0) {
+        glDeleteTextures(1, &textureHandle);
     }
 }
 
@@ -43,12 +43,8 @@ int Texture2D::getHeight() const {
     return height;
 }
 
-uint32_t Texture2D::getTextureId() const {
-    return textureId;
-}
-
 void Texture2D::bind() const {
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glBindTexture(GL_TEXTURE_2D, textureHandle);
 }
 
 bool Texture2D::isValidTextureType() const {

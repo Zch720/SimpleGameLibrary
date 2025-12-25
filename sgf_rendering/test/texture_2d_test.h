@@ -21,7 +21,6 @@ TEST_F(Texture2DSuite, PngImageLoadedWithCorrectInfo) {
     Texture2D texture = Texture2D(Texture2DId(), { .path = TEST_RESOURCES_DIR"/image.png" });
     ASSERT_EQ(225, texture.getWidth());
     ASSERT_EQ(225, texture.getHeight());
-    ASSERT_NE(0, texture.getTextureId());
 }
 
 TEST_F(Texture2DSuite, LoadJpgImage) {
@@ -32,7 +31,6 @@ TEST_F(Texture2DSuite, JpgImageLoadedWithCorrectInfo) {
     Texture2D texture = Texture2D(Texture2DId(), { .path = TEST_RESOURCES_DIR"/image.jpg" });
     ASSERT_EQ(225, texture.getWidth());
     ASSERT_EQ(225, texture.getHeight());
-    ASSERT_NE(0, texture.getTextureId());
 }
 
 TEST_F(Texture2DSuite, LoadBmpImage) {
@@ -43,7 +41,6 @@ TEST_F(Texture2DSuite, BmpImageLoadedWithCorrectInfo) {
     Texture2D texture = Texture2D(Texture2DId(), { .path = TEST_RESOURCES_DIR"/image.bmp" });
     ASSERT_EQ(225, texture.getWidth());
     ASSERT_EQ(225, texture.getHeight());
-    ASSERT_NE(0, texture.getTextureId());
 }
 
 TEST_F(Texture2DSuite, LoadTifImage) {

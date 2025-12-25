@@ -8,6 +8,7 @@
 #include "vertex_layout_test.h"
 #include "renderable_test.h"
 #include "image_test.h"
+#include "unsafe_gl_context_test.h"
 
 struct Arg {
     std::string key;

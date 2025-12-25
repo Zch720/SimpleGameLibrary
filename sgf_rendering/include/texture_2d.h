@@ -5,6 +5,8 @@
 #include <resource.h>
 #include "./texture_2d_id.h"
 
+class UnsafeGLContext;
+
 class Texture2D: public Resource<Texture2D, Texture2DId> {
 public:
     static const std::string TypeName;
@@ -19,18 +21,18 @@ public:
     int getWidth() const;
     int getHeight() const;
 
-    uint32_t getTextureId() const;
-
     void bind() const;
 
 private:
+    friend UnsafeGLContext;
+
     std::string path;
 
     int width;
     int height;
     int channels;
 
-    uint32_t textureId;
+    uint32_t textureHandle;
 
     bool isValidTextureType() const;
     uint8_t * loadData();

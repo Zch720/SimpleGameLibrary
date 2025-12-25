@@ -9,6 +9,8 @@
 #include <resource.h>
 #include "./shader_id.h"
 
+class UnsafeGLContext;
+
 class Shader: public Resource<Shader, ShaderId> {
 public:
     static const std::string TypeName;
@@ -54,16 +56,18 @@ public:
     glm::mat4x3 getMat4x3UniformVariable(const std::string & identifyName);
 
 private:
-    uint32_t programId;
+    friend UnsafeGLContext;
+
+    uint32_t programHandle;
     std::unordered_map<std::string, uint32_t> uniformLocations;
 
     void compileShader(uint32_t shaderId, const char * source);
     bool isShaderCompileSuccess(uint32_t shaderId);
     std::string getShaderCompileErrors(uint32_t shaderId);
     
-    void linkProgram(uint32_t programId, uint32_t vertexShaderId, uint32_t fragmentShaderId);
-    bool isProgramLinkSuccess(uint32_t programId);
-    std::string getProgramLinkErrors(uint32_t programId);
+    void linkProgram(uint32_t programHandle, uint32_t vertexShaderHandle, uint32_t fragmentShaderHandle);
+    bool isProgramLinkSuccess(uint32_t programHandle);
+    std::string getProgramLinkErrors(uint32_t programHandle);
 
     std::vector<std::string> getAllUniformVariableName();
     void registerDefaultUniformVariable();

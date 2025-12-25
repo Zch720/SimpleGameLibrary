@@ -82,6 +82,8 @@ target_link_libraries(
 
 target_compile_definitions(
     sgf_rendering_test
+    PUBLIC
+    SGF_RENDERING_UNSAFE
     PRIVATE
     PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
     RESOURCES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources"
