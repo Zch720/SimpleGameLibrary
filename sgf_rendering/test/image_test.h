@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "./test_env.h"
 #include "./utils.h"
+#include "../include/render_context.h"
 #include "../include/renderable.h"
 
 class ImageSuite : public ::testing::Test {
@@ -16,11 +17,11 @@ protected:
         imageVertexLayout = VertexLayout();
         imageVertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
         imageVertexLayout.addAttribute({ .index = 1, .size = 2, .type = GL_FLOAT, .normalized = false, .offset = sizeof(float) * 3 });
-        imageMesh = new Mesh(imageVertices.data(), 4, triangleIndices.data(), 6, imageVertexLayout);
+        imageMeshId = context.MeshManager.create({ .vertices = imageVertices.data(), .verticesCount = 4, .indices = triangleIndices.data(), .indicesCount = 6, .vertexLayout = imageVertexLayout });
     }
 
     void TearDown() override {
-        context.ShaderManager.destroyAll();
+        context.destroyAllResources();
 
         sgf_test::OpenGLContextTerminate();
     }
@@ -28,7 +29,7 @@ protected:
     RenderContext context;
     ShaderId shaderId;
     VertexLayout imageVertexLayout;
-    Mesh * imageMesh = nullptr;
+    MeshId imageMeshId;
     std::vector<float> imageVertices {
         -0.5f, 0.5f, 0.0f, 0.0f, 0.0f,
         0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
@@ -68,10 +69,10 @@ protected:
 TEST_F(ImageSuite, DrawPngImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    Texture2D texture(TEST_RESOURCES_DIR"/image.png");
-    Material material(shaderId, &texture);
+    Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image.png" });
+    MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
 
-    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
+    Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -86,10 +87,10 @@ TEST_F(ImageSuite, DrawPngImage) {
 TEST_F(ImageSuite, DrawTransparentPngImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    Texture2D texture(TEST_RESOURCES_DIR"/image_transparent.png");
-    Material material(shaderId, &texture);
+    Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image_transparent.png" });
+    MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
 
-    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
+    Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 
     PRINTF("There should be a smile image with no background in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -104,10 +105,10 @@ TEST_F(ImageSuite, DrawTransparentPngImage) {
 TEST_F(ImageSuite, DrawJpgImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    Texture2D texture(TEST_RESOURCES_DIR"/image.jpg");
-    Material material(shaderId, &texture);
+    Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image.jpg" });
+    MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
 
-    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
+    Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -122,10 +123,10 @@ TEST_F(ImageSuite, DrawJpgImage) {
 TEST_F(ImageSuite, DrawBmpImage) {
     if (skipHandTest) GTEST_SKIP();
 
-    Texture2D texture(TEST_RESOURCES_DIR"/image.bmp");
-    Material material(shaderId, &texture);
+    Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image.bmp" });
+    MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
 
-    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
+    Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");

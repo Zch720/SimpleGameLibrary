@@ -1,7 +1,7 @@
+#include "../include/shader.h"
 #include <stdexcept>
 #include <glad/gl.h>
 #include <glm/gtc/type_ptr.hpp>
-#include "../include/shader.h"
 
 Shader::Shader(const Id & id, const Construct & constructParameter) {
     this->id = id;

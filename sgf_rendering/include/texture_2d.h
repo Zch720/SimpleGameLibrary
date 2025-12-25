@@ -2,11 +2,16 @@
 
 #include <stdint.h>
 #include <string>
+#include <resource.h>
+#include "./texture_2d_id.h"
 
-class Texture2D {
+class Texture2D: public Resource<Texture2D, Texture2DId> {
 public:
-    Texture2D();
-    Texture2D(const std::string & path);
+    struct Construct {
+        std::string path;
+    };
+
+    Texture2D(const Id & id, const Construct & constructParameter);
     ~Texture2D();
 
     std::string getPath() const;
@@ -29,3 +34,5 @@ private:
     bool isValidTextureType() const;
     uint8_t * loadData();
 };
+
+#include "./texture_2d.tpp"

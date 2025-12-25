@@ -1,10 +1,11 @@
 #include "../include/renderable.h"
 #include <glad/gl.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include "../include/render_context.h"
 
 Renderable::Renderable(const Id & id, const Construct & constructParameter):
-        mesh(constructParameter.mesh),
-        material(constructParameter.material),
+        meshId(constructParameter.meshId),
+        materialId(constructParameter.materialId),
         color(1.0f),
         positionValue(0.0f),
         scaleValue(1.0f),
@@ -29,12 +30,16 @@ void Renderable::update() {
 }
 
 void Renderable::render(const RenderContext & context) const {
-    if (mesh == nullptr) return;
-    material->bind(context);
-    material->applyPerObject(context, *this);
-    mesh->bind();
-    glDrawElements(GL_TRIANGLES, mesh->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
-    mesh->unbind();
+    if (!context.MeshManager.isExist(meshId)) return;
+
+    Material & material = context.MaterialManager.getRef(materialId);
+    material.bind(context);
+    material.applyPerObject(context, *this);
+
+    Mesh & mesh = context.MeshManager.getRef(meshId);
+    mesh.bind();
+    glDrawElements(GL_TRIANGLES, mesh.getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+    mesh.unbind();
 }
 
 void Renderable::setColor(float r, float g, float b, float a) {

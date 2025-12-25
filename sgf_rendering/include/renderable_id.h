@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <resource_id.h>
 
 struct RenderableTag {};

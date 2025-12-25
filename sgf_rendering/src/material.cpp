@@ -1,16 +1,17 @@
 #include "../include/material.h"
+#include "../include/render_context.h"
 #include "../include/renderable.h"
 
-Material::Material(ShaderId shaderId): shaderId(shaderId) {
-}
-
-Material::Material(ShaderId shaderId, Texture2D * texture): shaderId(shaderId), texture(texture), useTexture(true) {
+Material::Material(const Id & id, const Construct & constructParameter):
+    useTexture(constructParameter.useTexture),
+    shaderId(constructParameter.shaderId),
+    textureId(constructParameter.textureId) {
 }
 
 void Material::bind(const RenderContext & context) const {
     context.ShaderManager.getRef(shaderId).use();
     if (useTexture) {
-        texture->bind();
+        context.Texture2DManager.getRef(textureId).bind();
     }
 }
 

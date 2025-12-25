@@ -3,16 +3,17 @@
 #include <string>
 #include <glm/matrix.hpp>
 #include <resource.h>
-#include "./material.h"
-#include "./mesh.h"
-#include "./render_context.h"
+#include "./material_id.h"
+#include "./mesh_id.h"
 #include "./renderable_id.h"
+
+class RenderContext;
 
 class Renderable: public Resource<Renderable, RenderableId> {
 public:
     struct Construct {
-        Mesh * mesh;
-        Material * material;
+        MeshId meshId;
+        MaterialId materialId;
     };
     Renderable(const Id & id, const Construct & constructParameter);
 
@@ -64,8 +65,8 @@ public:
 protected:
     void updateTransformationMatrix();
 
-    Mesh * mesh;
-    Material * material;
+    MeshId meshId;
+    MaterialId materialId;
 
     glm::vec4 color;
 

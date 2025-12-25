@@ -1,11 +1,12 @@
 #include "../include/mesh.h"
 #include <glad/gl.h>
 
-Mesh::Mesh(
-    const void * vertices, const size_t verticesCount,
-    const uint32_t * indices, const size_t indicesCount,
-    const VertexLayout & vertexLayout
-): verticesCount(verticesCount), indicesCount(indicesCount), vertexLayout(vertexLayout) {
+Mesh::Mesh(const Id & id, const Construct & constructParameter):
+    verticesCount(constructParameter.verticesCount),
+    indicesCount(constructParameter.indicesCount),
+    vertexLayout(constructParameter.vertexLayout) {
+    this->id = id;
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -13,10 +14,10 @@ Mesh::Mesh(
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertexLayout.getStride() * verticesCount, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertexLayout.getStride() * verticesCount, constructParameter.vertices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * indicesCount, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * indicesCount, constructParameter.indices, GL_STATIC_DRAW);
 
     vertexLayout.apply();
 

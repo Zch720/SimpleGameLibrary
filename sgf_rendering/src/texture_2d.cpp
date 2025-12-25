@@ -5,10 +5,9 @@
 #include <memory>
 #include <regex>
 
-Texture2D::Texture2D(): path(""), textureId(0) {
-}
+Texture2D::Texture2D(const Id & id, const Construct & constructParameter): path(constructParameter.path) {
+    this->id = id;
 
-Texture2D::Texture2D(const std::string & path): path(path) {
     uint8_t * data = loadData();
 
     glGenTextures(1, &textureId);

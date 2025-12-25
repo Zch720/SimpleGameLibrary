@@ -1,11 +1,21 @@
 #pragma once
 
 #include <stdint.h>
+#include <resource.h>
+#include "./mesh_id.h"
 #include "./vertex_layout.h"
 
-class Mesh {
+class Mesh: public Resource<Mesh, MeshId> {
 public:
-    Mesh(const void * vertices, const size_t verticesCount, const uint32_t * indices, const size_t indicesCount, const VertexLayout & vertexLayout);
+    struct Construct {
+        void * vertices;
+        size_t verticesCount;
+        uint32_t * indices;
+        size_t indicesCount;
+        const VertexLayout & vertexLayout;
+    };
+
+    Mesh(const Id & id, const Construct & constructParameter);
     ~Mesh();
 
     size_t getIndicesCount() const;
@@ -23,3 +33,5 @@ private:
 
     VertexLayout vertexLayout;
 };
+
+#include "./mesh.tpp"
