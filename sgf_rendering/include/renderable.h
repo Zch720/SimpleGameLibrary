@@ -15,8 +15,6 @@ public:
         Material * material;
     };
     Renderable(const Id & id, const Construct & constructParameter);
-    
-    RenderableId getId() const;
 
     glm::vec4 getColor() const;
     glm::mat4 getTransformationMatrix() const;
@@ -66,7 +64,6 @@ public:
 protected:
     void updateTransformationMatrix();
 
-    RenderableId id;
     Mesh * mesh;
     Material * material;
 

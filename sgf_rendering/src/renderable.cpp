@@ -3,18 +3,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Renderable::Renderable(const Id & id, const Construct & constructParameter):
-        id(id),
         mesh(constructParameter.mesh),
         material(constructParameter.material),
         color(1.0f),
         positionValue(0.0f),
         scaleValue(1.0f),
         rotationValue(0.0f) {
+    this->id = id;
     updateTransformationMatrix();
-}
-
-RenderableId Renderable::getId() const {
-    return id;
 }
 
 glm::vec4 Renderable::getColor() const {
