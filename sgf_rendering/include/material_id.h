@@ -1,6 +1,6 @@
 #pragma once
 
-#include <resource_id.h>
+#include <sgf/utils/resource_id.h>
 
 struct MaterialTag {
     static const std::string TypeName;

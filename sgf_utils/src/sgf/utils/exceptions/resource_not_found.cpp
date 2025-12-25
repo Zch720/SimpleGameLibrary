@@ -1,4 +1,4 @@
-#include "../../include/exceptions/resource_not_found.h"
+#include "../../../../include/sgf/utils/exceptions/resource_not_found.h"
 
 namespace sgf {
     ResourceNotFound::ResourceNotFound(const std::string & message) : message(message) {

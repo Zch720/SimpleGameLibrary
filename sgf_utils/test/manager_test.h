@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../include/manager.h"
-#include "../include/resource.h"
+#include "../include/sgf/utils/manager.h"
+#include "../include/sgf/utils/resource.h"
 #include "./util.hpp"
 
 struct FooTag {

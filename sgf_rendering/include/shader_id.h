@@ -1,6 +1,6 @@
 #pragma once
 
-#include <resource_id.h>
+#include <sgf/utils/resource_id.h>
 
 struct ShaderTag {
     static const std::string TypeName;

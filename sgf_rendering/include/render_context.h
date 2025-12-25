@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include <manager.h>
+#include <sgf/utils/manager.h>
 #include "./material.h"
 #include "./mesh.h"
 #include "./shader.h"

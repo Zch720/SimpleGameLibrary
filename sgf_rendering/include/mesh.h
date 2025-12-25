@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include <resource.h>
+#include <sgf/utils/resource.h>
 #include "./mesh_id.h"
 #include "./vertex_layout.h"
 

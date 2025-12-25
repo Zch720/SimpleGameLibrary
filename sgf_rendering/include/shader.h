@@ -6,7 +6,7 @@
 #include <vector>
 #include <unordered_map>
 #include <glm/matrix.hpp>
-#include <resource.h>
+#include <sgf/utils/resource.h>
 #include "./shader_id.h"
 
 class UnsafeGLContext;

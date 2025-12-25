@@ -2,7 +2,7 @@
 
 #include <string>
 #include <glm/matrix.hpp>
-#include <resource.h>
+#include <sgf/utils/resource.h>
 #include "./material_id.h"
 #include "./mesh_id.h"
 #include "./renderable_id.h"

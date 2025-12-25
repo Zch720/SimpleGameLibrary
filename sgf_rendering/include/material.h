@@ -1,6 +1,6 @@
 #pragma once
 
-#include <resource.h>
+#include <sgf/utils/resource.h>
 #include "./material_id.h"
 #include "./shader_id.h"
 #include "./texture_2d_id.h"

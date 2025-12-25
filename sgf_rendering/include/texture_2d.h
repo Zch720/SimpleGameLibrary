@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 #include <string>
-#include <resource.h>
+#include <sgf/utils/resource.h>
 #include "./texture_2d_id.h"
 
 class UnsafeGLContext;
