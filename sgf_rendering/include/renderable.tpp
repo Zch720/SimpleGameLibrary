@@ -1,7 +1,7 @@
-#include "./renderable_id.h"
+#include "./renderable.h"
 
 template <>
-struct TypeName<RenderableTag> {
+struct TypeName<Renderable> {
     std::string operator()() const noexcept {
         return "Renderable";
     }

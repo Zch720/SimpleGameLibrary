@@ -77,7 +77,7 @@ TEST_F(RenderableSuite, DrawTriangle) {
     vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
     Mesh mesh((void *)vertices.data(), 3, indices.data(), 3, vertexLayout);
 
-    Renderable triangle(&mesh, material);
+    Renderable triangle(RenderableId(), { .mesh = &mesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -103,7 +103,7 @@ TEST_F(RenderableSuite, DrawRectangle) {
     vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
     Mesh mesh((void *)vertices.data(), 4, indices.data(), 6, vertexLayout);
 
-    Renderable rectangle(&mesh, material);
+    Renderable rectangle(RenderableId(), { .mesh = &mesh, .material = material });
 
     PRINTF("There should be a white Rectangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -130,7 +130,7 @@ TEST_F(RenderableSuite, DrawPentagon) {
     vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
     Mesh mesh((void *)vertices.data(), 5, indices.data(), 9, vertexLayout);
 
-    Renderable pentagon(&mesh, material);
+    Renderable pentagon(RenderableId(), { .mesh = &mesh, .material = material });
 
     PRINTF("There should be a white Rectangle on the screen\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -145,7 +145,7 @@ TEST_F(RenderableSuite, DrawPentagon) {
 TEST_F(RenderableSuite, SetColor) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a red triangle on the screen\n");
@@ -167,7 +167,7 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
         {0.0f, 0.0f, 1.0f}
     };
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
     triangle.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a triangle on the screen\n");
@@ -192,7 +192,7 @@ TEST_F(RenderableSuite, ChangeColorAtRuntime) {
 TEST_F(RenderableSuite, Translate) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between lower left and upper right\n");
@@ -217,7 +217,7 @@ TEST_F(RenderableSuite, Translate) {
 TEST_F(RenderableSuite, TranslateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between left and right\n");
@@ -242,7 +242,7 @@ TEST_F(RenderableSuite, TranslateX) {
 TEST_F(RenderableSuite, TranslateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between up and down\n");
@@ -267,8 +267,8 @@ TEST_F(RenderableSuite, TranslateY) {
 TEST_F(RenderableSuite, TranslateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle1(triangleMesh, material);
-    Renderable triangle2(triangleMesh, material);
+    Renderable triangle1(RenderableId(), { .mesh = triangleMesh, .material = material });
+    Renderable triangle2(RenderableId(), { .mesh = triangleMesh, .material = material });
     triangle2.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 
     PRINTF("There should be a white triangle and red triangle on the screen by terns\n");
@@ -295,7 +295,7 @@ TEST_F(RenderableSuite, TranslateZ) {
 TEST_F(RenderableSuite, SetPosition) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle move between lower left and upper right\n");
@@ -321,7 +321,7 @@ TEST_F(RenderableSuite, SetPosition) {
 TEST_F(RenderableSuite, Scale) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled vertically and horizontally\n");
@@ -347,7 +347,7 @@ TEST_F(RenderableSuite, Scale) {
 TEST_F(RenderableSuite, ScaleX) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled horizontally\n");
@@ -373,7 +373,7 @@ TEST_F(RenderableSuite, ScaleX) {
 TEST_F(RenderableSuite, ScaleY) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be scaled vertically\n");
@@ -399,7 +399,7 @@ TEST_F(RenderableSuite, ScaleY) {
 TEST_F(RenderableSuite, Rotate) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate clockwise\n");
@@ -418,7 +418,7 @@ TEST_F(RenderableSuite, Rotate) {
 TEST_F(RenderableSuite, RotateX) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around x-axis\n");
@@ -437,7 +437,7 @@ TEST_F(RenderableSuite, RotateX) {
 TEST_F(RenderableSuite, RotateY) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around y-axis\n");
@@ -456,7 +456,7 @@ TEST_F(RenderableSuite, RotateY) {
 TEST_F(RenderableSuite, RotateZ) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate around z-axis\n");
@@ -475,7 +475,7 @@ TEST_F(RenderableSuite, RotateZ) {
 TEST_F(RenderableSuite, SetRotation) {
     if (skipHandTest) GTEST_SKIP();
 
-    Renderable triangle(triangleMesh, material);
+    Renderable triangle(RenderableId(), { .mesh = triangleMesh, .material = material });
 
     PRINTF("There should be a white triangle on the screen\n");
     PRINTF("The triangle should be rotate clockwise\n");

@@ -71,7 +71,7 @@ TEST_F(ImageSuite, DrawPngImage) {
     Texture2D texture(TEST_RESOURCES_DIR"/image.png");
     Material material(shaderId, &texture);
 
-    Renderable image(imageMesh, &material);
+    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -89,7 +89,7 @@ TEST_F(ImageSuite, DrawTransparentPngImage) {
     Texture2D texture(TEST_RESOURCES_DIR"/image_transparent.png");
     Material material(shaderId, &texture);
 
-    Renderable image(imageMesh, &material);
+    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
 
     PRINTF("There should be a smile image with no background in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -107,7 +107,7 @@ TEST_F(ImageSuite, DrawJpgImage) {
     Texture2D texture(TEST_RESOURCES_DIR"/image.jpg");
     Material material(shaderId, &texture);
 
-    Renderable image(imageMesh, &material);
+    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");
@@ -125,7 +125,7 @@ TEST_F(ImageSuite, DrawBmpImage) {
     Texture2D texture(TEST_RESOURCES_DIR"/image.bmp");
     Material material(shaderId, &texture);
 
-    Renderable image(imageMesh, &material);
+    Renderable image(RenderableId(), { .mesh = imageMesh, .material =  &material });
 
     PRINTF("There should be a smile image in the window.\n");
     PRINTF("If success press 's', otherwise press 'f' ");

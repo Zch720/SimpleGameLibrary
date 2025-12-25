@@ -2,14 +2,14 @@
 #include <glad/gl.h>
 #include <glm/gtc/matrix_transform.hpp>
 
-Renderable::Renderable(Mesh * mesh, Material * material) :
-        mesh(mesh),
-        material(material),
+Renderable::Renderable(const Id & id, const Construct & constructParameter):
+        id(id),
+        mesh(constructParameter.mesh),
+        material(constructParameter.material),
         color(1.0f),
         positionValue(0.0f),
         scaleValue(1.0f),
         rotationValue(0.0f) {
-    id = RenderableIdGenerator::Instance().getNewId();
     updateTransformationMatrix();
 }
 

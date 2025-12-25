@@ -2,14 +2,19 @@
 
 #include <string>
 #include <glm/matrix.hpp>
+#include <resource.h>
+#include "./material.h"
+#include "./mesh.h"
 #include "./render_context.h"
 #include "./renderable_id.h"
-#include "./mesh.h"
-#include "./material.h"
 
-class Renderable {
+class Renderable: public Resource<Renderable, RenderableId> {
 public:
-    Renderable(Mesh * mesh, Material * material);
+    struct Construct {
+        Mesh * mesh;
+        Material * material;
+    };
+    Renderable(const Id & id, const Construct & constructParameter);
     
     RenderableId getId() const;
 
