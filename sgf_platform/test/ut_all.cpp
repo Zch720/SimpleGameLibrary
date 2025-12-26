@@ -4,7 +4,6 @@
 
 #include "test_env.h"
 #include "window_test.h"
-#include "window_manager_test.h"
 
 struct Arg {
     std::string key;

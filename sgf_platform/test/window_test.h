@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include "./test_env.h"
 #include "./util.hpp"
-#include "../include/window.h"
+#include "../include/sgf/platform/window.h"
+
+using namespace sgf_core;
 
 class WindowSuite : public ::testing::Test {
 protected:
@@ -29,7 +31,7 @@ protected:
     }
 
     Window CreateDefaultWindow(int width, int height, const char * title) {
-        Window defaultWindow(WindowId(), width, height, title);
+        Window defaultWindow(WindowId(), { .width = width, .height = height, .title = title });
         defaultWindow.makeContextCurrent();
 
         SetUpGlad();
@@ -38,14 +40,14 @@ protected:
     }
 
     Window CreateWindow(int width, int height, const char * title) {
-        Window window(WindowId(), width, height, title);
+        Window window(WindowId(), { .width = width, .height = height, .title = title });
 
         return window;
     }
 };
 
 TEST_F(WindowSuite, CreateWindow) {
-    Window window(WindowId(), 800, 600, "Test Window");
+    Window window(WindowId(), { .width = 800, .height = 600, .title = "Test Window" });
     window.makeContextCurrent();
 
     SetUpGlad();
