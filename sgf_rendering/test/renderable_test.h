@@ -12,6 +12,7 @@ protected:
     virtual void SetUp() {
         sgf_test::createOpenGLContext();
 
+        context.initialize();
         shaderId = context.ShaderManager.create({
             .vertexShaderSource = vertexShaderSource,
             .fragmentShaderSource = fragmentShaderSource

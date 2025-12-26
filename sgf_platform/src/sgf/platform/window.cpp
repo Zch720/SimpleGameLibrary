@@ -8,6 +8,9 @@ namespace sgf_core {
     Window::Window(const Id & id, const Construct & constructParameter) {
         this->id = id;
 
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        
         window = glfwCreateWindow(
             constructParameter.width,
             constructParameter.height,
@@ -21,6 +24,7 @@ namespace sgf_core {
     }
 
     Window::~Window() {
+        glfwDestroyWindow(window);
     }
 
     GLFWwindow * Window::getGLFWWindow() {
@@ -44,22 +48,17 @@ namespace sgf_core {
         glfwMakeContextCurrent(window);
     }
 
-    void Window::clear() {
-        makeContextCurrent();
+    void Window::swapBuffer() {
         glfwSwapBuffers(window);
+    }
+
+    void Window::clearBuffer(uint32_t bits) {
         glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | bits);
     }
 
     void Window::close() {
         glfwSetWindowShouldClose(window, true);
-    }
-
-    void Window::destroy() {
-        if (window != nullptr) {
-            glfwDestroyWindow(window);
-            window = nullptr;
-        }
     }
 
     void Window::rename(std::string title) {

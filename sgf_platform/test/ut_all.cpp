@@ -3,6 +3,7 @@
 #include <regex>
 
 #include "test_env.h"
+#include "platform_context_test.h"
 #include "window_test.h"
 
 struct Arg {

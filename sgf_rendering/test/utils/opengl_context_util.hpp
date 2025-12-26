@@ -41,8 +41,6 @@ namespace sgf_test {
         if (!gladLoadGL(glfwGetProcAddress)) {
             throw std::runtime_error("Failed to initialize GLAD");
         }
-        
-        glEnable(GL_DEPTH_TEST);
     }
 
     void OpenGLContextTerminate() {

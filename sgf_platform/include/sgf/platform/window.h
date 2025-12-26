@@ -26,9 +26,9 @@ namespace sgf_core {
         bool isClose();
 
         void makeContextCurrent();
-        void clear();
+        void swapBuffer();
+        void clearBuffer(uint32_t bits);
         void close();
-        void destroy();
 
         void rename(std::string title);
         void resize(int width, int height);

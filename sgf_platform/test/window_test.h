@@ -66,14 +66,6 @@ TEST_F(WindowSuite, CloseWindow) {
     ASSERT_TRUE(glfwWindowShouldClose(window.getGLFWWindow()));
 }
 
-TEST_F(WindowSuite, DestroyWindow) {
-    Window window = CreateDefaultWindow(800, 600, "Test Window");
-
-    window.destroy();
-
-    ASSERT_EQ(window.getGLFWWindow(), nullptr);
-}
-
 TEST_F(WindowSuite, CheckWindowDisplay) {
     if (skipHandTest) GTEST_SKIP();
 
@@ -141,7 +133,9 @@ TEST_F(WindowSuite, SetClearColor) {
     fflush(stdout);
 
     while(!glfwWindowShouldClose(window.getGLFWWindow())) {
-        window.clear();
+        window.makeContextCurrent();
+        window.clearBuffer(0);
+        window.swapBuffer();
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
             glfwSetWindowShouldClose(window.getGLFWWindow(), true);
         }
@@ -181,8 +175,12 @@ TEST_F(WindowSuite, TwoWindowWithDifferentColor) {
     fflush(stdout);
 
     while(!glfwWindowShouldClose(window.getGLFWWindow())) {
-        defaultWindow.clear();
-        window.clear();
+        defaultWindow.makeContextCurrent();
+        defaultWindow.clearBuffer(0);
+        defaultWindow.swapBuffer();
+        window.makeContextCurrent();
+        window.clearBuffer(0);
+        window.swapBuffer();
         if (SuccessCheckFromInputForLoop("Window display wrong")) {
             glfwSetWindowShouldClose(window.getGLFWWindow(), true);
             glfwSetWindowShouldClose(defaultWindow.getGLFWWindow(), true);
