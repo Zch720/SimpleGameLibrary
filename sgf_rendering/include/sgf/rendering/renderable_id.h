@@ -2,7 +2,9 @@
 
 #include <sgf/utils/resource_id.h>
 
-struct RenderableTag {
-    static const std::string TypeName;
-};
-using RenderableId = ResourceId<RenderableTag>;
+namespace sgf_core {
+    struct RenderableTag {
+        static const std::string TypeName;
+    };
+    using RenderableId = ResourceId<RenderableTag>;
+}

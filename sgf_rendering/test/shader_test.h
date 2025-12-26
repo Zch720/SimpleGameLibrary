@@ -5,6 +5,7 @@
 #include "../include/sgf/rendering/shader.h"
 
 using namespace glm;
+using namespace sgf_core;
 
 class ShaderSuite : public ::testing::Test {
 protected:

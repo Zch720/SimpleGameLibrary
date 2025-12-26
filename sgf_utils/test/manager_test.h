@@ -7,9 +7,9 @@ struct FooTag {
     static const std::string TypeName;
 };
 const std::string FooTag::TypeName = "Foo";
-using FooId = ResourceId<FooTag>;
+using FooId = sgf_core::ResourceId<FooTag>;
 
-class Foo : public Resource<Foo, FooId> {
+class Foo : public sgf_core::Resource<Foo, FooId> {
 public:
     static const std::string TypeName;
     struct Construct {
@@ -26,11 +26,11 @@ public:
 const std::string Foo::TypeName = "Foo";
 
 TEST(ManagerSuite, CreateManager) {
-    ASSERT_NO_THROW(Manager<Foo>());
+    ASSERT_NO_THROW(sgf_core::Manager<Foo>());
 }
 
 TEST(ManagerSuite, CreateOneItem) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
 
     FooId id = manager.create(Foo::Construct { .a = 100 });
 
@@ -38,7 +38,7 @@ TEST(ManagerSuite, CreateOneItem) {
 }
 
 TEST(ManagerSuite, FindAnExistItem) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
 
     FooId id = manager.create(Foo::Construct { .a = 100 });
 
@@ -46,7 +46,7 @@ TEST(ManagerSuite, FindAnExistItem) {
 }
 
 TEST(ManagerSuite, FindAnNotExistItem) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
 
     manager.create(Foo::Construct {.a = 100});
 
@@ -54,7 +54,7 @@ TEST(ManagerSuite, FindAnNotExistItem) {
 }
 
 TEST(ManagerSuite, CreateTwoItemShouldHasDifferentId) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
 
     FooId id1 = manager.create(Foo::Construct { .a = 1 });
     FooId id2 = manager.create(Foo::Construct { .a = 2 });
@@ -63,7 +63,7 @@ TEST(ManagerSuite, CreateTwoItemShouldHasDifferentId) {
 }
 
 TEST(ManagerSuite, CreateTwoItemAndGetCorretItem) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
 
     FooId id1 = manager.create(Foo::Construct { .a = 1 });
     FooId id2 = manager.create(Foo::Construct { .a = 2 });
@@ -73,14 +73,14 @@ TEST(ManagerSuite, CreateTwoItemAndGetCorretItem) {
 }
 
 TEST(ManagerSuite, RemoveItem) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
     FooId id = manager.create(Foo::Construct { .a = 1 });
 
     ASSERT_NO_THROW(manager.remove(id));
 }
 
 TEST(ManagerSuite, RemovedItemShouldNotBeFound) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
     FooId id = manager.create(Foo::Construct { .a = 1 });
 
     manager.remove(id);
@@ -89,7 +89,7 @@ TEST(ManagerSuite, RemovedItemShouldNotBeFound) {
 }
 
 TEST(ManagerSuite, DestroyAll) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
     FooId id1 = manager.create(Foo::Construct { .a = 1 });
     FooId id2 = manager.create(Foo::Construct { .a = 2 });
 
@@ -100,21 +100,21 @@ TEST(ManagerSuite, DestroyAll) {
 }
 
 TEST(ManagerSuite, GetItemNotExist) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
 
     ASSERT_THROW_MESSAGE(
         manager.getRef(FooId()),
-        sgf::ResourceNotFound,
+        sgf_core::ResourceNotFound,
         "Try to get Foo with id FooId(id=0, gen=0) from manager, but not found"
     );
 }
 
 TEST(ManagerSuite, RemoveItemNotExist) {
-    Manager<Foo> manager;
+    sgf_core::Manager<Foo> manager;
 
     ASSERT_THROW_MESSAGE(
         manager.remove(FooId()),
-        sgf::ResourceNotFound,
+        sgf_core::ResourceNotFound,
         "Try to remove Foo with id FooId(id=0, gen=0) in manager, but not found"
     );
 }

@@ -3,18 +3,20 @@
 #include <string>
 #include "./resource_id.h"
 
-template <typename T, typename TId>
-class Resource {
-public:
-    using Id = TId;
-    struct Construct;
+namespace sgf_core {
+    template <typename T, typename TId>
+    class Resource {
+    public:
+        using Id = TId;
+        struct Construct;
 
-    Id getId() const;
+        Id getId() const;
 
-    static std::string getTypeName();
+        static std::string getTypeName();
 
-protected:
-    Id id;
-};
+    protected:
+        Id id;
+    };
+}
 
 #include "./resource.tpp"

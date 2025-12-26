@@ -4,6 +4,8 @@
 #include "../include/sgf/rendering/render_context.h"
 #include "../include/sgf/rendering/renderable.h"
 
+using namespace sgf_core;
+
 class ImageSuite : public ::testing::Test {
 protected:
     void SetUp() override {

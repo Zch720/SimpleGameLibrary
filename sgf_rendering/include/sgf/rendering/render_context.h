@@ -11,20 +11,22 @@
 #include "./unsafe_gl_context.h"
 #endif
 
-class RenderContext {
-public:
-    Manager<Shader> ShaderManager;
-    Manager<Texture2D> Texture2DManager;
-    Manager<Mesh> MeshManager;
-    Manager<Material> MaterialManager;
+namespace sgf_core {
+    class RenderContext {
+    public:
+        Manager<Shader> ShaderManager;
+        Manager<Texture2D> Texture2DManager;
+        Manager<Mesh> MeshManager;
+        Manager<Material> MaterialManager;
 
-    void destroyAllResources();
+        void destroyAllResources();
 
-#ifdef SGF_RENDERING_UNSAFE
-    template <typename Fn>
-    void unsafeExecute(Fn&& fn) {
-        UnsafeGLContext glContext(*this);
-        fn(glContext);
-    }
-#endif
-};
+    #ifdef SGF_RENDERING_UNSAFE
+        template <typename Fn>
+        void unsafeExecute(Fn&& fn) {
+            UnsafeGLContext glContext(*this);
+            fn(glContext);
+        }
+    #endif
+    };
+}

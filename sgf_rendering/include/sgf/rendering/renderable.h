@@ -7,73 +7,75 @@
 #include "./mesh_id.h"
 #include "./renderable_id.h"
 
-class RenderContext;
+namespace sgf_core {
+    class RenderContext;
 
-class Renderable: public Resource<Renderable, RenderableId> {
-public:
-    static const std::string TypeName;
-    struct Construct {
+    class Renderable: public Resource<Renderable, RenderableId> {
+    public:
+        static const std::string TypeName;
+        struct Construct {
+            MeshId meshId;
+            MaterialId materialId;
+        };
+        Renderable(const Id & id, const Construct & constructParameter);
+
+        glm::vec4 getColor() const;
+        glm::mat4 getTransformationMatrix() const;
+
+        void update();
+        void render(const RenderContext & context) const;
+        void setColor(float r, float g, float b, float a);
+
+        glm::vec3 position() const;
+        void position(const glm::vec3 & position);
+        void translate(const glm::vec3 & translate);
+        void translateX(const float delta);
+        void translateY(const float delta);
+        void translateZ(const float delta);
+
+        glm::vec3 scale() const;
+        void scale(const glm::vec3 & scale);
+        void scaleX(const float scale);
+        void scaleY(const float scale);
+        void scaleZ(const float scale);
+
+        /**
+         * Get the rotation of the object in degrees.
+        */
+        glm::vec3 rotation() const;
+        /**
+         * Set the rotation of the object in degrees.
+        */
+        void rotation(const glm::vec3 & rotation);
+        /**
+         * Rotate the object by the given vector. The vector is in degrees.
+        */
+        void rotate(const glm::vec3 & rotate);
+        /**
+         * Rotate the object with x-axis as its central axis by the given angle in degrees.
+        */
+        void rotateX(const float rotate);
+        /**
+         * Rotate the object with y-axis as its central axis by the given angle in degrees.
+        */
+        void rotateY(const float rotate);
+        /**
+         * Rotate the object with z-axis as its central axis by the given angle in degrees.
+        */
+        void rotateZ(const float rotate);
+
+    protected:
+        void updateTransformationMatrix();
+
         MeshId meshId;
         MaterialId materialId;
+
+        glm::vec4 color;
+
+        bool transformDirty;
+        glm::vec3 positionValue;
+        glm::vec3 scaleValue;
+        glm::vec3 rotationValue;
+        glm::mat4 transformationMatrix;
     };
-    Renderable(const Id & id, const Construct & constructParameter);
-
-    glm::vec4 getColor() const;
-    glm::mat4 getTransformationMatrix() const;
-
-    void update();
-    void render(const RenderContext & context) const;
-    void setColor(float r, float g, float b, float a);
-
-    glm::vec3 position() const;
-    void position(const glm::vec3 & position);
-    void translate(const glm::vec3 & translate);
-    void translateX(const float delta);
-    void translateY(const float delta);
-    void translateZ(const float delta);
-
-    glm::vec3 scale() const;
-    void scale(const glm::vec3 & scale);
-    void scaleX(const float scale);
-    void scaleY(const float scale);
-    void scaleZ(const float scale);
-
-    /**
-     * Get the rotation of the object in degrees.
-    */
-    glm::vec3 rotation() const;
-    /**
-     * Set the rotation of the object in degrees.
-    */
-    void rotation(const glm::vec3 & rotation);
-    /**
-     * Rotate the object by the given vector. The vector is in degrees.
-    */
-    void rotate(const glm::vec3 & rotate);
-    /**
-     * Rotate the object with x-axis as its central axis by the given angle in degrees.
-    */
-    void rotateX(const float rotate);
-    /**
-     * Rotate the object with y-axis as its central axis by the given angle in degrees.
-    */
-    void rotateY(const float rotate);
-    /**
-     * Rotate the object with z-axis as its central axis by the given angle in degrees.
-    */
-    void rotateZ(const float rotate);
-
-protected:
-    void updateTransformationMatrix();
-
-    MeshId meshId;
-    MaterialId materialId;
-
-    glm::vec4 color;
-
-    bool transformDirty;
-    glm::vec3 positionValue;
-    glm::vec3 scaleValue;
-    glm::vec3 rotationValue;
-    glm::mat4 transformationMatrix;
-};
+}

@@ -4,42 +4,44 @@
 #include <functional>
 #include <string>
 
-template <typename Id>
-class IdGenerator;
+namespace sgf_core {
+    template <typename Id>
+    class IdGenerator;
 
-template <typename Tag>
-class ResourceId {
-public:
-    ResourceId();
+    template <typename Tag>
+    class ResourceId {
+    public:
+        ResourceId();
 
-    uint32_t getId() const;
-    uint32_t getGen() const;
+        uint32_t getId() const;
+        uint32_t getGen() const;
 
-    std::string toString() const;
+        std::string toString() const;
 
-    static std::string getTypeName();
+        static std::string getTypeName();
 
-    bool operator==(const ResourceId<Tag> & other) const noexcept;
-    bool operator!=(const ResourceId<Tag> & other) const noexcept;
+        bool operator==(const ResourceId<Tag> & other) const noexcept;
+        bool operator!=(const ResourceId<Tag> & other) const noexcept;
 
-protected:
-    ResourceId(uint32_t id, uint32_t gen);
+    protected:
+        ResourceId(uint32_t id, uint32_t gen);
 
-private:
-    friend IdGenerator<ResourceId<Tag>>;
+    private:
+        friend IdGenerator<ResourceId<Tag>>;
 
-    uint32_t id;
-    uint32_t gen;
-};
+        uint32_t id;
+        uint32_t gen;
+    };
+}
 
 namespace std {
     template <typename Tag>
-    struct hash<ResourceId<Tag>> {
-        size_t operator()(const ResourceId<Tag> & id) const noexcept;
+    struct hash<sgf_core::ResourceId<Tag>> {
+        size_t operator()(const sgf_core::ResourceId<Tag> & id) const noexcept;
     };
     template <typename Tag>
-    struct equal_to<ResourceId<Tag>> {
-        bool operator()(const ResourceId<Tag> & left, const ResourceId<Tag> & right) const noexcept;
+    struct equal_to<sgf_core::ResourceId<Tag>> {
+        bool operator()(const sgf_core::ResourceId<Tag> & left, const sgf_core::ResourceId<Tag> & right) const noexcept;
     };
 }
 

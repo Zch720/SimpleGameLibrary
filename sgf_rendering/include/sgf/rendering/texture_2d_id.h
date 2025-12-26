@@ -2,7 +2,9 @@
 
 #include <sgf/utils/resource_id.h>
 
-struct Texture2DTag {
-    static const std::string TypeName;
-};
-using Texture2DId = ResourceId<Texture2DTag>;
+namespace sgf_core {
+    struct Texture2DTag {
+        static const std::string TypeName;
+    };
+    using Texture2DId = ResourceId<Texture2DTag>;
+}

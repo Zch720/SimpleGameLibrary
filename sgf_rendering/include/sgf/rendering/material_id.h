@@ -2,7 +2,9 @@
 
 #include <sgf/utils/resource_id.h>
 
-struct MaterialTag {
-    static const std::string TypeName;
-};
-using MaterialId = ResourceId<MaterialTag>;
+namespace sgf_core {
+    struct MaterialTag {
+        static const std::string TypeName;
+    };
+    using MaterialId = ResourceId<MaterialTag>;
+}

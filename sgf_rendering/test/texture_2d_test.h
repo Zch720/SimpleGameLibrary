@@ -2,6 +2,8 @@
 #include "./utils.h"
 #include "../include/sgf/rendering/texture_2d.h"
 
+using namespace sgf_core;
+
 class Texture2DSuite: public ::testing::Test {
 protected:
     void SetUp() override {

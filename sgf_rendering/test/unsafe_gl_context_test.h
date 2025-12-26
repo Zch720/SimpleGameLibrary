@@ -2,6 +2,8 @@
 #include "./utils.h"
 #include "../include/sgf/rendering/render_context.h"
 
+using namespace sgf_core;
+
 TEST(UnsafeGLContextSuite, Breath) {
     std::vector<float> vertices {
         0.0f, 0.5f, 0.0f,

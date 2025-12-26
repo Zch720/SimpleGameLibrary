@@ -5,6 +5,7 @@
 #include "../include/sgf/rendering/renderable.h"
 
 using namespace glm;
+using namespace sgf_core;
 
 class RenderableSuite : public ::testing::Test {
 protected:

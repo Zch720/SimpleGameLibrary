@@ -3,7 +3,7 @@
 #include <exception>
 #include <string>
 
-namespace sgf {
+namespace sgf_core {
     class ResourceNotFound : public std::exception {
         public:
             ResourceNotFound(const std::string & message);

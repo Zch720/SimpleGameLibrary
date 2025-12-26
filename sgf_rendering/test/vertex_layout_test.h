@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include "../include/sgf/rendering/vertex_layout.h"
 
+using namespace sgf_core;
+
 TEST(VertexLayoutSuite, AddStride_GL_BYTE) {
     VertexLayout vertexLayout;
 

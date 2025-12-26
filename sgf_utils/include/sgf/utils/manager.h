@@ -8,23 +8,25 @@
 #include "./id_generator.h"
 #include "./exceptions/resource_not_found.h"
 
-template <typename T>
-class Manager {
-using TId = typename T::Id;
-using Construct = typename T::Construct;
+namespace sgf_core {
+    template <typename T>
+    class Manager {
+    using TId = typename T::Id;
+    using Construct = typename T::Construct;
 
-public:
-    bool isExist(const TId & id) const;
+    public:
+        bool isExist(const TId & id) const;
 
-    T& getRef(const TId & id) const;
+        T& getRef(const TId & id) const;
 
-    TId create(const Construct & constructParameter);
-    void remove(const TId & id);
-    void destroyAll();
+        TId create(const Construct & constructParameter);
+        void remove(const TId & id);
+        void destroyAll();
 
-private:
-    std::unordered_map<TId, std::unique_ptr<T>> items;
-    IdGenerator<TId> idGenerator;
-};
+    private:
+        std::unordered_map<TId, std::unique_ptr<T>> items;
+        IdGenerator<TId> idGenerator;
+    };
+}
 
 #include "./manager.tpp"
