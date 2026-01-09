@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "./manager_test.h"
+#include "./logger_test.h"
 
 int main(int argc, char * argv[]) {
     testing::InitGoogleTest(&argc, argv);

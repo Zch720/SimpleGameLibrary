@@ -7,6 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 include(FetchContent)
+
 if(CMAKE_VERSION VERSION_LESS 3.24)
     FetchContent_Declare(
         googletest
@@ -28,9 +29,28 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+FetchContent_Declare(fmt
+    GIT_REPOSITORY git@github.com:fmtlib/fmt.git
+    GIT_TAG 12.1.0
+)
+FetchContent_MakeAvailable(fmt)
+
+FetchContent_Declare(spdlog
+    GIT_REPOSITORY git@github.com:gabime/spdlog.git
+    GIT_TAG v1.16.0
+)
+FetchContent_MakeAvailable(spdlog)
+
 file(GLOB_RECURSE sgf_utils_sourecs src/*.cpp)
 
 add_library(sgf_utils ${sgf_utils_sourecs})
+target_link_libraries(
+    sgf_utils
+    PUBLIC
+    fmt::fmt
+    PRIVATE
+    spdlog::spdlog
+)
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
@@ -44,6 +64,16 @@ target_link_libraries(
     sgf_utils_test
     GTest::gtest_main
     sgf_utils
+)
+target_compile_definitions(
+    sgf_utils_test
+    PRIVATE
+    SGF_LOG
+    SGF_DEBUG_LOG
+    PRIVATE
+    PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+    RESOURCES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources"
+    TEST_RESOURCES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/test/resources"
 )
 
 include(GoogleTest)
