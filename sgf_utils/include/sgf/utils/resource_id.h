@@ -13,6 +13,8 @@ namespace sgf_core {
     public:
         ResourceId();
 
+        bool isDefault() const;
+
         uint32_t getId() const;
         uint32_t getGen() const;
 

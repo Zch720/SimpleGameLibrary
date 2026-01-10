@@ -1,8 +1,7 @@
 #pragma once
 
+#include <memory>
 #include <string>
-#include <glad/gl.h>
-#include <GLFW/glfw3.h>
 #include <sgf/utils/resource.h>
 #include "./window_id.h"
 
@@ -19,13 +18,12 @@ namespace sgf_core {
         Window(const Id & id, const Construct & constructParameter);
         ~Window();
 
-        GLFWwindow * getGLFWWindow();
-
         void setClearColor(float r, float g, float b, float a);
 
-        bool isClose();
+        bool isClose() const;
 
         void makeContextCurrent();
+
         void swapBuffer();
         void clearBuffer(uint32_t bits);
         void close();
@@ -40,8 +38,9 @@ namespace sgf_core {
             float b = 0;
             float a = 1;
         };
+        struct WindowImpl;
 
-        GLFWwindow * window;
+        std::unique_ptr<WindowImpl> impl;
         ClearColor clearColor;
     };
 }

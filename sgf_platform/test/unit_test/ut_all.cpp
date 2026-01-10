@@ -2,9 +2,7 @@
 #include <string>
 #include <regex>
 
-#include "test_env.h"
 #include "platform_context_test.h"
-#include "window_test.h"
 
 struct Arg {
     std::string key;
@@ -35,12 +33,4 @@ Arg parseArg(char * arg) {
 
 void handleArg(Arg arg) {
     if (arg.key == "" || arg.value == "") return;
-
-    if (arg.key == "skipHandTest") {
-        if (arg.value == "true") {
-            skipHandTest = true;
-        } else {
-            skipHandTest = false;
-        }
-    }
 }

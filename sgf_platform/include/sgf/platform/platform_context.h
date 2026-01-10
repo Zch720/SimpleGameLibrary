@@ -2,20 +2,21 @@
 
 #include <sgf/utils/manager.h>
 #include <sgf/utils/exceptions/invalid_state.h>
-#include "./window.h"
+#include "./window/window_manager.h"
 
 namespace sgf_core {
     class PlatformContext {
     public:
         PlatformContext();
 
-        Manager<Window> & WindowManager();
-
-        WindowId createDefaultWindow(const Window::Construct & windowConstruct);
+        void createWindow(const Window::Construct & windowConstruct);
         void terminate();
+
+        sgf_core::Window & Window() const;
     
     private:
-        Manager<Window> windowManager;
+        WindowManager windowManager;
+        WindowId defaultWindowId;
 
         bool isInitialized;
     };

@@ -1,34 +1,39 @@
+#include "../../../../include/sgf/platform/window/window.h"
+#include <glad/gl.h>
+#include <GLFW/glfw3.h>
 #include <stdexcept>
-#include "../../../include/sgf/platform/window.h"
 
 namespace sgf_core {
     const std::string WindowTag::TypeName = "Window";
     const std::string Window::TypeName = "Window";
 
+    struct Window::WindowImpl {
+        GLFWwindow * window;
+    };
+
     Window::Window(const Id & id, const Construct & constructParameter) {
         this->id = id;
+
+        impl = std::make_unique<WindowImpl>();
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         
-        window = glfwCreateWindow(
+        impl->window = glfwCreateWindow(
             constructParameter.width,
             constructParameter.height,
             constructParameter.title.c_str(),
             nullptr,
             nullptr
         );
-        if (window == nullptr) {
+        if (impl->window == nullptr) {
             throw std::runtime_error("Failed to create GLFW window");
         }
     }
 
     Window::~Window() {
-        glfwDestroyWindow(window);
-    }
-
-    GLFWwindow * Window::getGLFWWindow() {
-        return window;
+        glfwSetWindowUserPointer(impl->window, nullptr);
+        glfwDestroyWindow(impl->window);
     }
 
     void Window::setClearColor(float r, float g, float b, float a) {
@@ -40,16 +45,16 @@ namespace sgf_core {
         glClearColor(r, g, b, a);
     }
 
-    bool Window::isClose() {
-        return glfwWindowShouldClose(window);
+    bool Window::isClose() const {
+        return glfwWindowShouldClose(impl->window);
     }
 
     void Window::makeContextCurrent() {
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(impl->window);
     }
 
     void Window::swapBuffer() {
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(impl->window);
     }
 
     void Window::clearBuffer(uint32_t bits) {
@@ -58,14 +63,14 @@ namespace sgf_core {
     }
 
     void Window::close() {
-        glfwSetWindowShouldClose(window, true);
+        glfwSetWindowShouldClose(impl->window, true);
     }
 
     void Window::rename(std::string title) {
-        glfwSetWindowTitle(window, title.c_str());
+        glfwSetWindowTitle(impl->window, title.c_str());
     }
 
     void Window::resize(int width, int height) {
-        glfwSetWindowSize(window, width, height);
+        glfwSetWindowSize(impl->window, width, height);
     }
 }

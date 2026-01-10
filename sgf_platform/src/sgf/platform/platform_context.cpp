@@ -1,35 +1,40 @@
 #include "../../../include/sgf/platform/platform_context.h"
 #include "../../../include/sgf/platform/gl_control.h"
+#include "sgf/utils/exceptions/invalid_state.h"
 
 namespace sgf_core {
-    PlatformContext::PlatformContext(): isInitialized(false) {
+    PlatformContext::PlatformContext(): defaultWindowId(), isInitialized(false) {
     }
 
-    Manager<Window> & PlatformContext::WindowManager() {
+    void PlatformContext::createWindow(const Window::Construct & windowConstruct) {
+        if (!defaultWindowId.isDefault()) {
+            throw InvalidState("Already created a default window. Multiple windows are not supported yet.");
+        }
+
         if (!isInitialized) {
-            throw InvalidState("Should use WindowManager after create the default window.");
+            GLControl::initGLFW();
         }
-        return windowManager;
-    }
-
-    WindowId PlatformContext::createDefaultWindow(const Window::Construct & windowConstruct) {
-        if (isInitialized) {
-            throw InvalidState("Default window already created.");
+        defaultWindowId = windowManager.create(windowConstruct);
+        if (!isInitialized) {
+            windowManager.getRef(defaultWindowId).makeContextCurrent();
+            GLControl::initGlad();
+            isInitialized = true;
         }
-        GLControl::initGLFW();
-        WindowId windowId = windowManager.create(windowConstruct);
-        windowManager.getRef(windowId).makeContextCurrent();
-        GLControl::initGlad();
-        isInitialized = true;
-        return windowId;
     }
 
     void PlatformContext::terminate() {
         if (!isInitialized) {
-            throw InvalidState("PlatformContext has not initialize yet, or you already treminated.");
+            throw InvalidState("PlatformContext has not initialize yet, or you already terminated. Please create a window to initial PlatformContext.");
         }
         windowManager.destroyAll();
         GLControl::terminate();
         isInitialized = false;
+    }
+
+    sgf_core::Window & PlatformContext::Window() const {
+        if (defaultWindowId.isDefault()) {
+            throw InvalidState("The default window has not been created yet. Please use PlatformContext::createWindow to create the default window.");
+        }
+        return windowManager.getRef(defaultWindowId);
     }
 }

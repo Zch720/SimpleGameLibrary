@@ -49,33 +49,34 @@ target_include_directories(
 )
 target_link_libraries(
     sgf_platform
+    PRIVATE
+    glfw
+    glad
     sgf_utils
 )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 add_executable(
-    sgf_platform_test
-    test/ut_all.cpp
+    sgf_platform_unit_test
+    test/unit_test/ut_all.cpp
 )
-set_target_properties(sgf_platform_test PROPERTIES OUTPUT_NAME "ut_all")
-target_compile_options(sgf_platform_test PUBLIC -Wall -Wfatal-errors)
+set_target_properties(sgf_platform_unit_test PROPERTIES OUTPUT_NAME "ut_all")
+target_compile_options(sgf_platform_unit_test PUBLIC -Wall -Wfatal-errors)
 target_include_directories(
-    sgf_platform_test
+    sgf_platform_unit_test
     PRIVATE
     ${sgf_includes}
     ${third_party_includes}
 )
 target_link_libraries(
-    sgf_platform_test
+    sgf_platform_unit_test
     GTest::gtest_main
-    glfw
-    glad
     sgf_platform
 )
 
 target_compile_definitions(
-    sgf_platform_test
+    sgf_platform_unit_test
     PRIVATE
     PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
     RESOURCES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources"
@@ -83,4 +84,4 @@ target_compile_definitions(
 )
 
 include(GoogleTest)
-gtest_discover_tests(sgf_platform_test)
+gtest_discover_tests(sgf_platform_unit_test)

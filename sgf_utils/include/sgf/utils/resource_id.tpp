@@ -10,6 +10,11 @@ namespace sgf_core {
     }
 
     template <typename Tag>
+    bool ResourceId<Tag>::isDefault() const {
+        return id == 0;
+    }
+
+    template <typename Tag>
     uint32_t ResourceId<Tag>::getId() const {
         return id;
     }
