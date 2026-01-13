@@ -49,10 +49,11 @@ target_include_directories(
 )
 target_link_libraries(
     sgf_platform
+    PUBLIC
+    sgf_utils
     PRIVATE
     glfw
     glad
-    sgf_utils
 )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)

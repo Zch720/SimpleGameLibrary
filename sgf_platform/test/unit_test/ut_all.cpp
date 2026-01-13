@@ -3,6 +3,7 @@
 #include <regex>
 
 #include "platform_context_test.h"
+#include "input_test.h"
 
 struct Arg {
     std::string key;

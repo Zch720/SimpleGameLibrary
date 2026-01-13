@@ -4,8 +4,13 @@
 #include <string>
 #include <sgf/utils/resource.h>
 #include "./window_id.h"
+#include "../input/key.h"
 
 namespace sgf_core {
+    class PlatformContext;
+    class KeyboardInputInjector;
+    class MouseInputInjector;
+    
     class Window: public Resource<Window, WindowId> {
     public:
         static const std::string TypeName;
@@ -32,6 +37,8 @@ namespace sgf_core {
         void resize(int width, int height);
 
     private:
+        friend PlatformContext;
+
         struct ClearColor {
             float r = 0;
             float g = 0;
@@ -42,5 +49,15 @@ namespace sgf_core {
 
         std::unique_ptr<WindowImpl> impl;
         ClearColor clearColor;
+
+        void setKeyboardInputInjector(KeyboardInputInjector & keyboardInjector);
+        void setMouseInputInjector(MouseInputInjector & mouseInjector);
+
+        void keyPressedHandler(Key key);
+        void keyReleasedHandler(Key key);
+        void mousePressedHandler(MouseKey key);
+        void mouseReleasedHandler(MouseKey key);
+        void cursorMovedHandler(double x, double y);
+        void scrollScrolledHandler(double x, double y);
     };
 }

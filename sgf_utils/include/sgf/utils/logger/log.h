@@ -43,6 +43,7 @@ namespace sgf_core {
     #endif
 #else
     #define SGF_LOG_INIT() ((void)0)
+    #define SGF_LOG_DROP() ((void)0)
     #define SGF_LOG_CONSOLE(level) ((void)0)
     #define SGF_LOG_FILE(level) ((void)0)
     #define SGF_LOG_INFO(...) ((void)0)
