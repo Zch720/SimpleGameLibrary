@@ -1,0 +1,29 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 14
+    },
+    "configurePresets": [
+      {
+        "name": "default",
+        "displayName": "Default (with tests)",
+        "description": "Build sgf_utils with tests enabled",
+        "binaryDir": "${sourceDir}/build",
+        "cacheVariables": {
+          "SGF_PLATFORM_TESTS": "ON"
+        }
+      },
+      {
+        "name": "ninja",
+        "displayName": "Ninja (with tests)",
+        "description": "Build sgf_utils with tests enabled using Ninja",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build",
+        "cacheVariables": {
+          "SGF_PLATFORM_TESTS": "ON"
+        }
+      }
+    ]
+  }
+  
