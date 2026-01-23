@@ -31,4 +31,12 @@ namespace sgf_core {
     void Manager<T>::destroyAll() {
         items.clear();
     }
+
+    template <typename T>
+    template <typename Func>
+    void Manager<T>::foreach(Func && func) {
+        for (const std::pair<const TId, std::unique_ptr<T>> & item : items) {
+            func(item.first, *item.second);
+        }
+    }
 }

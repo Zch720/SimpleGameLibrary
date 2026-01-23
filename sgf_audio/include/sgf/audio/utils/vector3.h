@@ -1,0 +1,11 @@
+#pragma once
+
+namespace sgf_core {
+    class Vector3 {
+    public:
+        Vector3();
+        Vector3(float x, float y, float z);
+
+        float x, y, z;
+    };
+}

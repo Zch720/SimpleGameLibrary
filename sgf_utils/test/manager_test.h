@@ -118,3 +118,24 @@ TEST(ManagerSuite, RemoveItemNotExist) {
         "Try to remove Foo with id FooId(id=0, gen=0) in manager, but not found"
     );
 }
+
+TEST(ManagerSuite, Foreach) {
+    class FooManager: public sgf_core::Manager<Foo> {
+    public:
+        void setAll(int a) {
+            foreach([a](auto &, Foo & item) {
+                item.a = a;
+            });
+        }
+    };
+
+    FooManager manager;
+
+    FooId item1Id = manager.create({ .a = 1 });
+    FooId item2Id = manager.create({ .a = 2 });
+
+    manager.setAll(5);
+
+    ASSERT_EQ(5, manager.getRef(item1Id).a);
+    ASSERT_EQ(5, manager.getRef(item2Id).a);
+}
