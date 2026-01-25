@@ -18,9 +18,9 @@ protected:
             .fragmentShaderSource = fragmentShaderSource
         });
         context.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
-        materialId = context.MaterialManager.create({ .useTexture = false, shaderId = shaderId });
+        materialId = context.MaterialManager.create({ .useTexture = false, .shaderId = shaderId });
         triangleVertexLayout = VertexLayout();
-        triangleVertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
+        triangleVertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
         triangleMeshId = context.MeshManager.create({ .vertices = triangleVertices.data(), .verticesCount = 3, .indices = triangleIndices.data(), .indicesCount = 3, .vertexLayout = triangleVertexLayout });
     }
 
@@ -75,7 +75,7 @@ TEST_F(RenderableSuite, DrawTriangle) {
     };
     std::vector<uint32_t> indices { 0, 1, 2 };
     VertexLayout vertexLayout;
-    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
+    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
     MeshId meshId = context.MeshManager.create({ .vertices = (void *)vertices.data(), .verticesCount = 3, .indices = indices.data(), .indicesCount = 3, .vertexLayout = vertexLayout });
 
     Renderable triangle(RenderableId(), { .meshId = meshId, .materialId = materialId });
@@ -101,7 +101,7 @@ TEST_F(RenderableSuite, DrawRectangle) {
     };
     std::vector<uint32_t> indices { 0, 1, 2, 0, 2, 3 };
     VertexLayout vertexLayout;
-    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
+    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
     MeshId meshId = context.MeshManager.create({ .vertices = (void *)vertices.data(), .verticesCount = 4, .indices = indices.data(), .indicesCount = 6, .vertexLayout = vertexLayout });
 
     Renderable rectangle(RenderableId(), { .meshId = meshId, .materialId = materialId });
@@ -128,7 +128,7 @@ TEST_F(RenderableSuite, DrawPentagon) {
     };
     std::vector<uint32_t> indices { 0, 1, 2, 0, 2, 3, 0, 3, 4 };
     VertexLayout vertexLayout;
-    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
+    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
     MeshId meshId = context.MeshManager.create({ .vertices = (void *)vertices.data(), .verticesCount = 5, .indices = indices.data(), .indicesCount = 9, .vertexLayout = vertexLayout });
 
     Renderable pentagon(RenderableId(), { .meshId = meshId, .materialId = materialId });

@@ -5,8 +5,8 @@
 class ColorTriangleBreathSuite: public testing::Test {
 protected:
     void SetUp() override {
-        layout.addAttribute({ .index = 0, .size = 3, .type = 0x1406, .normalized = false, .offset = 0 });
-        layout.addAttribute({ .index = 1, .size = 3, .type = 0x1406, .normalized = false, .offset = 3 * sizeof(float) });
+        layout.addAttribute({ .index = 0, .size = 3, .type = sgf_core::VertexLayout::FLOAT, .normalized = false, .offset = 0 });
+        layout.addAttribute({ .index = 1, .size = 3, .type = sgf_core::VertexLayout::FLOAT, .normalized = false, .offset = 3 * sizeof(float) });
     }
 
     std::string vertexShader = R"(
@@ -108,8 +108,8 @@ TEST_F(ColorTriangleBreathSuite, Breath) {
 class ColorCubeBreathSuite: public testing::Test {
 protected:
     void SetUp() override {
-        layout.addAttribute({ .index = 0, .size = 3, .type = 0x1406, .normalized = false, .offset = 0 });
-        layout.addAttribute({ .index = 1, .size = 3, .type = 0x1406, .normalized = false, .offset = 3 * sizeof(float) });
+        layout.addAttribute({ .index = 0, .size = 3, .type = sgf_core::VertexLayout::FLOAT, .normalized = false, .offset = 0 });
+        layout.addAttribute({ .index = 1, .size = 3, .type = sgf_core::VertexLayout::FLOAT, .normalized = false, .offset = 3 * sizeof(float) });
     }
 
     std::string vertexShader = R"(

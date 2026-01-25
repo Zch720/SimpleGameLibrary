@@ -12,7 +12,7 @@ TEST(UnsafeGLContextSuite, Breath) {
     };
     std::vector<uint32_t> indices { 0, 1, 2 };
     VertexLayout vertexLayout;
-    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
+    vertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
 
     sgf_test::createOpenGLContext();
 

@@ -117,7 +117,7 @@ if (SGF_RENDERING_TESTS)
     target_link_libraries(sgf_rendering_test
         GTest::gtest_main
         glfw
-        glad_gl_compatibility_33
+        glad_sgf_rendering
         sgf_utils
         sgf_rendering
     )

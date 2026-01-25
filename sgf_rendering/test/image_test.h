@@ -18,8 +18,8 @@ protected:
         });
         context.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
         imageVertexLayout = VertexLayout();
-        imageVertexLayout.addAttribute({ .index = 0, .size = 3, .type = GL_FLOAT, .normalized = false, .offset = 0 });
-        imageVertexLayout.addAttribute({ .index = 1, .size = 2, .type = GL_FLOAT, .normalized = false, .offset = sizeof(float) * 3 });
+        imageVertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
+        imageVertexLayout.addAttribute({ .index = 1, .size = 2, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = sizeof(float) * 3 });
         imageMeshId = context.MeshManager.create({ .vertices = imageVertices.data(), .verticesCount = 4, .indices = triangleIndices.data(), .indicesCount = 6, .vertexLayout = imageVertexLayout });
     }
 
