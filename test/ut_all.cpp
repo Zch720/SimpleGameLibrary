@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "./simple_rendering_breath.h"
+#include "./color_triangle_breath.h"
 
 int main(int argc, char * argv[]) {
     testing::InitGoogleTest(&argc, argv);
