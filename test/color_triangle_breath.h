@@ -1,3 +1,4 @@
+#include "sgf/rendering/projection.h"
 #include <gtest/gtest.h>
 #include <sgf/control/game_control_context.h>
 #include <sgf/rendering/renderable.h>
@@ -14,13 +15,15 @@ protected:
         layout (location = 0) in vec3 aPos;   // The vertex position data
         layout (location = 1) in vec3 aColor;  // The vertex color data
         
+        uniform mat4 projection = mat4(1.0);
+        uniform mat4 view = mat4(1.0);
         uniform mat4 model = mat4(1.0);
 
         out vec3 ourColor; // Output a color to the fragment shader
 
         void main()
         {
-            gl_Position = model * vec4(aPos, 1.0); // Set the position
+            gl_Position = projection * view * model * vec4(aPos, 1.0); // Set the position
             ourColor = aColor; // Pass the color to the fragment shader
         }
     )";
@@ -53,6 +56,13 @@ TEST_F(ColorTriangleBreathSuite, Breath) {
     sgf_core::RenderContext renderContext;
     renderContext.initialize();
     platformContext.setWindowClearBuffer(renderContext.getClearFrameBufferBits());
+
+    renderContext.Camera().translateZ(5);
+    renderContext.Camera().projection().setProjectionData({
+        .type = sgf_core::Projection::ORTHOGRAPHIC,
+        .width = 3, .height = 3,
+        .near = 0.1, .far = 1000
+    });
     
     sgf_core::GameControlContext gameContext(renderContext, platformContext);
 
@@ -72,6 +82,8 @@ TEST_F(ColorTriangleBreathSuite, Breath) {
         .useTexture = false,
         .shaderId = shaderId,
     });
+    renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "projection", sgf_core::UniformSource::CAMERA_PROJECTION);
+    renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "view", sgf_core::UniformSource::CAMERA_VIEW);
     renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "model", sgf_core::UniformSource::TRANSFORM_MATRIX);
 
     sgf_core::Manager<sgf_core::Renderable> renderableManager;
@@ -82,6 +94,10 @@ TEST_F(ColorTriangleBreathSuite, Breath) {
 
     gameContext.GameLoop().addRenderFunction([&renderableManager, &renderableId](const sgf_core::RenderContext & context) {
         renderableManager.getRef(renderableId).render(context);
+    });
+
+    gameContext.GameLoop().addUpdateFunction([&renderContext]() {
+        renderContext.Camera().update();
     });
 
     gameContext.GameLoop().addUpdateFunction([&renderableManager, &renderableId, &gameContext]() {
@@ -115,13 +131,15 @@ protected:
         layout (location = 0) in vec3 aPos;   // The vertex position data
         layout (location = 1) in vec3 aColor;  // The vertex color data
         
+        uniform mat4 projection = mat4(1.0);
+        uniform mat4 view = mat4(1.0);
         uniform mat4 model = mat4(1.0);
 
         out vec3 ourColor; // Output a color to the fragment shader
 
         void main()
         {
-            gl_Position = model * vec4(aPos, 1.0); // Set the position
+            gl_Position = projection * view * model * vec4(aPos, 1.0); // Set the position
             ourColor = aColor; // Pass the color to the fragment shader
         }
     )";
@@ -187,6 +205,14 @@ TEST_F(ColorCubeBreathSuite, Breath) {
     sgf_core::RenderContext renderContext;
     renderContext.initialize();
     platformContext.setWindowClearBuffer(renderContext.getClearFrameBufferBits());
+
+    renderContext.Camera().translateZ(5);
+    renderContext.Camera().projection().setProjectionData({
+        .type = sgf_core::Projection::PERSPECTIVE,
+        .width = 2, .height = 2,
+        .near = 0.1, .far = 1000,
+        .fieldOfView = 45
+    });
     
     sgf_core::GameControlContext gameContext(renderContext, platformContext);
 
@@ -206,6 +232,8 @@ TEST_F(ColorCubeBreathSuite, Breath) {
         .useTexture = false,
         .shaderId = shaderId,
     });
+    renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "projection", sgf_core::UniformSource::CAMERA_PROJECTION);
+    renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "view", sgf_core::UniformSource::CAMERA_VIEW);
     renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "model", sgf_core::UniformSource::TRANSFORM_MATRIX);
 
     sgf_core::Manager<sgf_core::Renderable> renderableManager;
@@ -216,6 +244,10 @@ TEST_F(ColorCubeBreathSuite, Breath) {
 
     gameContext.GameLoop().addRenderFunction([&renderableManager, &renderableId](const sgf_core::RenderContext & context) {
         renderableManager.getRef(renderableId).render(context);
+    });
+
+    gameContext.GameLoop().addUpdateFunction([&renderContext]() {
+        renderContext.Camera().update();
     });
 
     gameContext.GameLoop().addUpdateFunction([&renderableManager, &renderableId, &gameContext]() {

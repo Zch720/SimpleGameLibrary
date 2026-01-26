@@ -7,6 +7,8 @@ namespace sgf_core {
     enum UniformSource {
         TRANSFORM_MATRIX,
         RENDERABLE_COLOR,
+        CAMERA_VIEW,
+        CAMERA_PROJECTION,
         CUSTOM
     };
 

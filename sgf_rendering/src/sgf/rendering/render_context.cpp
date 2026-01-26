@@ -1,4 +1,5 @@
 #include "../../../include/sgf/rendering/render_context.h"
+#include "sgf/rendering/camera.h"
 #include "sgf/rendering/uniform_provider.h"
 #include <glad/gl.h>
 
@@ -21,6 +22,14 @@ namespace sgf_core {
 
     uint32_t RenderContext::getClearFrameBufferBits() const {
         return clearFrameBufferBits;
+    }
+
+    sgf_core::Camera & RenderContext::Camera() {
+        return camera;
+    }
+
+    const sgf_core::Camera & RenderContext::Camera() const {
+        return camera;
     }
 
     sgf_core::UniformProvider & RenderContext::UniformProvider() {

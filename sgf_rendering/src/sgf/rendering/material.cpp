@@ -42,6 +42,10 @@ namespace sgf_core {
                 shader.setMat4UniformVariable(name, renderable.getTransformationMatrix());
             } else if (sourceType == UniformSource::RENDERABLE_COLOR) {
                 shader.setVec4UniformVariable(name, renderable.getColor());
+            } else if (sourceType == UniformSource::CAMERA_VIEW) {
+                shader.setMat4UniformVariable(name, context.Camera().getViewMatrix());
+            } else if (sourceType == UniformSource::CAMERA_PROJECTION) {
+                shader.setMat4UniformVariable(name, context.Camera().getProjectionMatrix());
             } else if (sourceType == UniformSource::CUSTOM) {
                 if (renderable.getUniformProvider().hasProvider(uniformId)) {
                     shader.setUniformVariable(name, renderable.getUniformProvider().getProvider(uniformId)());

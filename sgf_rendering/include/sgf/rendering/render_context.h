@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sgf/utils/manager.h>
+#include "./camera.h"
 #include "./material.h"
 #include "./mesh.h"
 #include "./shader.h"
@@ -26,6 +27,9 @@ namespace sgf_core {
 
         uint32_t getClearFrameBufferBits() const;
 
+        sgf_core::Camera & Camera();
+        const sgf_core::Camera & Camera() const;
+        
         sgf_core::UniformProvider & UniformProvider();
         const sgf_core::UniformProvider & UniformProvider() const;
 
@@ -45,5 +49,6 @@ namespace sgf_core {
         uint32_t clearFrameBufferBits;
 
         sgf_core::UniformProvider uniformProvider;
+        sgf_core::Camera camera;
     };
 }
