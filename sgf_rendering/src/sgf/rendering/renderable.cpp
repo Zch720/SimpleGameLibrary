@@ -18,6 +18,14 @@ namespace sgf_core {
         updateTransformationMatrix();
     }
 
+    UniformProvider & Renderable::getUniformProvider() {
+        return uniformProvider;
+    }
+
+    const UniformProvider & Renderable::getUniformProvider() const {
+        return uniformProvider;
+    }
+
     glm::vec4 Renderable::getColor() const {
         return color;
     }

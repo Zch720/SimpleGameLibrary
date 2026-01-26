@@ -1,11 +1,11 @@
 #pragma once
 
-#include <functional>
 #include <sgf/utils/manager.h>
 #include "./material.h"
 #include "./mesh.h"
 #include "./shader.h"
 #include "./texture_2d.h"
+#include "./uniform_provider.h"
 
 #ifdef SGF_RENDERING_UNSAFE
 #include "./unsafe_gl_context.h"
@@ -26,6 +26,9 @@ namespace sgf_core {
 
         uint32_t getClearFrameBufferBits() const;
 
+        sgf_core::UniformProvider & UniformProvider();
+        const sgf_core::UniformProvider & UniformProvider() const;
+
     #ifdef SGF_RENDERING_UNSAFE
         template <typename Fn>
         void unsafeExecute(Fn&& fn) {
@@ -40,5 +43,7 @@ namespace sgf_core {
 
     private:
         uint32_t clearFrameBufferBits;
+
+        sgf_core::UniformProvider uniformProvider;
     };
 }

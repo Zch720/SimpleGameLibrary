@@ -9,6 +9,7 @@ namespace sgf_core {
 
     Shader::Shader(const Id & id, const Construct & constructParameter) {
         this->id = id;
+        uniformSetterVisitor = { .shader = this };
 
         uint32_t vertexShaderHandle = glCreateShader(GL_VERTEX_SHADER);
         compileShader(vertexShaderHandle, constructParameter.vertexShaderSource.c_str());
@@ -31,20 +32,13 @@ namespace sgf_core {
         glUseProgram(programHandle);
     }
 
-    void Shader::registerUniformVariable(const std::string & identifyName, const std::string & uniformName) {
-        if (uniformLocations.find(identifyName) != uniformLocations.end()) {
-            throw std::runtime_error("Uniform variable \"" + identifyName + "\" already registered");
-        }
-
-        int location = glGetUniformLocation(programHandle, uniformName.c_str());
-        if (location == -1) {
-            throw std::runtime_error("Uniform variable \"" + uniformName + "\" not found");
-        }
-        uniformLocations[identifyName] = location;
-    }
-
     bool Shader::hasUniformVariable(const std::string & identifyName) {
         return uniformLocations.find(identifyName) != uniformLocations.end();
+    }
+
+    void Shader::setUniformVariable(const std::string & identifyName, const UniformType & value) {
+        uniformSetterVisitor.name = identifyName;
+        std::visit(uniformSetterVisitor, value);
     }
 
     void Shader::setIntUniformVariable(const std::string & identifyName, int value) {
@@ -306,7 +300,11 @@ namespace sgf_core {
     void Shader::registerDefaultUniformVariable() {
         std::vector<std::string> uniformNames = getAllUniformVariableName();
         for (std::string uniformName : uniformNames) {
-            registerUniformVariable(uniformName, uniformName);
+            int location = glGetUniformLocation(programHandle, uniformName.c_str());
+            if (location == -1) {
+                throw std::runtime_error("Uniform variable \"" + uniformName + "\" not found");
+            }
+            uniformLocations[uniformName] = location;
         }
     }
 
@@ -314,5 +312,62 @@ namespace sgf_core {
         if (uniformLocations.find(identifyName) == uniformLocations.end()) {
             throw std::runtime_error("Uniform variable \"" + identifyName + "\" not registered");
         }
+    }
+
+
+    void Shader::SetUniformVisitor::operator()(const int & value) {
+        shader->setIntUniformVariable(name, value);
+    }
+    
+    void Shader::SetUniformVisitor::operator()(const float & value) {
+        shader->setFloatUniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::vec2 & value) {
+        shader->setVec2UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::vec3 & value) {
+        shader->setVec3UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::vec4 & value) {
+        shader->setVec4UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat2 & value) {
+        shader->setMat2UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat3 & value) {
+        shader->setMat3UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat4 & value) {
+        shader->setMat4UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat2x3 & value) {
+        shader->setMat2x3UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat3x2 & value) {
+        shader->setMat3x2UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat2x4 & value) {
+        shader->setMat2x4UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat4x2 & value) {
+        shader->setMat4x2UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat3x4 & value) {
+        shader->setMat3x4UniformVariable(name, value);
+    }
+
+    void Shader::SetUniformVisitor::operator()(const glm::mat4x3 & value) {
+        shader->setMat4x3UniformVariable(name, value);
     }
 }

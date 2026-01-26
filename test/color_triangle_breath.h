@@ -29,13 +29,11 @@ protected:
         #version 330 core
         out vec4 FragColor; // The final output color for the pixel
 
-        uniform vec4 color = vec4(1.0);
-
         in vec3 ourColor; // Input color from the vertex shader (interpolated)
 
         void main()
         {
-            FragColor = color * vec4(ourColor, 1.0f); // Set the final color, including alpha (opacity)
+            FragColor = vec4(ourColor, 1.0f); // Set the final color, including alpha (opacity)
         }
     )";
 
@@ -63,7 +61,6 @@ TEST_F(ColorTriangleBreathSuite, Breath) {
         .vertexShaderSource = vertexShader,
         .fragmentShaderSource = fragmentShader,
     });
-    renderContext.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
     sgf_core::MeshId meshId = renderContext.MeshManager.create({
         .vertices = vertices,
         .verticesCount = 3,
@@ -75,6 +72,7 @@ TEST_F(ColorTriangleBreathSuite, Breath) {
         .useTexture = false,
         .shaderId = shaderId,
     });
+    renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "model", sgf_core::UniformSource::TRANSFORM_MATRIX);
 
     sgf_core::Manager<sgf_core::Renderable> renderableManager;
     sgf_core::RenderableId renderableId = renderableManager.create({
@@ -132,13 +130,11 @@ protected:
         #version 330 core
         out vec4 FragColor; // The final output color for the pixel
 
-        uniform vec4 color = vec4(1.0);
-
         in vec3 ourColor; // Input color from the vertex shader (interpolated)
 
         void main()
         {
-            FragColor = color * vec4(ourColor, 1.0f); // Set the final color, including alpha (opacity)
+            FragColor = vec4(ourColor, 1.0f); // Set the final color, including alpha (opacity)
         }
     )";
 
@@ -199,7 +195,6 @@ TEST_F(ColorCubeBreathSuite, Breath) {
         .vertexShaderSource = vertexShader,
         .fragmentShaderSource = fragmentShader,
     });
-    renderContext.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
     sgf_core::MeshId meshId = renderContext.MeshManager.create({
         .vertices = vertices,
         .verticesCount = 24,
@@ -211,6 +206,7 @@ TEST_F(ColorCubeBreathSuite, Breath) {
         .useTexture = false,
         .shaderId = shaderId,
     });
+    renderContext.MaterialManager.getRef(materialId).registerUniform(renderContext, "model", sgf_core::UniformSource::TRANSFORM_MATRIX);
 
     sgf_core::Manager<sgf_core::Renderable> renderableManager;
     sgf_core::RenderableId renderableId = renderableManager.create({

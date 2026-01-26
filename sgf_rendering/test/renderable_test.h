@@ -17,8 +17,9 @@ protected:
             .vertexShaderSource = vertexShaderSource,
             .fragmentShaderSource = fragmentShaderSource
         });
-        context.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
         materialId = context.MaterialManager.create({ .useTexture = false, .shaderId = shaderId });
+        context.MaterialManager.getRef(materialId).registerUniform(context, "model", UniformSource::TRANSFORM_MATRIX);
+        context.MaterialManager.getRef(materialId).registerUniform(context, "color", UniformSource::RENDERABLE_COLOR);
         triangleVertexLayout = VertexLayout();
         triangleVertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
         triangleMeshId = context.MeshManager.create({ .vertices = triangleVertices.data(), .verticesCount = 3, .indices = triangleIndices.data(), .indicesCount = 3, .vertexLayout = triangleVertexLayout });

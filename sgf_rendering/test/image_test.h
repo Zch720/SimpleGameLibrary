@@ -16,7 +16,6 @@ protected:
             .vertexShaderSource = vertexShaderSource,
             .fragmentShaderSource = fragmentShaderSource
         });
-        context.ShaderManager.getRef(shaderId).registerUniformVariable("transform", "model");
         imageVertexLayout = VertexLayout();
         imageVertexLayout.addAttribute({ .index = 0, .size = 3, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = 0 });
         imageVertexLayout.addAttribute({ .index = 1, .size = 2, .type = VertexLayout::VertexType::FLOAT, .normalized = false, .offset = sizeof(float) * 3 });
@@ -74,6 +73,8 @@ TEST_F(ImageSuite, DrawPngImage) {
 
     Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image.png" });
     MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
+    context.MaterialManager.getRef(materialId).registerUniform(context, "model", UniformSource::TRANSFORM_MATRIX);
+    context.MaterialManager.getRef(materialId).registerUniform(context, "color", UniformSource::RENDERABLE_COLOR);
 
     Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 
@@ -92,6 +93,8 @@ TEST_F(ImageSuite, DrawTransparentPngImage) {
 
     Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image_transparent.png" });
     MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
+    context.MaterialManager.getRef(materialId).registerUniform(context, "model", UniformSource::TRANSFORM_MATRIX);
+    context.MaterialManager.getRef(materialId).registerUniform(context, "color", UniformSource::RENDERABLE_COLOR);
 
     Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 
@@ -110,6 +113,8 @@ TEST_F(ImageSuite, DrawJpgImage) {
 
     Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image.jpg" });
     MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
+    context.MaterialManager.getRef(materialId).registerUniform(context, "model", UniformSource::TRANSFORM_MATRIX);
+    context.MaterialManager.getRef(materialId).registerUniform(context, "color", UniformSource::RENDERABLE_COLOR);
 
     Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 
@@ -128,6 +133,8 @@ TEST_F(ImageSuite, DrawBmpImage) {
 
     Texture2DId textureId = context.Texture2DManager.create({ .path = TEST_RESOURCES_DIR"/image.bmp" });
     MaterialId materialId = context.MaterialManager.create({ .useTexture = true, .shaderId = shaderId, .textureId = textureId });
+    context.MaterialManager.getRef(materialId).registerUniform(context, "model", UniformSource::TRANSFORM_MATRIX);
+    context.MaterialManager.getRef(materialId).registerUniform(context, "color", UniformSource::RENDERABLE_COLOR);
 
     Renderable image(RenderableId(), { .meshId = imageMeshId, .materialId = materialId });
 

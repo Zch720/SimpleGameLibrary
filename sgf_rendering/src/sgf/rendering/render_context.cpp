@@ -1,4 +1,5 @@
 #include "../../../include/sgf/rendering/render_context.h"
+#include "sgf/rendering/uniform_provider.h"
 #include <glad/gl.h>
 
 namespace sgf_core {
@@ -20,5 +21,13 @@ namespace sgf_core {
 
     uint32_t RenderContext::getClearFrameBufferBits() const {
         return clearFrameBufferBits;
+    }
+
+    sgf_core::UniformProvider & RenderContext::UniformProvider() {
+        return uniformProvider;
+    }
+
+    const sgf_core::UniformProvider & RenderContext::UniformProvider() const {
+        return uniformProvider;
     }
 }

@@ -6,6 +6,7 @@
 #include "./material_id.h"
 #include "./mesh_id.h"
 #include "./renderable_id.h"
+#include "./uniform_provider.h"
 
 namespace sgf_core {
     class RenderContext;
@@ -18,6 +19,9 @@ namespace sgf_core {
             MaterialId materialId;
         };
         Renderable(const Id & id, const Construct & constructParameter);
+
+        UniformProvider & getUniformProvider();
+        const UniformProvider & getUniformProvider() const;
 
         glm::vec4 getColor() const;
         glm::mat4 getTransformationMatrix() const;
@@ -77,5 +81,7 @@ namespace sgf_core {
         glm::vec3 scaleValue;
         glm::vec3 rotationValue;
         glm::mat4 transformationMatrix;
+
+        UniformProvider uniformProvider;
     };
 }
